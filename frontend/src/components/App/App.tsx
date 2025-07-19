@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Loader from "../Loader/Loader";
+import Layout from "../Layout/Layout";
+
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 
 const AdminLoginPage = lazy(() => import("../../pages/admin/AdminLoginPage"));
 const AdminHomePage = lazy(() => import("../../pages/admin/AdminHomePage"));
@@ -22,7 +25,12 @@ export default function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <Suspense fallback={<Loader />}>
         <Routes>
-          {/* Адмін панель */}
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            {/* Додай тут інші основні сторінки */}
+          </Route>
+
+          {/* Admin panel */}
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/admin" element={<AdminHomePage />}>
             <Route path="archives" element={<AdminArchivesPage />} />

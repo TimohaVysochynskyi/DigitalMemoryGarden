@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 72px;
+  height: 90vh;
+}
+.mapImage {
+  width: 100%;
+  width: 70%;
+  object-fit: contain;
+}
+.content {
+  height: 100%;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 0%;
+  font-style: italic;
+  text-transform: uppercase;
+}
+.description {
+  width: 600px;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.icon {
+  width: 15px;
+  height: 15px;
+}
+.currentLanguage {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  top: 1px;
+}

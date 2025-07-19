@@ -1,0 +1,82 @@
+.hero {
+  padding: 135px 72px;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.heroContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  max-width: 1024px;
+}
+.title {
+  font-size: 100px;
+  line-height: 100%;
+  letter-spacing: -2%;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.title span {
+  margin-left: 55px;
+}
+.subtitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+.btnsWrapper {
+  display: flex;
+  gap: 17px;
+  margin-top: 40px;
+}
+
+.flowerWrapper {
+  height: 100%;
+  width: 850px;
+  position: absolute;
+  right: -12%;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flowerImage {
+  position: absolute;
+  width: 100%;
+  animation: rotateFlower 60s linear infinite;
+}
+.flowerText {
+  position: absolute;
+  width: 50%;
+  animation: rotateText 60s linear infinite;
+}
+.flowerPlayButton {
+  position: absolute;
+  width: 85px;
+  padding-left: 2%;
+}
+
+@keyframes rotateFlower {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

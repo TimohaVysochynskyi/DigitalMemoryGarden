@@ -26,7 +26,7 @@ export const setupServer = () => {
   );
   app.use(pino({ transport: { target: 'pino-pretty' } }));
 
-  app.use('/', router);
+  app.use('/api', router);
 
   app.use(notFoundHandler);
 

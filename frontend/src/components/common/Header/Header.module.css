@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+
+  position: absolute;
+  top: 16px;
+  left: 72px;
+  z-index: 1;
+}
+.logo {
+  width: 36px;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.link {
+  font-weight: 500;
+  font-size: 16px;
+}
