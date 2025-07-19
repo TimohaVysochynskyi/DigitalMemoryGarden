@@ -124,7 +124,7 @@ export default function AdminGalleryPage() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue }) => (
+        {({ setFieldValue }) => (
           <Form className="mb-6">
             <div className="grid grid-cols-2 gap-4">
               <div>

@@ -80,7 +80,8 @@ export default function AdminArchivesPage() {
   ) => {
     try {
       // Видаляємо службові поля перед відправкою
-      const { _id, createdAt, updatedAt, ...payload } = values;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _id, ...payload } = values;
 
       if (editingArchive && editingArchive._id) {
         await updateArchive(editingArchive._id, payload);
