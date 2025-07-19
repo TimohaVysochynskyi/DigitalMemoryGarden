@@ -1,34 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 import apiClient from "../../services/apiClient";
+import { saveAdminSession } from "../../hooks/useAdminAuth";
+import { showErrorToast, showSuccessToast } from "../../components/admin/utils";
+import { MESSAGES, CSS_CLASSES } from "../../components/admin/constants";
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // Перевірка пароля через запит на бекенд
-    await apiClient
-      .post(
+    try {
+      await apiClient.post(
         "/admin/login",
         {},
         {
           headers: { "x-admin-password": password },
         }
-      )
-      .then(() => {
-        localStorage.setItem(
-          "adminPassword",
-          JSON.stringify({ password, timestamp: Date.now() })
-        );
-        toast.success("Успішний вхід!");
-        navigate("../admin");
-      })
-      .catch((error) => {
-        toast.error("Неправильний пароль! " + error);
-      });
+      );
+      
+      saveAdminSession(password);
+      showSuccessToast(MESSAGES.SUCCESS.LOGIN_SUCCESS);
+      navigate("../admin");
+    } catch (error) {
+      showErrorToast(MESSAGES.ERROR.INVALID_PASSWORD, error);
+    }
   };
 
   return (
@@ -42,11 +39,11 @@ export default function AdminLoginPage() {
           placeholder="Введіть пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded mb-4"
+          className={`w-full ${CSS_CLASSES.INPUT} mb-4`}
         />
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          className={`w-full ${CSS_CLASSES.BUTTON_PRIMARY}`}
         >
           Увійти
         </button>

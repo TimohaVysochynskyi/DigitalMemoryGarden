@@ -1,17 +1,8 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Outlet, Link } from "react-router-dom";
+import { useAdminAuth } from "../../hooks/useAdminAuth";
 
 export default function AdminHomePage() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const adminData = JSON.parse(localStorage.getItem("adminPassword") || "{}");
-    const oneDay = 24 * 60 * 60 * 1000;
-
-    if (!adminData.password || Date.now() - adminData.timestamp > oneDay) {
-      navigate("/admin/login");
-    }
-  }, [navigate]);
+  useAdminAuth();
 
   return (
     <div className="flex h-screen">

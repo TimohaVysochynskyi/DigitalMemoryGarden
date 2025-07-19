@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import toast from "react-hot-toast";
 
 import {
   getAllCategories,
@@ -9,15 +8,18 @@ import {
   updateCategory,
   deleteCategory,
 } from "../../services/category";
+import { FormField, ActionButtons, SubmitButton } from "../../components/admin/FormComponents";
+import { showSuccessToast, createErrorHandler } from "../../components/admin/utils";
+import { MESSAGES, CSS_CLASSES } from "../../components/admin/constants";
+
+interface Category {
+  _id: string;
+  name: string;
+}
 
 export default function AdminCategoryPage() {
-  const [categories, setCategories] = useState<{ _id: string; name: string }[]>(
-    []
-  );
-  const [editingCategory, setEditingCategory] = useState<{
-    _id: string;
-    name: string;
-  } | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     fetchCategories();
@@ -28,24 +30,24 @@ export default function AdminCategoryPage() {
       const data = await getAllCategories();
       setCategories(data);
     } catch (error) {
-      toast.error("Не вдалося завантажити категорії. " + error);
+      createErrorHandler(MESSAGES.ERROR.LOAD_CATEGORIES)(error);
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
       await deleteCategory(id);
-      toast.success("Категорію видалено.");
+      showSuccessToast(MESSAGES.SUCCESS.CATEGORY_DELETED);
       fetchCategories();
     } catch (error) {
-      toast.error("Не вдалося видалити категорію. " + error);
+      createErrorHandler(MESSAGES.ERROR.DELETE_CATEGORY)(error);
     }
   };
 
   const initialValues = { name: "" };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Назва категорії обов'язкова."),
+    name: Yup.string().required(MESSAGES.VALIDATION.REQUIRED_CATEGORY_NAME),
   });
 
   const handleSubmit = async (
@@ -55,22 +57,23 @@ export default function AdminCategoryPage() {
     try {
       if (editingCategory) {
         await updateCategory(editingCategory._id, values);
-        toast.success("Категорію оновлено.");
+        showSuccessToast(MESSAGES.SUCCESS.CATEGORY_UPDATED);
       } else {
         await addCategory(values);
-        toast.success("Категорію додано.");
+        showSuccessToast(MESSAGES.SUCCESS.CATEGORY_ADDED);
       }
       fetchCategories();
       resetForm();
       setEditingCategory(null);
     } catch (error) {
-      toast.error("Не вдалося зберегти категорію. " + error);
+      createErrorHandler(MESSAGES.ERROR.SAVE_CATEGORY)(error);
     }
   };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Керування категоріями</h1>
+      
       <Formik
         initialValues={editingCategory || initialValues}
         enableReinitialize
@@ -78,50 +81,23 @@ export default function AdminCategoryPage() {
         onSubmit={handleSubmit}
       >
         <Form className="mb-6">
-          <div>
-            <label htmlFor="name" className="block font-medium">
-              Назва категорії
-            </label>
-            <Field
-              type="text"
-              name="name"
-              className="p-2 border rounded w-full"
-            />
-            <ErrorMessage
-              name="name"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-          </div>
-          <button
-            type="submit"
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            {editingCategory ? "Оновити" : "Додати"}
-          </button>
+          <FormField
+            name="name"
+            label="Назва категорії"
+            type="text"
+          />
+          <SubmitButton isEditing={!!editingCategory} />
         </Form>
       </Formik>
+
       <div>
         {categories.map((category) => (
-          <div
-            key={category._id}
-            className="p-4 border rounded mb-4 flex justify-between items-center"
-          >
+          <div key={category._id} className={CSS_CLASSES.CARD}>
             <span>{category.name}</span>
-            <div>
-              <button
-                onClick={() => setEditingCategory(category)}
-                className="bg-yellow-500 text-white py-1 px-2 rounded mr-2 hover:bg-yellow-600"
-              >
-                Редагувати
-              </button>
-              <button
-                onClick={() => handleDelete(category._id)}
-                className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
-              >
-                Видалити
-              </button>
-            </div>
+            <ActionButtons
+              onEdit={() => setEditingCategory(category)}
+              onDelete={() => handleDelete(category._id)}
+            />
           </div>
         ))}
       </div>
