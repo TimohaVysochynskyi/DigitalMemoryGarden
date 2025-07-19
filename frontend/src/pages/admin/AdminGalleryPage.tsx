@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import toast from "react-hot-toast";
+
 import {
   getAllGalleryItems,
   getGalleryItemById,
@@ -11,12 +11,19 @@ import {
 } from "../../services/gallery";
 import { getAllCategories } from "../../services/category";
 import type { GalleryItemType } from "../../types/Gallery";
+import { FormField, ActionButtons, SubmitButton } from "../../components/admin/FormComponents";
+import { FileUploadField } from "../../components/admin/FileUploadField";
+import { showSuccessToast, createErrorHandler, formatDateForInput } from "../../components/admin/utils";
+import { MESSAGES, CSS_CLASSES } from "../../components/admin/constants";
+
+interface Category {
+  _id: string;
+  name: string;
+}
 
 export default function AdminGalleryPage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItemType[]>([]);
-  const [categories, setCategories] = useState<{ _id: string; name: string }[]>(
-    []
-  );
+  const [categories, setCategories] = useState<Category[]>([]);
   const [editingItem, setEditingItem] = useState<GalleryItemType | null>(null);
 
   useEffect(() => {
@@ -29,7 +36,7 @@ export default function AdminGalleryPage() {
       const data = await getAllGalleryItems();
       setGalleryItems(data);
     } catch (error) {
-      toast.error("Не вдалося завантажити галерею. " + error);
+      createErrorHandler(MESSAGES.ERROR.LOAD_GALLERY)(error);
     }
   };
 
@@ -38,7 +45,7 @@ export default function AdminGalleryPage() {
       const data = await getAllCategories();
       setCategories(data);
     } catch (error) {
-      toast.error("Не вдалося завантажити категорії. " + error);
+      createErrorHandler(MESSAGES.ERROR.LOAD_CATEGORIES)(error);
     }
   };
 
@@ -46,10 +53,10 @@ export default function AdminGalleryPage() {
     if (!id) return;
     try {
       await deleteGalleryItem(id);
-      toast.success("Елемент галереї видалено.");
+      showSuccessToast(MESSAGES.SUCCESS.GALLERY_ITEM_DELETED);
       fetchGalleryItems();
     } catch (error) {
-      toast.error("Не вдалося видалити елемент галереї. " + error);
+      createErrorHandler(MESSAGES.ERROR.DELETE_GALLERY_ITEM)(error);
     }
   };
 
@@ -60,18 +67,18 @@ export default function AdminGalleryPage() {
     media: [],
     category: "",
     location: "",
-    date: new Date().toISOString().split("T")[0], // Формат yyyy-MM-dd
+    date: formatDateForInput(new Date()),
     imported: false,
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required("Заголовок обов'язковий."),
-    description: Yup.string().required("Опис обов'язковий."),
+    title: Yup.string().required(MESSAGES.VALIDATION.REQUIRED_TITLE),
+    description: Yup.string().required(MESSAGES.VALIDATION.REQUIRED_DESCRIPTION),
     contentType: Yup.string()
-      .oneOf(["image", "video", "audio"], "Неправильний тип контенту.")
-      .required("Тип контенту обов'язковий."),
-    category: Yup.string().required("Категорія обов'язкова."),
-    location: Yup.string().required("Локація обов'язкова."),
+      .oneOf(["image", "video", "audio"], MESSAGES.VALIDATION.INVALID_CONTENT_TYPE)
+      .required(MESSAGES.VALIDATION.REQUIRED_CONTENT_TYPE),
+    category: Yup.string().required(MESSAGES.VALIDATION.REQUIRED_CATEGORY),
+    location: Yup.string().required(MESSAGES.VALIDATION.REQUIRED_LOCATION),
   });
 
   const handleSubmit = async (
@@ -90,16 +97,16 @@ export default function AdminGalleryPage() {
 
       if (editingItem && editingItem._id) {
         await updateGalleryItem(editingItem._id, formData);
-        toast.success("Елемент галереї оновлено.");
+        showSuccessToast(MESSAGES.SUCCESS.GALLERY_ITEM_UPDATED);
       } else {
         await addGalleryItem(formData);
-        toast.success("Елемент галереї додано.");
+        showSuccessToast(MESSAGES.SUCCESS.GALLERY_ITEM_ADDED);
       }
       fetchGalleryItems();
       resetForm();
       setEditingItem(null);
     } catch (error) {
-      toast.error("Не вдалося зберегти елемент галереї. " + error);
+      createErrorHandler(MESSAGES.ERROR.SAVE_GALLERY_ITEM)(error);
     }
   };
 
@@ -109,15 +116,14 @@ export default function AdminGalleryPage() {
       const item = await getGalleryItemById(id);
       setEditingItem(item);
     } catch (error) {
-      toast.error(
-        "Не вдалося завантажити елемент галереї для редагування. " + error
-      );
+      createErrorHandler(MESSAGES.ERROR.LOAD_FOR_EDIT_GALLERY)(error);
     }
   };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Керування галереєю</h1>
+      
       <Formik
         initialValues={editingItem || initialValues}
         enableReinitialize
@@ -126,168 +132,52 @@ export default function AdminGalleryPage() {
       >
         {({ setFieldValue }) => (
           <Form className="mb-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="title" className="block font-medium">
-                  Заголовок
-                </label>
-                <Field
-                  type="text"
-                  name="title"
-                  className="p-2 border rounded w-full"
-                />
-                <ErrorMessage
-                  name="title"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="description" className="block font-medium">
-                  Опис
-                </label>
-                <Field
-                  type="text"
-                  name="description"
-                  className="p-2 border rounded w-full"
-                />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="contentType" className="block font-medium">
-                  Тип контенту
-                </label>
-                <Field
-                  as="select"
-                  name="contentType"
-                  className="p-2 border rounded w-full"
-                >
-                  <option value="image">Зображення</option>
-                  <option value="video">Відео</option>
-                  <option value="audio">Аудіо</option>
-                </Field>
-                <ErrorMessage
-                  name="contentType"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="media" className="block font-medium">
-                  Медіафайли
-                </label>
-                <input
-                  type="file"
-                  multiple
-                  onChange={(e) =>
-                    setFieldValue(
-                      "media",
-                      Array.from(e.currentTarget.files || [])
-                    )
-                  }
-                  className="p-2 border rounded w-full"
-                />
-                <ErrorMessage
-                  name="media"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="category" className="block font-medium">
-                  Категорія
-                </label>
-                <Field
-                  as="select"
-                  name="category"
-                  className="p-2 border rounded w-full"
-                >
-                  <option value="">Оберіть категорію</option>
-                  {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage
-                  name="category"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="location" className="block font-medium">
-                  Локація
-                </label>
-                <Field
-                  type="text"
-                  name="location"
-                  className="p-2 border rounded w-full"
-                />
-                <ErrorMessage
-                  name="location"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              <div>
-                <label htmlFor="date" className="block font-medium">
-                  Дата
-                </label>
-                <Field
-                  type="date"
-                  name="date"
-                  className="p-2 border rounded w-full"
-                />
-              </div>
-              <div>
-                <label htmlFor="imported" className="block font-medium">
-                  Імпортовано
-                </label>
-                <Field
-                  type="checkbox"
-                  name="imported"
-                  className="p-2 border rounded"
-                />
-              </div>
+            <div className={CSS_CLASSES.FORM_GRID}>
+              <FormField name="title" label="Заголовок" />
+              <FormField name="description" label="Опис" />
+              
+              <FormField name="contentType" label="Тип контенту" as="select">
+                <option value="image">Зображення</option>
+                <option value="video">Відео</option>
+                <option value="audio">Аудіо</option>
+              </FormField>
+
+              <FileUploadField
+                name="media"
+                label="Медіафайли"
+                multiple
+                onChange={(files) => setFieldValue("media", files)}
+              />
+
+              <FormField name="category" label="Категорія" as="select">
+                <option value="">Оберіть категорію</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </FormField>
+
+              <FormField name="location" label="Локація" />
+              <FormField name="date" label="Дата" type="date" />
+              <FormField name="imported" label="Імпортовано" type="checkbox" />
             </div>
-            <button
-              type="submit"
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            >
-              {editingItem ? "Оновити" : "Додати"}
-            </button>
+            <SubmitButton isEditing={!!editingItem} />
           </Form>
         )}
       </Formik>
+
       <div>
         {galleryItems.map((item) => (
-          <div
-            key={item._id}
-            className="p-4 border rounded mb-4 flex justify-between items-center"
-          >
+          <div key={item._id} className={CSS_CLASSES.CARD}>
             <div>
               <h2 className="font-bold">{item.title}</h2>
               <p>{item.description}</p>
             </div>
-            <div>
-              <button
-                onClick={() => handleEdit(item._id)}
-                className="bg-yellow-500 text-white py-1 px-2 rounded mr-2 hover:bg-yellow-600"
-              >
-                Редагувати
-              </button>
-              <button
-                onClick={() => handleDelete(item._id)}
-                className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
-              >
-                Видалити
-              </button>
-            </div>
+            <ActionButtons
+              onEdit={() => handleEdit(item._id)}
+              onDelete={() => handleDelete(item._id)}
+            />
           </div>
         ))}
       </div>
