@@ -1,0 +1,6 @@
+.blueContainer {
+  width: 100%;
+  height: calc(100vw / 5.88);
+  background-image: url("/blue-mask-bg.png");
+  background-size: 100vw;
+}

@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 import Layout from "../Layout/Layout";
 
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const GardenPage = lazy(() => import("../../pages/GardenPage/GardenPage"));
 
 const AdminLoginPage = lazy(() => import("../../pages/admin/AdminLoginPage"));
 const AdminHomePage = lazy(() => import("../../pages/admin/AdminHomePage"));
@@ -27,6 +28,7 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/garden" element={<GardenPage />} />
             {/* Додай тут інші основні сторінки */}
           </Route>
 
