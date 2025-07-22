@@ -44,3 +44,64 @@
   margin-top: 60px;
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 1200px) {
+  .item {
+    width: max-content;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    padding: 40px;
+  }
+  .title {
+    font-size: 32px;
+  }
+  .itemTitle {
+    font-size: 48px;
+  }
+  .itemDescription {
+    font-size: 20px;
+  }
+  .buttonContainer {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+  .title {
+    font-size: 28px;
+  }
+  .itemTitle {
+    font-size: 36px;
+  }
+  .itemDescription {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .content {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .item {
+    width: 100%;
+  }
+  .itemTitle {
+    font-size: 64px;
+  }
+  .itemDescription {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    gap: 30px;
+  }
+}

@@ -7,6 +7,12 @@ import Layout from "../Layout/Layout";
 
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const GardenPage = lazy(() => import("../../pages/GardenPage/GardenPage"));
+const CandlesPage = lazy(() => import("../../pages/CandlesPage/CandlesPage"));
+const ArchivesPage = lazy(
+  () => import("../../pages/ArchivesPage/ArchivesPage")
+);
+const GalleryPage = lazy(() => import("../../pages/GalleryPage/GalleryPage"));
+const DonatePage = lazy(() => import("../../pages/DonatePage/DonatePage"));
 
 const AdminLoginPage = lazy(() => import("../../pages/admin/AdminLoginPage"));
 const AdminHomePage = lazy(() => import("../../pages/admin/AdminHomePage"));
@@ -29,6 +35,10 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/garden" element={<GardenPage />} />
+            <Route path="/candles" element={<CandlesPage />} />
+            <Route path="/archives" element={<ArchivesPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/donate" element={<DonatePage />} />
             {/* Додай тут інші основні сторінки */}
           </Route>
 

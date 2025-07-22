@@ -22,9 +22,13 @@ export default function Hero() {
           <div className={css.btnsWrapper}>
             <OutlineButton>Join our digital memory field</OutlineButton>
             <OutlineButton>
-              <img src="/btn-arrow-right.png" alt="Arrow Right" />
+              <img
+                src="/btn-arrow-right.png"
+                alt="Arrow Right"
+                className={css.arrowIcon}
+              />
             </OutlineButton>
-          </div>{" "}
+          </div>
         </div>
 
         <div className={css.flowerWrapper}>
@@ -45,6 +49,9 @@ export default function Hero() {
               className={css.flowerPlayImage}
             />
           </button>
+        </div>
+        <div className={css.btnMobile}>
+          <OutlineButton>Join our digital memory field</OutlineButton>
         </div>
       </div>
     </>

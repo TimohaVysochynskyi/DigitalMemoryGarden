@@ -1,0 +1,183 @@
+.container {
+  background-image: url("/blue-bg.png");
+  background-size: 100vw;
+  position: relative;
+  top: -1px;
+  padding: 40px 72px 40px 72px;
+
+  display: flex;
+  justify-content: space-between;
+  height: 700px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 400px;
+}
+.title,
+.titleMobile {
+  font-size: 32px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0%;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: rgba(207, 206, 201, 1);
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.itemIcon {
+  width: 33px;
+  height: 35px;
+  object-fit: contain;
+}
+.itemText {
+  font-size: 20px;
+  letter-spacing: 0%;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: rgba(207, 206, 201, 1);
+}
+.btnsWrapper {
+  display: flex;
+  width: max-content;
+  gap: 10px;
+  margin-top: 40px;
+}
+.mapImage {
+  height: 100%;
+  max-width: 70%;
+  object-fit: contain;
+}
+.titleMobile,
+.mapImageMobile {
+  display: none;
+}
+
+@media screen and (max-width: 1440px) {
+  .mapImage {
+    max-width: 65%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .title {
+    font-size: 28px;
+  }
+  .mapImage {
+    max-width: 60%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    padding: 40px;
+    height: auto;
+    align-items: center;
+  }
+  .content {
+    width: 300px;
+  }
+  .mapImage {
+    max-width: 65%;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .itemText {
+    font-size: 18px;
+  }
+  .itemIcon {
+    width: 28px;
+    height: 30px;
+  }
+
+  .btnsWrapper {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .listItem {
+    gap: 20px;
+  }
+  .itemText {
+    font-size: 16px;
+  }
+  .mapImage {
+    max-width: 60%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  .content {
+    width: 100%;
+    align-items: center;
+  }
+  .list,
+  .btnsWrapper {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .listItem {
+    gap: 30px;
+  }
+  .itemText {
+    font-size: 18px;
+  }
+  .itemIcon {
+    width: 30px;
+    height: 32px;
+  }
+  .title {
+    font-size: 20px;
+    text-align: center;
+  }
+  .title,
+  .mapImage {
+    display: none;
+  }
+  .titleMobile,
+  .mapImageMobile {
+    display: block;
+    width: 100%;
+  }
+  .titleMobile {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .titleMobile {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .listItem {
+    gap: 20px;
+  }
+  .itemText {
+    font-size: 16px;
+  }
+  .btnsWrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}

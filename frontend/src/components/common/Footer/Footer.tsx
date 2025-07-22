@@ -57,9 +57,11 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <Link to="/">
-          <img src="/logo-blue.png" alt="Logo" className={css.logo} />
-        </Link>
+        <div className={css.logoWrapper}>
+          <Link to="/">
+            <img src="/logo-blue.png" alt="Logo" className={css.logo} />
+          </Link>
+        </div>
         <div className={css.rightsWrapper}>
           <p className={css.rightsText}>© THE.DIGITAL.MEMORY.GARDEN</p>
           <p className={css.rightsText}>All rights reserved</p>
