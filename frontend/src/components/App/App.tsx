@@ -16,14 +16,12 @@ const DonatePage = lazy(() => import("../../pages/DonatePage/DonatePage"));
 
 const AdminLoginPage = lazy(() => import("../../pages/admin/AdminLoginPage"));
 const AdminHomePage = lazy(() => import("../../pages/admin/AdminHomePage"));
-const AdminArchivesPage = lazy(
-  () => import("../../pages/admin/AdminArchivesPage")
-);
-const AdminGalleryPage = lazy(
-  () => import("../../pages/admin/AdminGalleryPage")
-);
+
 const AdminCategoryPage = lazy(
   () => import("../../pages/admin/AdminCategoryPage")
+);
+const AdminMapEventPage = lazy(
+  () => import("../../pages/admin/AdminMapEventPage")
 );
 
 export default function App() {
@@ -45,9 +43,8 @@ export default function App() {
           {/* Admin panel */}
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/admin" element={<AdminHomePage />}>
-            <Route path="archives" element={<AdminArchivesPage />} />
-            <Route path="gallery" element={<AdminGalleryPage />} />
             <Route path="categories" element={<AdminCategoryPage />} />
+            <Route path="events" element={<AdminMapEventPage />} />
           </Route>
         </Routes>
       </Suspense>

@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
           headers: { "x-admin-password": password },
         }
       );
-      
+
       saveAdminSession(password);
       showSuccessToast(MESSAGES.SUCCESS.LOGIN_SUCCESS);
       navigate("../admin");
@@ -29,8 +29,8 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-80">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 box-border px-0 py-0">
+      <div className="bg-white p-6 rounded shadow-md w-80 box-border">
         <h1 className="text-xl font-bold mb-4 text-center">
           Вхід для адміністратора
         </h1>
@@ -39,11 +39,11 @@ export default function AdminLoginPage() {
           placeholder="Введіть пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={`w-full ${CSS_CLASSES.INPUT} mb-4`}
+          className={`w-full ${CSS_CLASSES.INPUT} mb-4 box-border`}
         />
         <button
           onClick={handleLogin}
-          className={`w-full ${CSS_CLASSES.BUTTON_PRIMARY}`}
+          className={`w-full ${CSS_CLASSES.BUTTON_PRIMARY} box-border`}
         >
           Увійти
         </button>

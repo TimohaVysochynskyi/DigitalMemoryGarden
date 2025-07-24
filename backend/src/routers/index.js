@@ -1,19 +1,17 @@
 import { Router } from 'express';
 import { env } from '../utils/env.js';
 
-import archivesRouter from './archives.js';
 import galleryRouter from './gallery.js';
 import categoryRouter from './category.js';
-
-import flowersRouter from './flower.js';
+import storiesRouter from './story.js';
+import mapEventRouter from './mapEvent.js';
 
 const router = Router();
 
-router.use('/archives', archivesRouter);
 router.use('/gallery', galleryRouter);
 router.use('/categories', categoryRouter);
-
-router.use('/flowers', flowersRouter);
+router.use('/stories', storiesRouter);
+router.use('/map-events', mapEventRouter);
 
 // Ендпоінт для логіну адміністратора
 router.post('/admin/login', (req, res, next) => {

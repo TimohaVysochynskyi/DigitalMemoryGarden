@@ -5,44 +5,44 @@ const db = mongoose.connection.useDb(env('MONGODB_DB'));
 
 const storySchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
+    // Common fields
+    title: { type: String, required: true, trim: true },
+    comment: { type: String, trim: true }, // main text
+    name: { type: String, trim: true },
+    age: { type: Number, min: 0 },
+    location: { type: String, trim: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
       required: true,
     },
-    tags: {
-      type: [String],
+    createdAt: { type: Date, default: Date.now, immutable: true },
+
+    // Media (optional, only for flower stories)
+    media: {
+      photo: { type: String },
+      audio: { type: String },
+      video: { type: String },
     },
-    name: {
+
+    // Unique flowerId (optional, only for flower stories)
+    flowerId: {
       type: String,
+      unique: true,
+      sparse: true,
+      match: /^\d{8}$/,
     },
-    age: {
-      type: Number,
-    },
-    city: {
+
+    // Source: 'flower' | 'archive'
+    source: {
       type: String,
-    },
-    date: {
-      type: Date,
+      enum: ['flower', 'archive'],
       required: true,
-    },
-    imported: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
   },
   {
-    timestamps: true,
     versionKey: false,
+    timestamps: true,
   },
 );
 

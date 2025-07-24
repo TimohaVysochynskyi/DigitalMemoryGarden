@@ -33,8 +33,7 @@
 .row .input:last-child {
   width: min-content;
 }
-.input,
-.mediaBtn {
+.input {
   padding: 16px 40px;
   border: 2px solid rgba(15, 26, 44, 1);
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
@@ -53,21 +52,6 @@
 .input:focus {
   outline: none;
   border-color: rgba(15, 26, 44, 1);
-}
-.mediaRow {
-  display: flex;
-  gap: 10px;
-}
-.mediaBtn {
-  color: rgba(80, 102, 123, 1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.mediaIcon {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
 }
 .checkboxRow {
   margin-top: 12px;

@@ -1,41 +1,52 @@
-import OutlineButton from "../../common/OutlineButton/OutlineButton";
+import SelectionSlider from "../../common/SelectionSlider/SelectionSlider";
 import css from "./FlowerSelection.module.css";
 
-export default function FlowerSelection() {
-  return (
-    <>
-      <div className={css.container}>
-        <div className={css.titleWrapper}>
-          <h2 className={css.title}>Childhood of war</h2>
-          <p className={css.subtitle}>
-            Stories from or about children growing up during wartime
-          </p>
-        </div>
+type Category = {
+  _id: string;
+  name: string;
+  description?: string;
+  flowerImage: string;
+};
 
-        <div className={css.sliderWrapper}>
-          <img
-            src="/garden-dark-flower.png"
-            alt="Garden Dark Flower"
-            className={css.flower}
-          />
-          <div className={css.btnsWrapper}>
-            <OutlineButton>
-              <img
-                src="/small-left-arrow.png"
-                alt="Left arrow"
-                className={css.arrow}
-              />
-            </OutlineButton>
-            <OutlineButton>
-              <img
-                src="/small-right-arrow.png"
-                alt="Right arrow"
-                className={css.arrow}
-              />
-            </OutlineButton>
-          </div>
+type Props = {
+  categories?: Category[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+};
+
+export default function FlowerSelection({
+  categories = [],
+  selectedId,
+  onSelect,
+}: Props) {
+  const current =
+    categories.length && selectedId
+      ? categories.find((cat) => cat._id === selectedId)
+      : undefined;
+
+  return (
+    <div className={css.container}>
+      {current && (current.name || current.description) && (
+        <div className={css.titleWrapper}>
+          {current.name && <h2 className={css.title}>{current.name}</h2>}
+          {current.description && (
+            <p className={css.subtitle}>{current.description}</p>
+          )}
         </div>
+      )}
+
+      <div className={css.sliderWrapper}>
+        <SelectionSlider
+          items={categories.map((cat) => ({
+            id: cat._id,
+            name: cat.name,
+            image: cat.flowerImage,
+            description: cat.description,
+          }))}
+          selectedId={selectedId}
+          onSelect={onSelect}
+        />
       </div>
-    </>
+    </div>
   );
 }

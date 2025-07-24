@@ -2,6 +2,12 @@ import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import css from "./Hero.module.css";
 
 export default function Hero() {
+  const handleArrowClick = () => {
+    window.scrollTo({
+      top: innerHeight * 0.85,
+      behavior: "smooth",
+    });
+  };
   return (
     <>
       <div className={css.hero}>
@@ -20,8 +26,10 @@ export default function Hero() {
             carry our stories through generations. Your memory matters!
           </p>
           <div className={css.btnsWrapper}>
-            <OutlineButton>Join our digital memory field</OutlineButton>
-            <OutlineButton>
+            <OutlineButton to="/garden">
+              Join our digital memory field
+            </OutlineButton>
+            <OutlineButton onClick={handleArrowClick}>
               <img
                 src="/btn-arrow-right.png"
                 alt="Arrow Right"

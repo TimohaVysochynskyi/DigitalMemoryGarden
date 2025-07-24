@@ -30,6 +30,7 @@ export const MESSAGES = {
     LOAD_FOR_EDIT_ARCHIVE: 'Не вдалося завантажити архів для редагування.',
     LOAD_FOR_EDIT_GALLERY: 'Не вдалося завантажити елемент галереї для редагування.',
     INVALID_PASSWORD: 'Неправильний пароль!',
+    LOAD_EVENTS: 'Не вдалося завантажити події.',
   },
   VALIDATION: {
     REQUIRED_TITLE: "Заголовок обов'язковий.",

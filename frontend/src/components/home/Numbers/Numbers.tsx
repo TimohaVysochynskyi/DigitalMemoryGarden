@@ -23,7 +23,9 @@ export default function Numbers() {
         </div>
 
         <div className={css.buttonContainer}>
-          <OutlineButton>Join our digital memory field</OutlineButton>
+          <OutlineButton to="/garden">
+            Join our digital memory field
+          </OutlineButton>
         </div>
       </div>
     </>

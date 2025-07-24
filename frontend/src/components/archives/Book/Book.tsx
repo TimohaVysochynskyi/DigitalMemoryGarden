@@ -1,95 +1,97 @@
 import clsx from "clsx";
 import css from "./Book.module.css";
+import type { Story } from "../../../types/story";
+import type { Category } from "../../../types/category";
 
-export default function Book() {
+type BookProps = {
+  stories: Story[];
+  totalCount: number;
+  page: number;
+  onPageChange: (page: number) => void;
+  categories: Category[];
+  selectedCategoryId: string;
+  isSearching: boolean;
+};
+
+export default function Book({
+  stories,
+  totalCount,
+  page,
+  onPageChange,
+  categories,
+  selectedCategoryId,
+  isSearching,
+}: BookProps) {
+  const currentCategory = categories.find((c) => c._id === selectedCategoryId);
+  const maxPage = Math.max(1, Math.ceil(totalCount / 4));
+
   return (
-    <>
-      <div className={css.container}>
-        <h2 className={css.title}>
-          Archive <span>Childhood of War</span>
-        </h2>
-        <div className={css.sliderWrapper}>
-          <button type="button" className={clsx(css.arrowBtn, css.arrowLeft)}>
-            <img
-              src="/small-left-arrow.png"
-              alt="Left arrow"
-              className={css.arrowIcon}
-            />
-          </button>
-          <div className={css.bookBg}>
-            <div className={css.bookContent}>
-              <div className={css.middleLine}></div>
-              <div className={css.record}>
-                <div className={css.recordTop}>
-                  <h3 className={css.recordTitle}>Lorem ipsum.</h3>
-                  <div className={css.recordEmpty} />
+    <div className={css.container}>
+      <h2 className={css.title}>
+        Archive
+        {currentCategory && (
+          <span className={css.categoryName}> {currentCategory.name}</span>
+        )}
+      </h2>
+      <div className={css.sliderWrapper}>
+        <button
+          type="button"
+          className={clsx(css.arrowBtn, css.arrowLeft)}
+          onClick={() => onPageChange(page - 1)}
+          disabled={page <= 1 || isSearching}
+        >
+          <img
+            src="/small-left-arrow.png"
+            alt="Left arrow"
+            className={css.arrowIcon}
+          />
+        </button>
+        <div className={css.bookBg}>
+          <div className={css.bookContent}>
+            <div className={css.middleLine}></div>
+            {Array.from({ length: 4 }).map((_, i) => {
+              const story = stories[i];
+              return (
+                <div
+                  key={story ? story._id : `empty-${i}`}
+                  className={css.record}
+                >
+                  <div className={css.recordTop}>
+                    <h3 className={css.recordTitle}>
+                      {story ? story.title : ""}
+                    </h3>
+                    <span className={css.recordTitle}>
+                      {story
+                        ? `${story.name} - ${story.age} - ${story.location}`
+                        : ""}
+                    </span>
+                    <span className={css.recordTitle}>
+                      {story
+                        ? new Date(story.createdAt).toLocaleDateString()
+                        : ""}
+                    </span>
+                  </div>
+                  <p className={css.recordText}>
+                    {story ? story.comment || "" : ""}
+                  </p>
                 </div>
-                <p className={css.recordText}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis.Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                  Pellentesque sit amet sapien fringilla, mattis ligula
-                  consectetur, ultrices mauris. Maecenas vitae mattis.
-                </p>
-              </div>
-              <div className={css.record}>
-                <div className={css.recordTop}>
-                  <h3 className={css.recordTitle}>Lorem ipsum.</h3>
-                  <div className={css.recordEmpty} />
-                </div>
-                <p className={css.recordText}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis.Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                  Pellentesque sit amet sapien fringilla, mattis ligula
-                  consectetur, ultrices mauris. Maecenas vitae mattis.
-                </p>
-              </div>
-              <div className={css.record}>
-                <div className={css.recordTop}>
-                  <h3 className={css.recordTitle}>Lorem ipsum.</h3>
-                  <div className={css.recordEmpty} />
-                </div>
-                <p className={css.recordText}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis.Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                  Pellentesque sit amet sapien fringilla, mattis ligula
-                  consectetur, ultrices mauris. Maecenas vitae mattis.
-                </p>
-              </div>
-              <div className={css.record}>
-                <div className={css.recordTop}>
-                  <h3 className={css.recordTitle}>Lorem ipsum.</h3>
-                  <div className={css.recordEmpty} />
-                </div>
-                <p className={css.recordText}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis.Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                  Pellentesque sit amet sapien fringilla, mattis ligula
-                  consectetur, ultrices mauris. Maecenas vitae mattis.
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
-          <button type="button" className={clsx(css.arrowBtn, css.arrowRight)}>
-            <img
-              src="/small-right-arrow.png"
-              alt="Right arrow"
-              className={css.arrowIcon}
-            />
-          </button>
         </div>
+        <button
+          type="button"
+          className={clsx(css.arrowBtn, css.arrowRight)}
+          onClick={() => onPageChange(page + 1)}
+          disabled={page >= maxPage || isSearching}
+        >
+          <img
+            src="/small-right-arrow.png"
+            alt="Right arrow"
+            className={css.arrowIcon}
+          />
+        </button>
       </div>
-    </>
+    </div>
   );
 }

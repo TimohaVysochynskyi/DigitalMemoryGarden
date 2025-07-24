@@ -43,6 +43,7 @@
 .book {
   height: 100%;
   width: 125px;
+  min-width: 125px;
   background-color: rgba(80, 102, 123, 1);
   box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
   border-radius: 4px 4px 0 0;
@@ -79,6 +80,7 @@
 }
 .book:nth-child(6) {
   height: 98%;
+  background-color: rgba(188, 198, 210, 1);
 }
 .book:nth-child(7) {
   height: 95%;
@@ -100,4 +102,132 @@
   text-transform: uppercase;
   line-height: 100%;
   letter-spacing: 0%;
+}
+
+@media screen and (max-width: 1650px) {
+  .booksWrapper {
+    position: relative;
+    right: 280px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .row {
+    height: 420px;
+  }
+  .book {
+    min-width: 100px;
+    width: 100px;
+  }
+  .book:nth-child(1) {
+    left: 35px;
+  }
+  .booksWrapper {
+    right: 200px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .row {
+    height: 320px;
+  }
+  .book {
+    min-width: 90px;
+    width: 90px;
+  }
+  .book:nth-child(1) {
+    left: 25px;
+  }
+  .booksWrapper {
+    right: 270px;
+  }
+  .bookTitle {
+    font-size: 20px;
+  }
+  .btnsWrapper {
+    width: auto;
+    padding-right: 40px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .row {
+    height: 300px;
+  }
+  .book {
+    min-width: 75px;
+    width: 75px;
+  }
+  .booksWrapper {
+    right: 225px;
+  }
+  .bookTitle {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    padding: 20px;
+  }
+  .blueSection {
+    height: 60px;
+  }
+  .row {
+    height: auto;
+    flex-direction: column-reverse;
+    position: relative;
+    gap: 40px;
+  }
+  .booksWrapper {
+    flex-direction: column;
+    align-items: center;
+    right: 0;
+    width: 100%;
+  }
+  .book {
+    width: 75% !important;
+    height: 75px !important;
+  }
+  .book:nth-child(1) {
+    left: 15px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .book:nth-child(2) {
+    left: -5px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .book:nth-child(3) {
+    left: 5px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .book:nth-child(4) {
+    left: -10px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .book:nth-child(5) {
+    left: 20px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .book:nth-child(6) {
+    left: 5px;
+    top: 0;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  .bookTitle {
+    transform: rotate(0deg);
+    writing-mode: horizontal-tb;
+    font-size: 22px;
+  }
 }

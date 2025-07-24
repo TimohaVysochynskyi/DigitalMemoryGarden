@@ -9,6 +9,22 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      default: '',
+    },
+    flowerImage: {
+      type: String, // шлях до картинки
+      default: '',
+    },
+    flowerAnimation: {
+      type: String, // шлях до відео
+      default: '',
+    },
+    miniatureImage: {
+      type: String, // шлях до мініатюри
+      default: '',
+    },
   },
   {
     timestamps: true,

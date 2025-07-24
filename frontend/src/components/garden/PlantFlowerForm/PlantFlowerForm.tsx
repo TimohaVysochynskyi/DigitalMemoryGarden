@@ -21,9 +21,35 @@ const validationSchema = Yup.object({
   video: Yup.mixed().nullable(),
   consent: Yup.boolean().oneOf([true], "Consent is required"),
   sensitive: Yup.boolean(),
+  category: Yup.string().required("Category is required"),
 });
 
-export default function PlantFlowerForm() {
+type PlantFlowerFormValues = {
+  name: string;
+  age: string;
+  location: string;
+  title: string;
+  comment: string;
+  audio: File | null;
+  photo: File | null;
+  video: File | null;
+  consent: boolean;
+  sensitive: boolean;
+  category: string;
+};
+
+type Props = {
+  selectedCategoryId: string;
+  onSubmit: (
+    values: PlantFlowerFormValues,
+    files: { audio: File | null; photo: File | null; video: File | null }
+  ) => void | Promise<void>;
+};
+
+export default function PlantFlowerForm({
+  selectedCategoryId,
+  onSubmit,
+}: Props) {
   return (
     <>
       <div className={css.container}>
@@ -39,11 +65,16 @@ export default function PlantFlowerForm() {
             video: null,
             consent: false,
             sensitive: false,
+            category: selectedCategoryId,
           }}
+          enableReinitialize
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            // handle submit
-            console.log(values);
+            onSubmit(values, {
+              audio: values.audio,
+              photo: values.photo,
+              video: values.video,
+            });
           }}
         >
           {({ setFieldValue }) => (
@@ -53,7 +84,7 @@ export default function PlantFlowerForm() {
                 <div className={css.row}>
                   <Field
                     name="name"
-                    placeholder="Name and Surname"
+                    placeholder="Name or Callsign"
                     className={css.input}
                   />
                   <Field
@@ -61,6 +92,9 @@ export default function PlantFlowerForm() {
                     type="number"
                     placeholder="Age"
                     className={css.input}
+                    value={undefined}
+                    // Let Formik handle value, but ensure never null
+                    // If you want to control, use render prop or custom input
                   />
                 </div>
                 <ErrorMessage
@@ -196,6 +230,8 @@ export default function PlantFlowerForm() {
                   This message may contain sensitive content
                 </label>
               </div>
+
+              <Field type="hidden" name="category" value={selectedCategoryId} />
 
               <div className={css.footerRow}>
                 <div className={css.flowerId}>#22334455</div>
