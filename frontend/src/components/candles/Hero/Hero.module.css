@@ -10,3 +10,66 @@
   display: flex;
   justify-content: space-between;
 }
+
+.candlesWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 8%;
+  height: 65%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 72px;
+  overflow: hidden;
+}
+.leftCandles,
+.rightCandles {
+  display: flex;
+  gap: 5%;
+  align-items: end;
+  height: 100%;
+}
+.commonCandle {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+.commonCandleImage {
+  object-fit: contain;
+}
+.mainCandleWrapper {
+  height: 100%;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.mainCandleBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.candleButton {
+  padding: 25px;
+  width: 110px;
+  height: 110px;
+  border: 8px solid rgba(188, 198, 210, 1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.candleFire {
+  position: relative;
+  top: 10px;
+  width: 80%;
+  width: 75px;
+}

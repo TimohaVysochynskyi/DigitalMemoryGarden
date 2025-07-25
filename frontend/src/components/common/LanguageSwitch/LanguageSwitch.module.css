@@ -14,3 +14,11 @@
   position: relative;
   top: 1px;
 }
+.currentLanguageLight {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  top: 1px;
+  color: rgba(207, 206, 201, 1);
+}

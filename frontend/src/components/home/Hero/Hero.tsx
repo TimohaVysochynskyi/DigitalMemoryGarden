@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import css from "./Hero.module.css";
 
@@ -50,13 +51,13 @@ export default function Hero() {
             alt="Flower Text"
             className={css.flowerText}
           />
-          <button className={css.flowerPlayButton}>
+          <Link to="/about" className={css.flowerPlayButton}>
             <img
               src="/hero-flower-play.png"
               alt="Flower Play Button"
               className={css.flowerPlayImage}
             />
-          </button>
+          </Link>
         </div>
         <div className={css.btnMobile}>
           <OutlineButton>Join our digital memory field</OutlineButton>

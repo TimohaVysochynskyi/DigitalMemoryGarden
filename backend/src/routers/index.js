@@ -13,7 +13,6 @@ router.use('/categories', categoryRouter);
 router.use('/stories', storiesRouter);
 router.use('/map-events', mapEventRouter);
 
-// Ендпоінт для логіну адміністратора
 router.post('/admin/login', (req, res, next) => {
   const adminPassword = env('ADMIN_PASSWORD');
   const providedPassword = req.headers['x-admin-password'];

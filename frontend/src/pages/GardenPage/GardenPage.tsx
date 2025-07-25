@@ -6,6 +6,7 @@ import MapWrapper from "../../components/garden/MapWrapper/MapWrapper";
 import FlowerDetails from "../../components/garden/FlowerDetails/FlowerDetails";
 import FlowerSelection from "../../components/garden/FlowerSelection/FlowerSelection";
 import PlantFlowerForm from "../../components/garden/PlantFlowerForm/PlantFlowerForm";
+import FadeInOnScroll from "../../components/common/FadeInOnScroll/FadeInOnScroll";
 import { getAllCategories } from "../../services/category";
 import type { Category } from "../../types/category";
 import {
@@ -129,12 +130,16 @@ export default function GardenPage() {
 
   return (
     <>
-      <Hero
-        onSearch={() => setSearchBarVisible(true)}
-        onDetails={() => setFlowerDetailsVisible(true)}
-        flower={randomFlower}
-      />
-      <MapWrapper categories={categories} />
+      <FadeInOnScroll>
+        <Hero
+          onSearch={() => setSearchBarVisible(true)}
+          onDetails={() => setFlowerDetailsVisible(true)}
+          flower={randomFlower}
+        />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <MapWrapper categories={categories} />
+      </FadeInOnScroll>
       <div className={css.plantWrapper} id="plant-new-memory-flower">
         <FlowerSelection
           categories={categories}

@@ -225,6 +225,7 @@
     transform: rotate(0deg);
     height: 80px;
   }
+
   .bookTitle {
     transform: rotate(0deg);
     writing-mode: horizontal-tb;

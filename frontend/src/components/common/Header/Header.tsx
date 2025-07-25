@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 export default function Header() {
-  const currentRoute = useLocation().pathname;
+  const currentRoute = useLocation().pathname.replace(/\/$/, ""); // Remove trailing slash for consistency
   const [menuOpen, setMenuOpen] = useState(false);
 
   const linkClass = ({ isActive }: { isActive: boolean }) => {

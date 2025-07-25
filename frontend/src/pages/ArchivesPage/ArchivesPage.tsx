@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AddStory from "../../components/archives/AddStory/AddStory";
 import Book from "../../components/archives/Book/Book";
 import Hero from "../../components/archives/Hero/Hero";
+import FadeInOnScroll from "../../components/common/FadeInOnScroll/FadeInOnScroll";
 import PopupOverlay from "../../components/common/PopupOverlay/PopupOverlay";
 import SearchBar from "../../components/common/SearchBar/SearchBar";
 import {
@@ -106,32 +107,38 @@ export default function ArchivesPage() {
 
   return (
     <>
-      <Hero
-        onSearch={() => setSearchBarVisible(true)}
-        selectedCategoryId={selectedCategoryId}
-        onCategoryChange={handleCategoryChange}
-      />
-      <Book
-        stories={isSearching ? searchStoriesArr : stories}
-        totalCount={isSearching ? searchStoriesArr.length : totalCount}
-        page={page}
-        onPageChange={handlePageChange}
-        categories={categories}
-        selectedCategoryId={selectedCategoryId}
-        isSearching={isSearching}
-      />
-      <AddStory
-        categories={categories}
-        onStoryAdded={() => {
-          if (selectedCategoryId && !isSearching) {
-            getStoriesByCategory(selectedCategoryId, 1, 4).then((res) => {
-              setStories(res.stories);
-              setTotalCount(res.totalCount);
-              setPage(1);
-            });
-          }
-        }}
-      />
+      <FadeInOnScroll>
+        <Hero
+          onSearch={() => setSearchBarVisible(true)}
+          selectedCategoryId={selectedCategoryId}
+          onCategoryChange={handleCategoryChange}
+        />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <Book
+          stories={isSearching ? searchStoriesArr : stories}
+          totalCount={isSearching ? searchStoriesArr.length : totalCount}
+          page={page}
+          onPageChange={handlePageChange}
+          categories={categories}
+          selectedCategoryId={selectedCategoryId}
+          isSearching={isSearching}
+        />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <AddStory
+          categories={categories}
+          onStoryAdded={() => {
+            if (selectedCategoryId && !isSearching) {
+              getStoriesByCategory(selectedCategoryId, 1, 4).then((res) => {
+                setStories(res.stories);
+                setTotalCount(res.totalCount);
+                setPage(1);
+              });
+            }
+          }}
+        />
+      </FadeInOnScroll>
       {searchBarVisible && (
         <PopupOverlay onClose={() => setSearchBarVisible(false)}>
           <SearchBar

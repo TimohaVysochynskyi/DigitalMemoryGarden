@@ -14,15 +14,15 @@ const categorySchema = new mongoose.Schema(
       default: '',
     },
     flowerImage: {
-      type: String, // шлях до картинки
+      type: String,
       default: '',
     },
     flowerAnimation: {
-      type: String, // шлях до відео
+      type: String,
       default: '',
     },
     miniatureImage: {
-      type: String, // шлях до мініатюри
+      type: String,
       default: '',
     },
   },

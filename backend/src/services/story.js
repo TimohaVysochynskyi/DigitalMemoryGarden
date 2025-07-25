@@ -13,17 +13,14 @@ const generateFlowerId = async () => {
 };
 
 export const createStory = async (payload) => {
-  // Validate required fields
   if (!payload.title || !payload.category || !payload.source) {
     throw new Error('Missing required fields');
   }
-  // Check if category exists
   const categoryExists = await CategoriesCollection.exists({
     _id: payload.category,
   });
   if (!categoryExists) throw new Error('Category not found');
 
-  // Generate flowerId only for flower stories
   let flowerId;
   if (payload.source === 'flower') {
     flowerId = await generateFlowerId();

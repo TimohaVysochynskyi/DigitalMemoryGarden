@@ -13,10 +13,10 @@ const ArchivesPage = lazy(
 );
 const GalleryPage = lazy(() => import("../../pages/GalleryPage/GalleryPage"));
 const DonatePage = lazy(() => import("../../pages/DonatePage/DonatePage"));
+const AboutPage = lazy(() => import("../../pages/AboutPage/AboutPage"));
 
 const AdminLoginPage = lazy(() => import("../../pages/admin/AdminLoginPage"));
 const AdminHomePage = lazy(() => import("../../pages/admin/AdminHomePage"));
-
 const AdminCategoryPage = lazy(
   () => import("../../pages/admin/AdminCategoryPage")
 );
@@ -37,7 +37,7 @@ export default function App() {
             <Route path="/archives" element={<ArchivesPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/donate" element={<DonatePage />} />
-            {/* Додай тут інші основні сторінки */}
+            <Route path="/about" element={<AboutPage />} />
           </Route>
 
           {/* Admin panel */}

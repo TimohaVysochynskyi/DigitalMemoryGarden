@@ -9,9 +9,8 @@ export default function Map() {
             Ukraine will always remember those united by war
           </h3>
           <p className={css.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
-            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-            fringilla, mattis ligula consectetur, ultrices mauri...
+            This living map blossoms with digital flowers - each one marking a
+            story, a voice, a memory rooted across Ukraine
           </p>
         </div>
         <img
