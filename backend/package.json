@@ -1,7 +1,7 @@
 {
   "name": "digital-memory-garden-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project is developed as part of work in the University of Edinburgh",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lana Sokoliuk. The University of Edinburgh, Edinburgh, UK",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.10",
