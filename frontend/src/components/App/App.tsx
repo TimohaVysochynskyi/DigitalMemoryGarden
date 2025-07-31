@@ -23,6 +23,9 @@ const AdminCategoryPage = lazy(
 const AdminMapEventPage = lazy(
   () => import("../../pages/admin/AdminMapEventPage")
 );
+const AdminCandleTypePage = lazy(
+  () => import("../../pages/admin/AdminCandleTypePage")
+);
 
 export default function App() {
   return (
@@ -45,6 +48,7 @@ export default function App() {
           <Route path="/admin" element={<AdminHomePage />}>
             <Route path="categories" element={<AdminCategoryPage />} />
             <Route path="events" element={<AdminMapEventPage />} />
+            <Route path="candle-types" element={<AdminCandleTypePage />} />
           </Route>
         </Routes>
       </Suspense>

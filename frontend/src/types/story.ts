@@ -1,5 +1,6 @@
 // types/story.ts
 import type { Category } from "./category";
+import type { CandleType } from "./candleType";
 
 export type StoryMedia = {
     photo?: string;
@@ -9,26 +10,32 @@ export type StoryMedia = {
 
 export type Story = {
     _id: string;
-    title: string;
+    title?: string;
     comment?: string;
     name?: string;
     age?: number;
     location?: string;
+    dateOfBirth?: string;
+    dateOfDeath?: string;
     category: string | Category;
+    candleType?: string | CandleType;
     createdAt: string;
     media?: StoryMedia;
-    flowerId?: string;
-    source: "flower" | "archive";
+    storyId?: string;
+    source: "flower" | "candle" | "archive";
 };
 
 export type CreateStoryPayload = {
-    title: string;
+    title?: string;
     comment?: string;
     name?: string;
     age?: number | string | null;
     location?: string;
+    dateOfBirth?: string;
+    dateOfDeath?: string;
     category: string;
-    source: "flower" | "archive";
+    candleType?: string;
+    source: "flower" | "candle" | "archive";
     photo?: File;
     audio?: File;
     video?: File;

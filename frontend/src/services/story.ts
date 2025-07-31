@@ -13,14 +13,14 @@ export const getStoriesContextByCategory = async (categoryId: string, storyId: s
     });
     return response.data;
 };
-export const getNextFlowerStory = async (current: { id?: string; flowerId?: string }): Promise<Story | null> => {
+export const getNextFlowerStory = async (current: { id?: string; storyId?: string }): Promise<Story | null> => {
     const response = await apiClient.post("/stories/next", current, {
         headers: { "Content-Type": "application/json" },
     });
     return response.data;
 };
 
-export const getPrevFlowerStory = async (current: { id?: string; flowerId?: string }): Promise<Story | null> => {
+export const getPrevFlowerStory = async (current: { id?: string; storyId?: string }): Promise<Story | null> => {
     const response = await apiClient.post("/stories/prev", current, {
         headers: { "Content-Type": "application/json" },
     });
@@ -40,30 +40,38 @@ export const getStoryById = async (id: string): Promise<Story> => {
     return response.data;
 };
 
-export const getStoryByFlowerId = async (flowerId: string): Promise<Story> => {
-    const response = await apiClient.get(`/stories/flower/${flowerId}`);
+export const getStoryByStoryId = async (storyId: string): Promise<Story> => {
+    const response = await apiClient.get(`/stories/story/${storyId}`);
     return response.data;
 };
 
 export const addStory = async (data: {
-    title: string;
+    storyId: string;
+    title?: string;
     comment?: string;
     name?: string;
     age?: number | string;
     location?: string;
+    dateOfBirth?: string;
+    dateOfDeath?: string;
     category: string;
-    source: "flower" | "archive";
+    candleType?: string;
+    source: "flower" | "candle" | "archive";
     photo?: File;
     audio?: File;
     video?: File;
 }): Promise<Story> => {
     const formData = new FormData();
-    formData.append("title", data.title);
+    formData.append("storyId", data.storyId);
+    if (data.title) formData.append("title", data.title);
     if (data.comment) formData.append("comment", data.comment);
     if (data.name) formData.append("name", data.name);
     if (data.age !== undefined && data.age !== null) formData.append("age", String(data.age));
     if (data.location) formData.append("location", data.location);
+    if (data.dateOfBirth) formData.append("dateOfBirth", data.dateOfBirth);
+    if (data.dateOfDeath) formData.append("dateOfDeath", data.dateOfDeath);
     formData.append("category", data.category);
+    if (data.candleType) formData.append("candleType", data.candleType);
     formData.append("source", data.source);
     if (data.photo) formData.append("photo", data.photo);
     if (data.audio) formData.append("audio", data.audio);
@@ -77,7 +85,7 @@ export const addStory = async (data: {
 
 export const updateStory = async (
     id: string,
-    data: Partial<Omit<Story, "_id" | "createdAt" | "media" | "flowerId">> & {
+    data: Partial<Omit<Story, "_id" | "createdAt" | "media" | "storyId">> & {
         photo?: File;
         audio?: File;
         video?: File;
@@ -89,6 +97,8 @@ export const updateStory = async (
     if (data.name) formData.append("name", data.name);
     if (data.age !== undefined && data.age !== null) formData.append("age", String(data.age));
     if (data.location) formData.append("location", data.location);
+    if (data.dateOfBirth) formData.append("dateOfBirth", data.dateOfBirth);
+    if (data.dateOfDeath) formData.append("dateOfDeath", data.dateOfDeath);
     if (data.category) {
         const categoryValue = typeof data.category === "string"
             ? data.category
@@ -110,12 +120,34 @@ export const deleteStory = async (id: string): Promise<void> => {
     await apiClient.delete(`/stories/${id}`);
 };
 
-export const searchStories = async (query: string): Promise<Story[]> => {
-    const response = await apiClient.post("/stories/search", { query }, {
+export const searchStories = async (query: string, source?: 'flower' | 'candle' | 'archive'): Promise<Story[]> => {
+    const payload: { query: string; source?: string } = { query };
+    if (source) payload.source = source;
+
+    const response = await apiClient.post("/stories/search", payload, {
         headers: { "Content-Type": "application/json" },
     });
     return response.data;
 };
+
+export const addCandle = async (data: {
+    storyId: string;
+    name?: string;
+    dateOfBirth?: string;
+    dateOfDeath?: string;
+    comment?: string;
+    category: string;
+    candleType: string;
+    photo?: File;
+    audio?: File;
+    video?: File;
+}): Promise<Story> => {
+    return addStory({
+        ...data,
+        source: "candle",
+    });
+};
+
 // Get a random flower story (source: 'flower')
 export const getRandomFlowerStory = async (): Promise<Story> => {
     const response = await apiClient.get("/stories/random-flower");

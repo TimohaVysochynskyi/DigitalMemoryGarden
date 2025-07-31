@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import PopupOverlay from "../../components/common/PopupOverlay/PopupOverlay";
 import SearchBar from "../../components/common/SearchBar/SearchBar";
+import StoryDetails from "../../components/common/StoryDetails/StoryDetails";
 import Hero from "../../components/garden/Hero/Hero";
 import MapWrapper from "../../components/garden/MapWrapper/MapWrapper";
-import FlowerDetails from "../../components/garden/FlowerDetails/FlowerDetails";
 import FlowerSelection from "../../components/garden/FlowerSelection/FlowerSelection";
 import PlantFlowerForm from "../../components/garden/PlantFlowerForm/PlantFlowerForm";
 import FadeInOnScroll from "../../components/common/FadeInOnScroll/FadeInOnScroll";
@@ -16,11 +16,36 @@ import {
   getNextFlowerStory,
   getPrevFlowerStory,
 } from "../../services/story";
+import { generateStoryId } from "../../utils/storyId";
 import type { Story } from "../../types/story";
 
 import css from "./GardenPage.module.css";
 
 export default function GardenPage() {
+  const [searchBarVisible, setSearchBarVisible] = useState(false);
+  const [flowerDetailsVisible, setFlowerDetailsVisible] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [randomFlower, setRandomFlower] = useState<Story | null>(null);
+  const [searchError, setSearchError] = useState<string>("");
+  const [randomLoading, setRandomLoading] = useState(true);
+  const [currentStoryId, setCurrentStoryId] = useState<string>("");
+
+  // Стан форми, щоб дані не зникали при зміні слайдера
+  const [formValues, setFormValues] = useState({
+    name: "",
+    age: "",
+    location: "",
+    title: "",
+    comment: "",
+    audio: null as File | null,
+    photo: null as File | null,
+    video: null as File | null,
+    consent: false,
+    sensitive: false,
+  });
+
   function handleNextFlower() {
     if (!randomFlower) return;
     getNextFlowerStory({ id: randomFlower._id }).then((next) => {
@@ -34,14 +59,6 @@ export default function GardenPage() {
       if (prev) setRandomFlower(prev);
     });
   }
-  const [searchBarVisible, setSearchBarVisible] = useState(false);
-  const [flowerDetailsVisible, setFlowerDetailsVisible] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [randomFlower, setRandomFlower] = useState<Story | null>(null);
-  const [searchError, setSearchError] = useState<string>("");
-  const [randomLoading, setRandomLoading] = useState(true);
 
   useEffect(() => {
     getAllCategories()
@@ -50,6 +67,11 @@ export default function GardenPage() {
         if (data.length) setSelectedCategoryId(data[0]._id);
       })
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    // Generate initial storyId
+    setCurrentStoryId(generateStoryId("flower"));
   }, []);
 
   useEffect(() => {
@@ -89,6 +111,7 @@ export default function GardenPage() {
     files: { audio: File | null; photo: File | null; video: File | null }
   ) => {
     await addStory({
+      storyId: currentStoryId,
       name: values.name,
       age: values.age === "" || values.age === null ? undefined : values.age,
       location: values.location,
@@ -100,7 +123,23 @@ export default function GardenPage() {
       photo: files.photo ?? undefined,
       video: files.video ?? undefined,
     });
-    // show success, reset form, etc.
+
+    // Очистити форму після успішного відправлення
+    setFormValues({
+      name: "",
+      age: "",
+      location: "",
+      title: "",
+      comment: "",
+      audio: null,
+      photo: null,
+      video: null,
+      consent: false,
+      sensitive: false,
+    });
+
+    // Generate new storyId for next submission
+    setCurrentStoryId(generateStoryId("flower"));
   };
 
   const handleSearchFlower = async (input: string | Story) => {
@@ -113,7 +152,7 @@ export default function GardenPage() {
     }
     if (typeof input !== "string" || !input.trim()) return;
     try {
-      const results = await searchStories(input);
+      const results = await searchStories(input, "flower");
       if (results.length > 0) {
         setRandomFlower(results[0]);
         setFlowerDetailsVisible(false);
@@ -148,6 +187,9 @@ export default function GardenPage() {
         />
         <PlantFlowerForm
           selectedCategoryId={selectedCategoryId}
+          storyId={currentStoryId}
+          initialValues={formValues}
+          onFormChange={setFormValues}
           onSubmit={handlePlantFlower}
         />
       </div>
@@ -157,12 +199,13 @@ export default function GardenPage() {
             onClose={() => setSearchBarVisible(false)}
             onSearch={handleSearchFlower}
             error={searchError}
+            source="flower"
           />
         </PopupOverlay>
       )}
       {flowerDetailsVisible && randomFlower && (
         <PopupOverlay onClose={() => setFlowerDetailsVisible(false)}>
-          <FlowerDetails
+          <StoryDetails
             story={randomFlower}
             onClose={() => setFlowerDetailsVisible(false)}
             onNext={handleNextFlower}

@@ -70,7 +70,22 @@
   letter-spacing: 0%;
   text-transform: uppercase;
   position: relative;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.button:hover {
+  background-color: rgba(15, 26, 44, 1);
+  transform: translateY(-2px);
+}
+
+.button.active {
+  background-color: rgba(15, 26, 44, 1);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 .button:nth-child(1) {
   left: 50px;
 }

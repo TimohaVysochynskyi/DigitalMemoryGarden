@@ -1,17 +1,18 @@
 import { Router } from 'express';
+import createHttpError from 'http-errors';
 import { env } from '../utils/env.js';
 
-import galleryRouter from './gallery.js';
 import categoryRouter from './category.js';
 import storiesRouter from './story.js';
 import mapEventRouter from './mapEvent.js';
+import candleTypeRouter from './candleType.js';
 
 const router = Router();
 
-router.use('/gallery', galleryRouter);
 router.use('/categories', categoryRouter);
 router.use('/stories', storiesRouter);
 router.use('/map-events', mapEventRouter);
+router.use('/candle-types', candleTypeRouter);
 
 router.post('/admin/login', (req, res, next) => {
   const adminPassword = env('ADMIN_PASSWORD');

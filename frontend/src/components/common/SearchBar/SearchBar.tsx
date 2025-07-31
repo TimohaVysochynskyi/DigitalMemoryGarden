@@ -8,9 +8,17 @@ type Props = {
   onClose?: () => void;
   onSearch?: (query: string | Story) => void;
   error?: string;
+  source?: "flower" | "candle" | "archive";
+  placeholder?: string;
 };
 
-export default function SearchBar({ onClose, onSearch, error }: Props) {
+export default function SearchBar({
+  onClose,
+  onSearch,
+  error,
+  source,
+  placeholder = "Enter a name, title, or number",
+}: Props) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Story[]>([]);
   const [, setLoading] = useState(false);
@@ -37,7 +45,7 @@ export default function SearchBar({ onClose, onSearch, error }: Props) {
     setLoading(true);
     debounceRef.current = window.setTimeout(async () => {
       try {
-        const res = await searchStories(val.trim());
+        const res = await searchStories(val.trim(), source);
         setResults(res.slice(0, 3));
       } catch {
         setResults([]);
@@ -50,7 +58,7 @@ export default function SearchBar({ onClose, onSearch, error }: Props) {
   const handleSelect = (story: Story) => {
     if (onSearch) onSearch(story);
     setShowDropdown(false);
-    setQuery(story.title);
+    setQuery(story.title || story.name || "");
   };
 
   return (
@@ -59,7 +67,7 @@ export default function SearchBar({ onClose, onSearch, error }: Props) {
         <input
           type="text"
           className={css.input}
-          placeholder="Enter a name, title, or number"
+          placeholder={placeholder}
           value={query}
           onChange={handleInput}
           onFocus={() => setShowDropdown(!!query)}
@@ -74,12 +82,14 @@ export default function SearchBar({ onClose, onSearch, error }: Props) {
               className={css.dropdownItem}
               onMouseDown={() => handleSelect(story)}
             >
-              <span className={css.dropdownTitle}>{story.title}</span>
-              {story.name && (
+              <span className={css.dropdownTitle}>
+                {story.title || story.name || "Untitled"}
+              </span>
+              {story.name && story.title && (
                 <span className={css.dropdownAuthor}>by {story.name}</span>
               )}
-              {story.flowerId && (
-                <span className={css.dropdownId}>#{story.flowerId}</span>
+              {story.storyId && (
+                <span className={css.dropdownId}>#{story.storyId}</span>
               )}
             </li>
           ))}

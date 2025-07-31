@@ -5,15 +5,24 @@ const db = mongoose.connection.useDb(env('MONGODB_DB'));
 
 const storySchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, trim: true },
+    title: { type: String, trim: true },
     comment: { type: String, trim: true },
     name: { type: String, trim: true },
     age: { type: Number, min: 0 },
     location: { type: String, trim: true },
+    dateOfBirth: { type: Date },
+    dateOfDeath: { type: Date },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
       required: true,
+    },
+    candleType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'candleType',
+      required: function () {
+        return this.source === 'candle';
+      },
     },
     createdAt: { type: Date, default: Date.now, immutable: true },
     media: {
@@ -21,15 +30,15 @@ const storySchema = new mongoose.Schema(
       audio: { type: String },
       video: { type: String },
     },
-    flowerId: {
+    storyId: {
       type: String,
       unique: true,
       sparse: true,
-      match: /^\d{8}$/,
+      match: /^[FCA]\d{8}$/,
     },
     source: {
       type: String,
-      enum: ['flower', 'archive'],
+      enum: ['flower', 'candle', 'archive'],
       required: true,
     },
   },

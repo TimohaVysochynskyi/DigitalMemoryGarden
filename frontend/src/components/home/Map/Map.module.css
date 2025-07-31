@@ -7,8 +7,32 @@
 }
 .mapImage {
   width: 100%;
-  width: 65%;
+  height: 100%;
   object-fit: contain;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mapContainer {
+  position: relative;
+  width: 65%;
+  height: 100%;
+  max-width: 900px;
+  min-width: 320px;
+  min-height: 300px;
+  aspect-ratio: 3/2;
+}
+
+.flowerMarker {
+  position: absolute;
+  transition: box-shadow 0.2s;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: left, top, width, height;
 }
 .content {
   height: 100%;
@@ -33,8 +57,8 @@
 }
 
 @media screen and (max-width: 1440px) {
-  .mapImage {
-    width: calc(100% - 400px);
+  .mapContainer {
+    width: calc(65% - 400px + 65%);
   }
 }
 
@@ -49,7 +73,7 @@
     font-size: 20px;
     width: 500px;
   }
-  .mapImage {
+  .mapContainer {
     width: calc(100% - 300px);
   }
 }
@@ -91,7 +115,7 @@
     padding: 20px;
   }
   .content,
-  .mapImage {
+  .mapContainer {
     width: 100%;
   }
   .title {

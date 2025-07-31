@@ -36,10 +36,29 @@
   line-height: 100%;
   letter-spacing: -2%;
 }
-.input::placeholder {
+
+.textarea {
+  padding: 16px 40px;
+  border: 2px solid rgba(15, 26, 44, 1);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  background-color: rgba(188, 198, 210, 1);
+  color: rgba(15, 26, 44, 1);
+  min-height: 120px;
+  max-height: 200px;
+  font-size: 18px;
+  width: 100%;
+  line-height: 140%;
+  letter-spacing: -2%;
+  resize: vertical;
+  font-family: inherit;
+}
+.input::placeholder,
+.textarea::placeholder {
   color: rgba(80, 102, 123, 1);
 }
-.input:focus {
+.input:focus,
+.textarea:focus {
   outline: none;
   border-color: rgba(15, 26, 44, 1);
 }
@@ -52,6 +71,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mediaBtnAdded {
+  color: rgba(15, 26, 44, 1);
+  background-color: rgba(144, 174, 189, 1);
 }
 .mediaIcon {
   width: 18px;
@@ -138,6 +164,9 @@
   .mediaBtn {
     padding: 16px 30px;
   }
+  .textarea {
+    padding: 16px 30px;
+  }
   .footerRow {
     gap: 20px;
   }
@@ -152,6 +181,9 @@
   }
   .input,
   .mediaBtn {
+    padding: 16px 20px;
+  }
+  .textarea {
     padding: 16px 20px;
   }
 }
@@ -173,6 +205,11 @@
   .mediaBtn {
     font-size: 16px;
   }
+  .textarea {
+    font-size: 16px;
+    min-height: 100px;
+    max-height: 150px;
+  }
   .footerRow {
     flex-direction: column;
     align-items: center;
@@ -182,6 +219,9 @@
 @media screen and (max-width: 425px) {
   .input,
   .mediaBtn {
+    font-size: 15px;
+  }
+  .textarea {
     font-size: 15px;
   }
   .mediaIcon {

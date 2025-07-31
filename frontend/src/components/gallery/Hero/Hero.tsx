@@ -1,7 +1,13 @@
 import HeroTitleAndSubtitle from "../../common/HeroTitleAndSubtitle/HeroTitleAndSubtitle";
+import type { MediaType } from "../../../types/Gallery";
 import css from "./Hero.module.css";
 
-export default function Hero() {
+type Props = {
+  selectedMediaType: MediaType;
+  onMediaTypeChange: (mediaType: MediaType) => void;
+};
+
+export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
   return (
     <>
       <div className={css.hero}>
@@ -18,13 +24,31 @@ export default function Hero() {
               </div>
             </div>
             <div className={css.btnsWrapper}>
-              <button type="button" className={css.button}>
+              <button
+                type="button"
+                className={`${css.button} ${
+                  selectedMediaType === "photo" ? css.active : ""
+                }`}
+                onClick={() => onMediaTypeChange("photo")}
+              >
                 Photo
               </button>
-              <button type="button" className={css.button}>
+              <button
+                type="button"
+                className={`${css.button} ${
+                  selectedMediaType === "video" ? css.active : ""
+                }`}
+                onClick={() => onMediaTypeChange("video")}
+              >
                 Video
               </button>
-              <button type="button" className={css.button}>
+              <button
+                type="button"
+                className={`${css.button} ${
+                  selectedMediaType === "audio" ? css.active : ""
+                }`}
+                onClick={() => onMediaTypeChange("audio")}
+              >
                 Audio
               </button>
             </div>

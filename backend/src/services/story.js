@@ -1,36 +1,85 @@
 import { StoriesCollection } from '../models/story.js';
 import { CategoriesCollection } from '../models/category.js';
+import { CandleTypesCollection } from '../models/candleType.js';
 
-// Helper to generate unique 8-digit flowerId
-const generateFlowerId = async () => {
+// Generate unique story ID with prefix based on source
+const generateStoryId = async (source) => {
+  const prefix = source === 'flower' ? 'F' : source === 'candle' ? 'C' : 'A';
   let id;
   let exists = true;
   while (exists) {
-    id = Math.floor(10000000 + Math.random() * 90000000).toString();
-    exists = await StoriesCollection.exists({ flowerId: id });
+    const randomNum = Math.floor(
+      10000000 + Math.random() * 90000000,
+    ).toString();
+    id = prefix + randomNum;
+    exists = await StoriesCollection.exists({ storyId: id });
   }
   return id;
 };
 
 export const createStory = async (payload) => {
-  if (!payload.title || !payload.category || !payload.source) {
+  if (!payload.category || !payload.source) {
     throw new Error('Missing required fields');
   }
+
+  // Title is required only for flowers
+  if (payload.source === 'flower' && !payload.title) {
+    throw new Error('Title is required for flower stories');
+  }
+
+  // CandleType is required for candles
+  if (payload.source === 'candle' && !payload.candleType) {
+    throw new Error('CandleType is required for candle stories');
+  }
+
   const categoryExists = await CategoriesCollection.exists({
     _id: payload.category,
   });
   if (!categoryExists) throw new Error('Category not found');
 
-  let flowerId;
-  if (payload.source === 'flower') {
-    flowerId = await generateFlowerId();
+  // Check if candleType exists for candles
+  if (payload.candleType) {
+    const candleTypeExists = await CandleTypesCollection.exists({
+      _id: payload.candleType,
+    });
+    if (!candleTypeExists) throw new Error('CandleType not found');
+  }
+
+  // Use provided storyId or generate new one
+  let storyId = payload.storyId;
+  if (!storyId) {
+    storyId = await generateStoryId(payload.source);
+  } else {
+    // Validate provided storyId format
+    const storyIdRegex = /^[FCA]\d{8}$/;
+    if (!storyIdRegex.test(storyId)) {
+      throw new Error('Invalid storyId format');
+    }
+    // Check if storyId already exists
+    const exists = await StoriesCollection.exists({ storyId });
+    if (exists) {
+      throw new Error('StoryId already exists');
+    }
   }
 
   const story = await StoriesCollection.create({
     ...payload,
-    ...(flowerId && { flowerId }),
+    storyId,
   });
-  return story;
+
+  // Manually populate category and candleType for the response
+  const category = story.category
+    ? await CategoriesCollection.findById(story.category)
+    : null;
+  const candleType = story.candleType
+    ? await CandleTypesCollection.findById(story.candleType)
+    : null;
+
+  const result = story.toObject();
+  result.category = category;
+  if (candleType) result.candleType = candleType;
+
+  return result;
 };
 
 export const getStoryById = async (id) => {
@@ -39,19 +88,27 @@ export const getStoryById = async (id) => {
   const category = story.category
     ? await CategoriesCollection.findById(story.category)
     : null;
+  const candleType = story.candleType
+    ? await CandleTypesCollection.findById(story.candleType)
+    : null;
   const result = story.toObject();
   result.category = category;
+  if (candleType) result.candleType = candleType;
   return result;
 };
 
-export const getStoryByFlowerId = async (flowerId) => {
-  const story = await StoriesCollection.findOne({ flowerId });
+export const getStoryByStoryId = async (storyId) => {
+  const story = await StoriesCollection.findOne({ storyId });
   if (!story) return null;
   const category = story.category
     ? await CategoriesCollection.findById(story.category)
     : null;
+  const candleType = story.candleType
+    ? await CandleTypesCollection.findById(story.candleType)
+    : null;
   const result = story.toObject();
   result.category = category;
+  if (candleType) result.candleType = candleType;
   return result;
 };
 
@@ -68,23 +125,38 @@ export const deleteStory = async (id) => {
   return await StoriesCollection.findByIdAndDelete(id);
 };
 
-export const searchStories = async (query) => {
+export const searchStories = async (query, source = null) => {
   if (typeof query !== 'string' || !query.trim()) return [];
   const regex = new RegExp(query, 'i');
-  const stories = await StoriesCollection.find({
+
+  let searchFilter = {
     $or: [
       { title: regex },
       { name: regex },
       { comment: regex },
       { location: regex },
+      { storyId: regex },
     ],
-  });
-  // Populate category for each story
+  };
+
+  // Add source filter if provided
+  if (source && ['flower', 'candle', 'archive'].includes(source)) {
+    searchFilter.source = source;
+  }
+
+  const stories = await StoriesCollection.find(searchFilter);
+
+  // Manually populate category and candleType
   return await Promise.all(
     stories.map(async (storyDoc) => {
       const story = storyDoc.toObject();
       if (story.category) {
         story.category = await CategoriesCollection.findById(story.category);
+      }
+      if (story.candleType) {
+        story.candleType = await CandleTypesCollection.findById(
+          story.candleType,
+        );
       }
       return story;
     }),
@@ -202,4 +274,56 @@ export const getStoriesContextByCategory = async (
     }
   }
   return result;
+};
+
+// Get stories with media for gallery with pagination and filtering
+export const getStoriesForGallery = async (
+  mediaType,
+  categoryId = null,
+  page = 1,
+  limit = 12,
+) => {
+  const skip = (page - 1) * limit;
+
+  // Build filter based on media type
+  let filter = {};
+
+  // Filter by media type
+  if (mediaType === 'photo') {
+    filter['media.photo'] = { $exists: true, $ne: null };
+  } else if (mediaType === 'video') {
+    filter['media.video'] = { $exists: true, $ne: null };
+  } else if (mediaType === 'audio') {
+    filter['media.audio'] = { $exists: true, $ne: null };
+  }
+
+  // Filter by category if provided
+  if (categoryId) {
+    filter.category = categoryId;
+  }
+
+  const [stories, totalCount] = await Promise.all([
+    StoriesCollection.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit),
+    StoriesCollection.countDocuments(filter),
+  ]);
+
+  // Populate categories
+  const result = await Promise.all(
+    stories.map(async (storyDoc) => {
+      const story = storyDoc.toObject();
+      if (story.category) {
+        story.category = await CategoriesCollection.findById(story.category);
+      }
+      return story;
+    }),
+  );
+
+  return {
+    stories: result,
+    totalCount,
+    hasMore: skip + stories.length < totalCount,
+  };
 };

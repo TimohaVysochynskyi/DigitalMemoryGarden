@@ -1,14 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import { getAllCategories } from "../../../services/category";
+import type { Category } from "../../../types/category";
 import css from "./CategoryDropdown.module.css";
-
-const categories = [
-  "Childhood of war",
-  "Displacement and escape",
-  "Resistance",
-  "Hope and love",
-  "Wartime reality",
-  "Loss and grief",
-];
 
 export default function CategoryDropdown({
   value,
@@ -18,7 +11,13 @@ export default function CategoryDropdown({
   onChange: (val: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const ref = useRef<HTMLDivElement>(null);
+
+  // Load categories from API
+  useEffect(() => {
+    getAllCategories().then(setCategories);
+  }, []);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -29,6 +28,8 @@ export default function CategoryDropdown({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const selectedCategory = categories.find((cat) => cat._id === value);
+
   return (
     <div className={css.dropdownWrapper} ref={ref}>
       <button
@@ -37,7 +38,7 @@ export default function CategoryDropdown({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span>{value || "Category"}</span>
+        <span>{selectedCategory?.name || "Category"}</span>
         <img
           src="/dropdown-arrow-down.png"
           alt="Dropdown arrow down"
@@ -46,16 +47,25 @@ export default function CategoryDropdown({
       </button>
       {open && (
         <ul className={css.dropdownList}>
+          <li
+            className={css.dropdownItem}
+            onClick={() => {
+              onChange("");
+              setOpen(false);
+            }}
+          >
+            All Categories
+          </li>
           {categories.map((cat) => (
             <li
-              key={cat}
+              key={cat._id}
               className={css.dropdownItem}
               onClick={() => {
-                onChange(cat);
+                onChange(cat._id);
                 setOpen(false);
               }}
             >
-              {cat}
+              {cat.name}
             </li>
           ))}
         </ul>

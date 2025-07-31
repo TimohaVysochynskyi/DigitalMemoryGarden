@@ -17,6 +17,9 @@ export default function AdminHomePage() {
         <Link to="events" className="p-4 hover:bg-gray-700 box-border">
           Мапа
         </Link>
+        <Link to="candle-types" className="p-4 hover:bg-gray-700 box-border">
+          Типи свічок
+        </Link>
       </nav>
 
       {/* Контент */}

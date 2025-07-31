@@ -12,12 +12,16 @@ type Props = {
   items: SelectionItem[];
   selectedId: string;
   onSelect: (id: string) => void;
+  maxImageWidth?: number;
+  buttonColor?: "light" | "dark";
 };
 
 export default function SelectionSlider({
   items,
   selectedId,
   onSelect,
+  maxImageWidth,
+  buttonColor = "dark",
 }: Props) {
   const currentIdx = items.findIndex((item) => item.id === selectedId);
 
@@ -46,19 +50,20 @@ export default function SelectionSlider({
           src={current.image}
           alt={current.name || "item"}
           className={css.flower}
+          style={maxImageWidth ? { maxWidth: `${maxImageWidth}px` } : {}}
         />
       )}
       <div className={css.btnsWrapper}>
-        <OutlineButton onClick={handlePrev}>
+        <OutlineButton onClick={handlePrev} color={buttonColor}>
           <img
-            src="/small-left-arrow.png"
+            src={`/small-left-arrow-${buttonColor}.png`}
             alt="Left arrow"
             className={css.arrow}
           />
         </OutlineButton>
-        <OutlineButton onClick={handleNext}>
+        <OutlineButton onClick={handleNext} color={buttonColor}>
           <img
-            src="/small-right-arrow.png"
+            src={`/small-right-arrow-${buttonColor}.png`}
             alt="Right arrow"
             className={css.arrow}
           />

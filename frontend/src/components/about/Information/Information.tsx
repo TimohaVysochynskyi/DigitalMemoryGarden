@@ -5,18 +5,15 @@ export default function Information() {
     <>
       <div className={css.container}>
         <div className={css.videoWrapper}>
-          <div className={css.video}>
-            <iframe
-              src="https://cdnapisec.kaltura.com/id/1_pllbvj4i"
-              title="Interview"
-              width="100%"
-              height="100%"
-              allow="autoplay; fullscreen"
-              frameBorder="0"
-              allowFullScreen
-              style={{ borderRadius: "50px" }}
-            />
-          </div>
+          <iframe
+            id="kaltura_player"
+            src='https://cdnapisec.kaltura.com/p/2010292/embedPlaykitJs/uiconf_id/55171522?iframeembed=true&entry_id=1_pllbvj4i&config[provider]={"widgetId":"1_r8l45si2"}'
+            allowFullScreen
+            allow="autoplay *; fullscreen *; encrypted-media *"
+            sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+            title="Kaltura Player"
+            className={css.video}
+          />
           <div className={css.videoRow}>
             <div className={css.videoCol}>
               <p className={css.videoTitle}>Interview</p>

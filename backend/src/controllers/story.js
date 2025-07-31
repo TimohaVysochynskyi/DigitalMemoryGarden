@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import {
   createStory,
   getStoryById,
-  getStoryByFlowerId,
+  getStoryByStoryId,
   getAllStories,
   updateStory,
   deleteStory,
@@ -12,6 +12,7 @@ import {
   getNextStory,
   getPrevStory,
   getStoriesContextByCategory,
+  getStoriesForGallery,
 } from '../services/story.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { createDirIfNotExist } from '../utils/createDirIfNotExist.js';
@@ -57,9 +58,9 @@ export const getStoryByIdController = async (req, res, next) => {
   res.status(200).send(story);
 };
 
-// GET /stories/flower/:flowerId
-export const getStoryByFlowerIdController = async (req, res, next) => {
-  const story = await getStoryByFlowerId(req.params.flowerId);
+// GET /stories/story/:storyId
+export const getStoryByStoryIdController = async (req, res, next) => {
+  const story = await getStoryByStoryId(req.params.storyId);
   if (!story) return res.status(404).send({ message: 'Story not found' });
   res.status(200).send(story);
 };
@@ -86,14 +87,14 @@ export const deleteStoryController = async (req, res, next) => {
   res.status(204).send();
 };
 
-// GET /stories/search?query=...
+// POST /stories/search
 export const searchStoriesController = async (req, res, next) => {
   try {
-    const q = req.body.query;
-    if (typeof q !== 'string' || !q.trim()) {
+    const { query, source } = req.body;
+    if (typeof query !== 'string' || !query.trim()) {
       return res.status(200).send([]);
     }
-    const results = await searchStories(q);
+    const results = await searchStories(query, source);
     res.status(200).send(results);
   } catch (err) {
     next(createHttpError(400, err.message));
@@ -130,10 +131,10 @@ export const getStoriesByCategoryController = async (req, res, next) => {
 // POST /stories/next
 export const getNextStoryController = async (req, res, next) => {
   try {
-    const { id, flowerId } = req.body;
+    const { id, storyId } = req.body;
     let current;
     if (id) current = await getStoryById(id);
-    else if (flowerId) current = await getStoryByFlowerId(flowerId);
+    else if (storyId) current = await getStoryByStoryId(storyId);
     if (!current)
       return res.status(404).send({ message: 'Current story not found' });
     const next = await getNextStory(current.createdAt);
@@ -146,10 +147,10 @@ export const getNextStoryController = async (req, res, next) => {
 // POST /stories/prev
 export const getPrevStoryController = async (req, res, next) => {
   try {
-    const { id, flowerId } = req.body;
+    const { id, storyId } = req.body;
     let current;
     if (id) current = await getStoryById(id);
-    else if (flowerId) current = await getStoryByFlowerId(flowerId);
+    else if (storyId) current = await getStoryByStoryId(storyId);
     if (!current)
       return res.status(404).send({ message: 'Current story not found' });
     const prev = await getPrevStory(current.createdAt);
@@ -170,6 +171,30 @@ export const getStoriesContextByCategoryController = async (req, res, next) => {
       limit,
     );
     res.status(200).send(stories);
+  } catch (err) {
+    next(createHttpError(500, err.message));
+  }
+};
+
+// GET /stories/gallery
+export const getStoriesForGalleryController = async (req, res, next) => {
+  try {
+    const { mediaType, categoryId, page = 1, limit = 12 } = req.query;
+
+    if (!mediaType || !['photo', 'video', 'audio'].includes(mediaType)) {
+      return res
+        .status(400)
+        .send({ message: 'Valid mediaType (photo, video, audio) is required' });
+    }
+
+    const result = await getStoriesForGallery(
+      mediaType,
+      categoryId || null,
+      Number(page),
+      Number(limit),
+    );
+
+    res.status(200).send(result);
   } catch (err) {
     next(createHttpError(500, err.message));
   }

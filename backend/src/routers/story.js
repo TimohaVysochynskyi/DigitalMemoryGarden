@@ -10,7 +10,7 @@ import { storySchema } from '../validation/validateStory.js';
 import {
   createStoryController,
   getStoryByIdController,
-  getStoryByFlowerIdController,
+  getStoryByStoryIdController,
   getAllStoriesController,
   updateStoryController,
   deleteStoryController,
@@ -19,6 +19,7 @@ import {
   getStoriesByCategoryController,
   getNextStoryController,
   getPrevStoryController,
+  getStoriesForGalleryController,
 } from '../controllers/story.js';
 
 const router = Router();
@@ -38,6 +39,9 @@ router.post(
 // GET /stories/random-flower
 router.get('/random-flower', ctrlWrapper(getRandomFlowerStoryController));
 
+// GET /stories/gallery
+router.get('/gallery', ctrlWrapper(getStoriesForGalleryController));
+
 // GET /stories/category/:categoryId/context/:storyId
 router.get(
   '/category/:categoryId/context/:storyId',
@@ -53,8 +57,8 @@ router.get(
 // GET /stories/:id
 router.get('/:id', isValidId, ctrlWrapper(getStoryByIdController));
 
-// GET /stories/flower/:flowerId
-router.get('/flower/:flowerId', ctrlWrapper(getStoryByFlowerIdController));
+// GET /stories/story/:storyId
+router.get('/story/:storyId', ctrlWrapper(getStoryByStoryIdController));
 
 // GET /stories
 router.get('/', ctrlWrapper(getAllStoriesController));

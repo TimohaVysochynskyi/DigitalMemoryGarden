@@ -1,6 +1,10 @@
 import css from "./MemoryTools.module.css";
 
-export default function MemoryTools() {
+type Props = {
+  onToolClick: (tool: "a" | "b" | "c") => void;
+};
+
+export default function MemoryTools({ onToolClick }: Props) {
   return (
     <>
       <div className={css.container}>
@@ -13,7 +17,10 @@ export default function MemoryTools() {
                 alt="Flower image"
                 className={css.toolImage}
               />
-              <button className={css.toolButton}>
+              <button
+                className={css.toolButton}
+                onClick={() => onToolClick("a")}
+              >
                 <img
                   src="/eye-button.png"
                   alt="Eye button"
@@ -30,7 +37,10 @@ export default function MemoryTools() {
                 alt="Candle image"
                 className={css.toolImage}
               />
-              <button className={css.toolButton}>
+              <button
+                className={css.toolButton}
+                onClick={() => onToolClick("b")}
+              >
                 <img
                   src="/eye-button.png"
                   alt="Eye button"
@@ -47,7 +57,10 @@ export default function MemoryTools() {
                 alt="Books image"
                 className={css.toolImage}
               />
-              <button className={css.toolButton}>
+              <button
+                className={css.toolButton}
+                onClick={() => onToolClick("c")}
+              >
                 <img
                   src="/eye-button.png"
                   alt="Eye button"

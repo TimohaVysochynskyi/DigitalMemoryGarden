@@ -1,22 +1,22 @@
-import { Field, ErrorMessage } from 'formik';
-import { CSS_CLASSES } from './constants';
+import { Field, ErrorMessage } from "formik";
+import { CSS_CLASSES } from "./constants";
 
 interface FormFieldProps {
   name: string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'checkbox';
-  as?: 'select';
+  type?: "text" | "number" | "date" | "checkbox";
+  as?: "select";
   children?: React.ReactNode;
   placeholder?: string;
 }
 
-export function FormField({ 
-  name, 
-  label, 
-  type = 'text', 
-  as, 
-  children, 
-  placeholder 
+export function FormField({
+  name,
+  label,
+  type = "text",
+  as,
+  children,
+  placeholder,
 }: FormFieldProps) {
   return (
     <div>
@@ -28,7 +28,9 @@ export function FormField({
         name={name}
         as={as}
         placeholder={placeholder}
-        className={type === 'checkbox' ? 'p-2 border rounded' : CSS_CLASSES.INPUT}
+        className={
+          type === "checkbox" ? "p-2 border rounded" : CSS_CLASSES.INPUT
+        }
       >
         {children}
       </Field>
@@ -48,11 +50,11 @@ interface ActionButtonsProps {
   deleteLabel?: string;
 }
 
-export function ActionButtons({ 
-  onEdit, 
-  onDelete, 
-  editLabel = 'Редагувати',
-  deleteLabel = 'Видалити' 
+export function ActionButtons({
+  onEdit,
+  onDelete,
+  editLabel = "Редагувати",
+  deleteLabel = "Видалити",
 }: ActionButtonsProps) {
   return (
     <div>
@@ -90,8 +92,8 @@ export function TagManager({
   onNewTagChange,
   onAddTag,
   onRemoveTag,
-  addButtonLabel = 'Додати',
-  placeholder = 'Новий тег'
+  addButtonLabel = "Додати",
+  placeholder = "Новий тег",
 }: TagManagerProps) {
   return (
     <div>
@@ -135,17 +137,45 @@ interface SubmitButtonProps {
   updateLabel?: string;
 }
 
-export function SubmitButton({ 
-  isEditing, 
-  addLabel = 'Додати', 
-  updateLabel = 'Оновити' 
+export function SubmitButton({
+  isEditing,
+  addLabel = "Додати",
+  updateLabel = "Оновити",
 }: SubmitButtonProps) {
   return (
-    <button
-      type="submit"
-      className={CSS_CLASSES.FORM_SUBMIT}
-    >
+    <button type="submit" className={CSS_CLASSES.FORM_SUBMIT}>
       {isEditing ? updateLabel : addLabel}
     </button>
+  );
+}
+
+interface FormButtonsProps {
+  isEditing: boolean;
+  onCancel: () => void;
+  addLabel?: string;
+  updateLabel?: string;
+}
+
+export function FormButtons({
+  isEditing,
+  onCancel,
+  addLabel = "Додати",
+  updateLabel = "Оновити",
+}: FormButtonsProps) {
+  return (
+    <div className="flex gap-2">
+      <button type="submit" className={CSS_CLASSES.BUTTON_PRIMARY}>
+        {isEditing ? updateLabel : addLabel}
+      </button>
+      {isEditing && (
+        <button
+          type="button"
+          onClick={onCancel}
+          className={CSS_CLASSES.BUTTON_SECONDARY}
+        >
+          Скасувати
+        </button>
+      )}
+    </div>
   );
 }
