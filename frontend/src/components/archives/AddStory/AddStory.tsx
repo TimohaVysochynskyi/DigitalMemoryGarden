@@ -47,7 +47,14 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
+            // Generate storyId for archive
+            const generateStoryId = () => {
+              const timestamp = Date.now().toString();
+              return `A${timestamp.slice(-8)}`;
+            };
+
             await addStory({
+              storyId: generateStoryId(),
               title: values.title,
               comment: values.comment,
               name: values.name,

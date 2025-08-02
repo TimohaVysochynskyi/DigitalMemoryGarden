@@ -31,8 +31,8 @@ export default function FlowerDetails({
   const location = story?.location || "";
   // age
   const age = story?.age !== undefined && story?.age !== null ? story.age : "";
-  // flowerId
-  const flowerId = story?.flowerId ? `#${story.flowerId}` : "";
+  // storyId (previously flowerId)
+  const flowerId = story?.storyId ? `#${story.storyId}` : "";
   // title
   const title = story?.title || "";
   // author
