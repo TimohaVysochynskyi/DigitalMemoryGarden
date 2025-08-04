@@ -60,7 +60,12 @@ export default function Header() {
 
         {/* Burger button */}
         <button
-          className={clsx(css.burger, menuOpen && css.burgerOpen)}
+          className={clsx(
+            css.burger,
+            menuOpen && css.burgerOpen,
+            (currentRoute === "/candles" || currentRoute === "/about") &&
+              css.burgerLight
+          )}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}

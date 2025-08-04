@@ -173,11 +173,19 @@
   .blueSection {
     height: 60px;
   }
+  .content {
+    height: 75%;
+    top: auto;
+    bottom: 0;
+  }
   .row {
     height: auto;
     flex-direction: column-reverse;
     position: relative;
     gap: 40px;
+  }
+  .btnsWrapper {
+    padding-right: 0;
   }
   .booksWrapper {
     flex-direction: column;
@@ -186,49 +194,68 @@
     width: 100%;
   }
   .book {
-    width: 75% !important;
+    width: 80% !important;
     height: 75px !important;
   }
   .book:nth-child(1) {
     left: 15px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
+    height: 80px !important;
   }
   .book:nth-child(2) {
     left: -5px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
   }
   .book:nth-child(3) {
     left: 5px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
   }
   .book:nth-child(4) {
     left: -10px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
   }
   .book:nth-child(5) {
     left: 20px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
   }
   .book:nth-child(6) {
     left: 5px;
     top: 0;
     transform: rotate(0deg);
-    height: 80px;
   }
 
   .bookTitle {
     transform: rotate(0deg);
     writing-mode: horizontal-tb;
     font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .row {
+    gap: 20px;
+  }
+  .book {
+    height: 55px !important;
+  }
+  .book:nth-child(1) {
+    left: 0;
+    top: 0;
+    transform: rotate(0deg);
+    height: 60px !important;
+  }
+  .bookTitle {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .row {
+    height: 60%;
   }
 }

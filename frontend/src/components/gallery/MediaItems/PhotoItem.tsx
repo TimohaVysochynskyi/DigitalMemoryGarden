@@ -22,9 +22,13 @@ export default function PhotoItem({ story, index }: Props) {
       )}
       <div className={css.overlay}>
         <div className={css.info}>
-          {story.title && <h3 className={css.title}>{story.title}</h3>}
-          {story.name && <p className={css.author}>by {story.name}</p>}
-          <p className={css.category}>{story.category.name}</p>
+          <div className={css.col}>
+            {story.title && <h3 className={css.title}>{story.title}</h3>}
+          </div>
+          <div className={css.col}>
+            <p className={css.category}>{story.category.name}</p>
+            {story.name && <p className={css.author}>by {story.name}</p>}
+          </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,11 @@ export default function Manifest() {
     <>
       <div className={css.container}>
         <div className={css.page}>
+          <img
+            src="/pattern.png"
+            alt="Pattern image"
+            className={css.patternLeft}
+          />
           <h2 className={css.title}>Manifesto</h2>
           <p className={css.text}>
             <span className={css.sectionTitle}>How the Idea Was Planted</span>
@@ -100,6 +105,11 @@ export default function Manifest() {
             moderation is in place to ensure that the space remains emotionally
             safe and respectful for everyone.
           </p>
+          <img
+            src="/pattern.png"
+            alt="Pattern image"
+            className={css.patternRight}
+          />
         </div>
       </div>
     </>

@@ -34,11 +34,11 @@ const storySchema = new mongoose.Schema(
       type: String,
       unique: true,
       sparse: true,
-      match: /^[FCA]\d{8}$/,
+      match: /^[FCAG]\d{8}$/,
     },
     source: {
       type: String,
-      enum: ['flower', 'candle', 'archive'],
+      enum: ['flower', 'candle', 'archive', 'gallery'],
       required: true,
     },
   },

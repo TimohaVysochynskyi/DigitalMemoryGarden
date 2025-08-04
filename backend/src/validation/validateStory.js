@@ -11,14 +11,14 @@ export const storySchema = Joi.object({
   comment: Joi.string().max(2000).allow('', null),
   name: Joi.string().max(100).allow('', null),
 
-  // Fields for flowers only
+  // Fields for flowers, archives and gallery
   age: Joi.when('source', {
-    is: 'flower',
-    then: Joi.number().integer().min(0).max(120).allow(null),
+    is: Joi.valid('flower', 'archive', 'gallery'),
+    then: Joi.number().integer().min(0).max(120).allow(null, ''),
     otherwise: Joi.forbidden(),
   }),
   location: Joi.when('source', {
-    is: 'flower',
+    is: Joi.valid('flower', 'archive', 'gallery'),
     then: Joi.string().max(200).allow('', null),
     otherwise: Joi.forbidden(),
   }),
@@ -55,5 +55,7 @@ export const storySchema = Joi.object({
       }
       return value;
     }),
-  source: Joi.string().valid('flower', 'candle', 'archive').required(),
+  source: Joi.string()
+    .valid('flower', 'candle', 'archive', 'gallery')
+    .required(),
 });

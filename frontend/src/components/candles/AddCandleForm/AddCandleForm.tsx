@@ -49,15 +49,16 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
             consent: false,
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
+          onSubmit={(values, { resetForm }) => {
             onSubmit(values, {
               audio: values.audio,
               photo: values.photo,
               video: values.video,
             });
+            resetForm();
           }}
         >
-          {({ setFieldValue }) => (
+          {({ setFieldValue, values }) => (
             <Form className={css.formWrapper}>
               <h2 className={css.title}>New candle</h2>
               <div className={css.form}>
@@ -117,8 +118,12 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                 />
 
                 <div className={css.mediaRow}>
-                  <label className={css.mediaBtn}>
-                    Audio
+                  <label
+                    className={`${css.mediaBtn} ${
+                      values.audio ? css.mediaBtnAdded : ""
+                    }`}
+                  >
+                    {values.audio ? "Audio Added" : "Audio"}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -136,8 +141,12 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                       }
                     />
                   </label>
-                  <label className={css.mediaBtn}>
-                    Photo
+                  <label
+                    className={`${css.mediaBtn} ${
+                      values.photo ? css.mediaBtnAdded : ""
+                    }`}
+                  >
+                    {values.photo ? "Photo Added" : "Photo"}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -155,8 +164,12 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                       }
                     />
                   </label>
-                  <label className={css.mediaBtn}>
-                    Video
+                  <label
+                    className={`${css.mediaBtn} ${
+                      values.video ? css.mediaBtnAdded : ""
+                    }`}
+                  >
+                    {values.video ? "Video Added" : "Video"}
                     <img
                       src="/plus-media.png"
                       alt="Add file"

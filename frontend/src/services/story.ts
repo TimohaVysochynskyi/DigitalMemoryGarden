@@ -56,7 +56,7 @@ export const addStory = async (data: {
     dateOfDeath?: string;
     category: string;
     candleType?: string;
-    source: "flower" | "candle" | "archive";
+    source: "flower" | "candle" | "archive" | "gallery";
     photo?: File;
     audio?: File;
     video?: File;

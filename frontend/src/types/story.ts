@@ -22,7 +22,7 @@ export type Story = {
     createdAt: string;
     media?: StoryMedia;
     storyId?: string;
-    source: "flower" | "candle" | "archive";
+    source: "flower" | "candle" | "archive" | "gallery";
 };
 
 export type CreateStoryPayload = {
@@ -35,7 +35,7 @@ export type CreateStoryPayload = {
     dateOfDeath?: string;
     category: string;
     candleType?: string;
-    source: "flower" | "candle" | "archive";
+    source: "flower" | "candle" | "archive" | "gallery";
     photo?: File;
     audio?: File;
     video?: File;

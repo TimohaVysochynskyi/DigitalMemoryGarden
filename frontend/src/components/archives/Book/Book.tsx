@@ -41,13 +41,18 @@ export default function Book({
           disabled={page <= 1 || isSearching}
         >
           <img
-            src="/small-left-arrow.png"
+            src="/small-left-arrow-dark.png"
             alt="Left arrow"
             className={css.arrowIcon}
           />
         </button>
         <div className={css.bookBg}>
           <div className={css.bookContent}>
+            <img
+              src="/pattern.png"
+              alt="Pattern image"
+              className={css.pattern}
+            />
             <div className={css.middleLine}></div>
             {Array.from({ length: 4 }).map((_, i) => {
               const story = stories[i];
@@ -60,11 +65,6 @@ export default function Book({
                     <h3 className={css.recordTitle}>
                       {story ? story.title : ""}
                     </h3>
-                    <span className={css.recordTitle}>
-                      {story
-                        ? `${story.name} - ${story.age} - ${story.location}`
-                        : ""}
-                    </span>
                     <span className={css.recordTitle}>
                       {story
                         ? new Date(story.createdAt).toLocaleDateString()
@@ -86,7 +86,7 @@ export default function Book({
           disabled={page >= maxPage || isSearching}
         >
           <img
-            src="/small-right-arrow.png"
+            src="/small-right-arrow-dark.png"
             alt="Right arrow"
             className={css.arrowIcon}
           />

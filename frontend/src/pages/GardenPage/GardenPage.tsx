@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import PopupOverlay from "../../components/common/PopupOverlay/PopupOverlay";
 import SearchBar from "../../components/common/SearchBar/SearchBar";
 import StoryDetails from "../../components/common/StoryDetails/StoryDetails";
@@ -32,7 +33,6 @@ export default function GardenPage() {
   const [randomLoading, setRandomLoading] = useState(true);
   const [currentStoryId, setCurrentStoryId] = useState<string>("");
 
-  // Стан форми, щоб дані не зникали при зміні слайдера
   const [formValues, setFormValues] = useState({
     name: "",
     age: "",
@@ -110,7 +110,7 @@ export default function GardenPage() {
     },
     files: { audio: File | null; photo: File | null; video: File | null }
   ) => {
-    await addStory({
+    const newStory = await addStory({
       storyId: currentStoryId,
       name: values.name,
       age: values.age === "" || values.age === null ? undefined : values.age,
@@ -124,7 +124,28 @@ export default function GardenPage() {
       video: files.video ?? undefined,
     });
 
-    // Очистити форму після успішного відправлення
+    // Показати toast про успішне додавання квітки
+    const flowerTitle = values.title || "Your memory flower";
+    toast.success(
+      `🌸 "${flowerTitle}" has been planted and is blooming in the garden!`
+    );
+
+    if (newStory && typeof newStory.category === "object") {
+      setRandomFlower(newStory);
+    } else if (newStory) {
+      const category = categories.find((cat) => cat._id === newStory.category);
+      if (category) {
+        setRandomFlower({ ...newStory, category });
+      }
+    }
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 50);
+
     setFormValues({
       name: "",
       age: "",

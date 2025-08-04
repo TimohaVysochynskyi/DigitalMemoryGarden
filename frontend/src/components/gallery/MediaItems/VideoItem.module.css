@@ -57,6 +57,8 @@
 .info {
   padding: 16px;
   background-color: rgba(188, 198, 210, 1);
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
@@ -71,6 +73,7 @@
   font-size: 14px;
   margin: 0 0 4px 0;
   color: rgba(80, 102, 123, 1);
+  text-align: right;
 }
 
 .category {
@@ -79,6 +82,7 @@
   color: rgba(80, 102, 123, 1);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: right;
 }
 
 /* Responsive */

@@ -215,11 +215,12 @@
     display: none;
   }
   .mainCandleWrapper {
-    width: 70px;
+    width: 120px;
+    height: auto;
   }
   .fire {
-    width: 30px;
-    height: 40px;
+    width: 50px;
+    height: 60px;
   }
   .candleButton {
     width: 60px;

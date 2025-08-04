@@ -1,7 +1,7 @@
 // Utility functions for generating story IDs
 
-export const generateStoryId = (source: 'flower' | 'candle' | 'archive'): string => {
-    const prefix = source === 'flower' ? 'F' : source === 'candle' ? 'C' : 'A';
+export const generateStoryId = (source: 'flower' | 'candle' | 'archive' | 'gallery'): string => {
+    const prefix = source === 'flower' ? 'F' : source === 'candle' ? 'C' : source === 'archive' ? 'A' : 'G';
     const timestamp = Date.now().toString();
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     // Take last 5 digits of timestamp + 3 random digits = 8 digits total
@@ -10,5 +10,5 @@ export const generateStoryId = (source: 'flower' | 'candle' | 'archive'): string
 };
 
 export const validateStoryId = (storyId: string): boolean => {
-    return /^[FCA]\d{8}$/.test(storyId);
+    return /^[FCAG]\d{8}$/.test(storyId);
 };

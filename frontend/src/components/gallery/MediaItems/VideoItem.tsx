@@ -46,9 +46,13 @@ export default function VideoItem({ story }: Props) {
         </div>
       )}
       <div className={css.info}>
-        {story.title && <h3 className={css.title}>{story.title}</h3>}
-        {story.name && <p className={css.author}>by {story.name}</p>}
-        <p className={css.category}>{story.category.name}</p>
+        <div className={css.col}>
+          {story.title && <h3 className={css.title}>{story.title}</h3>}
+        </div>
+        <div className={css.col}>
+          {story.name && <p className={css.author}>by {story.name}</p>}
+          <p className={css.category}>{story.category.name}</p>
+        </div>
       </div>
     </div>
   );

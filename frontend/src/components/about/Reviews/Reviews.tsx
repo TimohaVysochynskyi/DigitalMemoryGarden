@@ -1,7 +1,46 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
+import reviewsData from "../../../data/reviews.json";
 import css from "./Reviews.module.css";
 
+type Review = {
+  id: number;
+  author: string;
+  date: string;
+  text: string;
+  icon: string;
+};
+
 export default function Reviews() {
+  const [currentReview, setCurrentReview] = useState<Review | null>(null);
+  const [usedReviews, setUsedReviews] = useState<number[]>([]);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * reviewsData.length);
+    const initialReview = reviewsData[randomIndex];
+    setCurrentReview(initialReview);
+    setUsedReviews([initialReview.id]);
+  }, []);
+
+  const getRandomReview = () => {
+    const availableReviews = reviewsData.filter(
+      (review) => !usedReviews.includes(review.id)
+    );
+
+    const reviewsToChooseFrom =
+      availableReviews.length > 0 ? availableReviews : reviewsData;
+
+    if (availableReviews.length === 0) {
+      setUsedReviews([]);
+    }
+
+    const randomIndex = Math.floor(Math.random() * reviewsToChooseFrom.length);
+    const selectedReview = reviewsToChooseFrom[randomIndex];
+
+    setUsedReviews((prev) => [...prev, selectedReview.id]);
+    setCurrentReview(selectedReview);
+  };
   return (
     <>
       <div className={css.container}>
@@ -15,18 +54,32 @@ export default function Reviews() {
             />
           </div>
           <div className={css.col}>
-            <div className={css.review}>
-              <p className={css.reviewText}>
-                This platform feels like a quiet place in the middle of chaos. I
-                came just to read, but ended up sharing a memory I didn’t think
-                I’d ever tell. Thank you for making it feel safe and meaningful.
-              </p>
-              <div className={css.reviewRow}>
-                <span className={css.reviewAuthor}>Kateryna</span>
-                <span className={css.reviewDate}>02.07.2025</span>
-              </div>
-            </div>
-            <OutlineButton>Take one review</OutlineButton>
+            <AnimatePresence mode="wait">
+              {currentReview && (
+                <motion.div
+                  key={currentReview.id}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className={css.review}
+                >
+                  <p className={css.reviewText}>{currentReview.text}</p>
+                  <div className={css.reviewRow}>
+                    <span className={css.reviewAuthor}>
+                      {currentReview.author}{" "}
+                      <span className={css.reviewIcon}>
+                        {currentReview.icon}
+                      </span>
+                    </span>
+                    <span className={css.reviewDate}>{currentReview.date}</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <OutlineButton onClick={getRandomReview}>
+              Take one review
+            </OutlineButton>
           </div>
         </div>
         <div className={css.blueSection}></div>

@@ -51,7 +51,7 @@ export const createStory = async (payload) => {
     storyId = await generateStoryId(payload.source);
   } else {
     // Validate provided storyId format
-    const storyIdRegex = /^[FCA]\d{8}$/;
+    const storyIdRegex = /^[FCAG]\d{8}$/;
     if (!storyIdRegex.test(storyId)) {
       throw new Error('Invalid storyId format');
     }

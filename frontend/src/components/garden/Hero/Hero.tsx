@@ -64,7 +64,8 @@ function VideoLoopSection({
         objectFit: "contain",
         border: 0,
         outline: 0,
-        background: "none",
+        background: "transparent",
+        backgroundColor: "transparent",
       }}
     />
   );

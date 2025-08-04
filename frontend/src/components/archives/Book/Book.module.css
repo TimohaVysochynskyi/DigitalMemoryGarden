@@ -58,6 +58,15 @@
   top: 0;
   right: 0;
 }
+.pattern {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  width: 25%;
+  transform: rotate(90deg);
+  z-index: 1;
+  opacity: 0.8;
+}
 .middleLine {
   position: absolute;
   top: 0;
@@ -71,6 +80,8 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  position: relative;
+  z-index: 2;
 }
 .recordTop {
   display: flex;

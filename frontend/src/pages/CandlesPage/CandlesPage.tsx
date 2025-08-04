@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import PopupOverlay from "../../components/common/PopupOverlay/PopupOverlay";
 import SearchBar from "../../components/common/SearchBar/SearchBar";
 import StoryDetails from "../../components/common/StoryDetails/StoryDetails";
@@ -63,6 +64,18 @@ export default function CandlesPage() {
 
     console.log("New candle added:", newCandle);
     setLastAddedCandle(newCandle);
+
+    // Показати toast про успішне додавання свічки
+    const candleName = values.name || "Memorial candle";
+    toast.success(`🕯️ "${candleName}" has been lit and added to our memorial!`);
+
+    // Прокрутити до верху з невеликою затримкою
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 50);
   };
 
   const handleSearchCandle = async (input: string | Story) => {
