@@ -20,6 +20,15 @@
   justify-content: center;
   text-align: center;
 }
+
+@media screen and (min-width: 1441px) {
+  .button {
+    font-size: 22px;
+    height: 78px;
+    padding: 12px 45px;
+  }
+}
+
 .dark {
   color: rgba(15, 26, 44);
   border-color: rgba(15, 26, 44);
@@ -27,6 +36,12 @@
 .light {
   color: rgba(188, 198, 210, 1);
   border-color: rgba(188, 198, 210, 1);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 1200px) {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import reviewsData from "../../../data/reviews.json";
@@ -13,6 +14,7 @@ type Review = {
 };
 
 export default function Reviews() {
+  const { t } = useTranslation();
   const [currentReview, setCurrentReview] = useState<Review | null>(null);
   const [usedReviews, setUsedReviews] = useState<number[]>([]);
 
@@ -44,7 +46,7 @@ export default function Reviews() {
   return (
     <>
       <div className={css.container}>
-        <h2 className={css.title}>Reviews</h2>
+        <h2 className={css.title}>{t("about.reviews.title")}</h2>
         <div className={css.content}>
           <div className={css.col}>
             <img

@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import css from "./Manifest.module.css";
 
 export default function Manifest() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={css.container}>
@@ -10,7 +13,7 @@ export default function Manifest() {
             alt="Pattern image"
             className={css.patternLeft}
           />
-          <h2 className={css.title}>Manifesto</h2>
+          <h2 className={css.title}>{t("about.manifest.title")}</h2>
           <p className={css.text}>
             <span className={css.sectionTitle}>How the Idea Was Planted</span>
             <br />
@@ -53,8 +56,16 @@ export default function Manifest() {
         </div>
         <div className={css.page}>
           <div className={css.imagesWrapper}>
-            <div className={css.image}></div>
-            <div className={css.image}></div>
+            <img
+              src="/manifest1.webp"
+              alt="Manifest image"
+              className={css.image}
+            />
+            <img
+              src="/manifest2.webp"
+              alt="Manifest image"
+              className={css.image}
+            />
           </div>
           <p className={css.text}>
             <span className={css.sectionTitle}>What Makes It Different</span>

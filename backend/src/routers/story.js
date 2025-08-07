@@ -2,6 +2,7 @@ import { getStoriesContextByCategoryController } from '../controllers/story.js';
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
+import { handleMulterError } from '../middlewares/handleMulterError.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { authAdmin } from '../middlewares/authAdmin.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -32,6 +33,7 @@ router.post(
     { name: 'audio', maxCount: 1 },
     { name: 'video', maxCount: 1 },
   ]),
+  handleMulterError,
   validateBody(storySchema),
   ctrlWrapper(createStoryController),
 );

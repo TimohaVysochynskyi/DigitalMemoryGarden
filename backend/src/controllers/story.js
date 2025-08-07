@@ -14,27 +14,54 @@ import {
   getStoriesContextByCategory,
   getStoriesForGallery,
 } from '../services/story.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-import { createDirIfNotExist } from '../utils/createDirIfNotExist.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 // POST /stories
 export const createStoryController = async (req, res, next) => {
   try {
+    console.log('🔄 Story creation started');
+    console.log('📝 Request body:', {
+      storyId: req.body.storyId,
+      source: req.body.source,
+      title: req.body.title,
+      name: req.body.name,
+      category: req.body.category,
+    });
+    console.log(
+      '📁 Request files:',
+      req.files ? Object.keys(req.files) : 'No files',
+    );
+
+    if (req.files) {
+      for (const [field, files] of Object.entries(req.files)) {
+        if (files && files.length > 0) {
+          console.log(`📎 ${field}:`, {
+            name: files[0].originalname,
+            size: files[0].size,
+            mimetype: files[0].mimetype,
+          });
+        }
+      }
+    }
+
     let media = {};
     if (req.files) {
       // req.files is an object: { photo: [file], audio: [file], video: [file] }
       const fieldToFolder = {
-        photo: 'images',
-        audio: 'audio',
-        video: 'video',
+        photo: 'stories/images',
+        audio: 'stories/audio',
+        video: 'stories/video',
       };
       for (const field of Object.keys(fieldToFolder)) {
         const filesArr = req.files[field];
         if (filesArr && filesArr.length > 0) {
           const file = filesArr[0];
           const folder = fieldToFolder[field];
-          await createDirIfNotExist(`uploads/${folder}`);
-          media[field] = await saveFileToUploadDir(file, folder);
+          console.log(
+            `☁️ Uploading ${field} file to Cloudinary folder: ${folder}`,
+          );
+          media[field] = await saveFileToCloudinary(file, folder);
+          console.log(`✅ ${field} uploaded to Cloudinary successfully`);
         }
       }
     }
@@ -44,10 +71,35 @@ export const createStoryController = async (req, res, next) => {
       location: req.body.location || undefined,
       age: req.body.age ? Number(req.body.age) : undefined,
     };
+
+    console.log('🚀 Creating story with payload:', {
+      storyId: payload.storyId,
+      source: payload.source,
+      hasMedia: !!payload.media,
+      mediaKeys: payload.media ? Object.keys(payload.media) : [],
+    });
+
     const story = await createStory(payload);
+    console.log('✅ Story created successfully:', story._id);
     res.status(201).send(story);
   } catch (err) {
-    next(createHttpError(400, err.message));
+    console.error('❌ Error creating story:', {
+      message: err.message,
+      code: err.code,
+      stack: err.stack,
+    });
+
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      next(createHttpError(400, 'File too large. Maximum size is 10MB.'));
+    } else if (err.code === 'LIMIT_FILE_COUNT') {
+      next(createHttpError(400, 'Too many files. Maximum is 3 files.'));
+    } else if (err.code === 'LIMIT_FIELD_VALUE') {
+      next(createHttpError(400, 'Field value too large.'));
+    } else if (err.message && err.message.includes('Invalid file type')) {
+      next(createHttpError(400, err.message));
+    } else {
+      next(createHttpError(400, err.message));
+    }
   }
 };
 

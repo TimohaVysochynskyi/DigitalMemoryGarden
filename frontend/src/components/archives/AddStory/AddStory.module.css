@@ -92,6 +92,13 @@
   }
 }
 
+@media screen and (min-width: 1441px) {
+  .input {
+    font-size: 20px;
+    height: 76px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .container {
     padding: 40px 72px;

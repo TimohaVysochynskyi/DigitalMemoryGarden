@@ -26,6 +26,12 @@
   transition: color 0.3s ease;
 }
 
+@media screen and (min-width: 1441px) {
+  .filterButton {
+    font-size: 28px;
+  }
+}
+
 .filterButton:hover,
 .filterButton.active {
   color: rgba(15, 26, 44, 1);

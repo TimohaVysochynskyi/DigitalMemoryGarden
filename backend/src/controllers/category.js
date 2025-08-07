@@ -4,7 +4,7 @@ import {
   updateCategory,
   deleteCategory,
 } from '../services/category.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getAllCategoriesController = async (req, res, next) => {
   const categories = await getAllCategories();
@@ -18,19 +18,19 @@ export const addCategoryController = async (req, res, next) => {
   let miniatureImage = '';
 
   if (req.files?.flowerImage?.[0]) {
-    flowerImage = await saveFileToUploadDir(
+    flowerImage = await saveFileToCloudinary(
       req.files.flowerImage[0],
       'categories/images',
     );
   }
   if (req.files?.flowerAnimation?.[0]) {
-    flowerAnimation = await saveFileToUploadDir(
+    flowerAnimation = await saveFileToCloudinary(
       req.files.flowerAnimation[0],
       'categories/animations',
     );
   }
   if (req.files?.miniatureImage?.[0]) {
-    miniatureImage = await saveFileToUploadDir(
+    miniatureImage = await saveFileToCloudinary(
       req.files.miniatureImage[0],
       'categories/miniatures',
     );
@@ -52,19 +52,19 @@ export const updateCategoryController = async (req, res, next) => {
   let flowerImage, flowerAnimation, miniatureImage;
 
   if (req.files?.flowerImage?.[0]) {
-    flowerImage = await saveFileToUploadDir(
+    flowerImage = await saveFileToCloudinary(
       req.files.flowerImage[0],
       'categories/images',
     );
   }
   if (req.files?.flowerAnimation?.[0]) {
-    flowerAnimation = await saveFileToUploadDir(
+    flowerAnimation = await saveFileToCloudinary(
       req.files.flowerAnimation[0],
       'categories/animations',
     );
   }
   if (req.files?.miniatureImage?.[0]) {
-    miniatureImage = await saveFileToUploadDir(
+    miniatureImage = await saveFileToCloudinary(
       req.files.miniatureImage[0],
       'categories/miniatures',
     );

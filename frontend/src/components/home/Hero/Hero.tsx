@@ -1,35 +1,29 @@
 import { Link } from "react-router-dom";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import css from "./Hero.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   const handleArrowClick = () => {
     window.scrollTo({
       top: innerHeight * 0.85,
       behavior: "smooth",
     });
   };
+
   return (
     <>
       <div className={css.hero}>
         <div className={css.heroContent}>
           <h1 className={css.title}>
-            The Digital <br />
-            <span>Memory Garden</span>
+            {t("home.hero.title.0")} <br />
+            <span>{t("home.hero.title.1")}</span>
           </h1>
-          <p className={css.subtitle}>
-            An interactive platform for collective remembrance of the ongoing
-            war in Ukraine (2022–). Through participatory storytelling, the
-            Digital Memory Garden invites you to preserve personal wartime
-            memories – spoken or silent, written, drawn, or recorded. Each
-            contribution becomes part of a living archive of courage, loss, and
-            resilience. Let’s grow this digital garden of memory together – and
-            carry our stories through generations. Your memory matters!
-          </p>
+          <p className={css.subtitle}>{t("home.hero.subtitle")}</p>
           <div className={css.btnsWrapper}>
-            <OutlineButton to="/garden">
-              Join our digital memory field
-            </OutlineButton>
+            <OutlineButton to="/garden">{t("home.hero.cta")}</OutlineButton>
             <OutlineButton onClick={handleArrowClick}>
               <img
                 src="/btn-arrow-right.png"
@@ -60,7 +54,7 @@ export default function Hero() {
           </Link>
         </div>
         <div className={css.btnMobile}>
-          <OutlineButton>Join our digital memory field</OutlineButton>
+          <OutlineButton to="/garden">{t("home.hero.cta")}</OutlineButton>
         </div>
       </div>
     </>

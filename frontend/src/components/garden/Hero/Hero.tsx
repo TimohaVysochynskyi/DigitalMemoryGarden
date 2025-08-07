@@ -4,6 +4,7 @@ import css from "./Hero.module.css";
 
 import { useRef, useEffect } from "react";
 import type { Story } from "../../../types/story";
+import { useTranslation } from "react-i18next";
 
 type VideoLoopSectionProps = {
   src: string;
@@ -78,6 +79,8 @@ type Props = {
 };
 
 export default function Hero({ onSearch, onDetails, flower }: Props) {
+  const { t } = useTranslation();
+
   const handlePlantNewFlower = () => {
     window.scrollTo({
       top: document.getElementById("plant-new-memory-flower")?.offsetTop || 0,
@@ -88,19 +91,17 @@ export default function Hero({ onSearch, onDetails, flower }: Props) {
   return (
     <>
       <div className={css.hero}>
-        <HeroTitleAndSubtitle title="Memory garden">
-          Mark a moment or a feeling. Upload a written story, record a video, or
-          add an image, sound, or drawing – and let it bloom as a digital
-          flower.
+        <HeroTitleAndSubtitle title={t("garden.hero.title")}>
+          {t("garden.hero.subtitle")}
         </HeroTitleAndSubtitle>
 
         <div className={css.heroContent}>
           <div className={css.btnsWrapper}>
             <OutlineButton onClick={onSearch}>
-              Find some memory flower
+              {t("garden.hero.findFlower")}
             </OutlineButton>
             <OutlineButton onClick={handlePlantNewFlower}>
-              Plant new memory flower
+              {t("garden.hero.plantFlower")}
             </OutlineButton>
           </div>
 
@@ -110,7 +111,7 @@ export default function Hero({ onSearch, onDetails, flower }: Props) {
                 {flower?.title || "Name of story"}
               </p>
               <p className={css.storyAuthor}>
-                {flower?.name ? `By ${flower.name}` : ""}
+                {flower?.name ? flower.name : ""}
               </p>
             </div>
 
@@ -171,5 +172,4 @@ export default function Hero({ onSearch, onDetails, flower }: Props) {
       </div>
     </>
   );
-  // ...existing code...
 }

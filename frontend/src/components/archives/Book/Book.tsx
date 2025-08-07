@@ -2,6 +2,7 @@ import clsx from "clsx";
 import css from "./Book.module.css";
 import type { Story } from "../../../types/story";
 import type { Category } from "../../../types/category";
+import { useTranslation } from "react-i18next";
 
 type BookProps = {
   stories: Story[];
@@ -25,10 +26,12 @@ export default function Book({
   const currentCategory = categories.find((c) => c._id === selectedCategoryId);
   const maxPage = Math.max(1, Math.ceil(totalCount / 4));
 
+  const { t } = useTranslation();
+
   return (
     <div className={css.container}>
       <h2 className={css.title}>
-        Archive
+        {t("archives.book.title")}
         {currentCategory && (
           <span className={css.categoryName}> {currentCategory.name}</span>
         )}

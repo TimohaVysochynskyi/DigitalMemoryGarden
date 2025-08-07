@@ -1,12 +1,23 @@
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import css from "./LanguageSwitch.module.css";
 
 export default function LanguageSwitch() {
   const currentRoute = useLocation().pathname.replace(/\/$/, "");
+  const { i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    const nextLanguage = i18n.language === "en" ? "uk" : "en";
+    i18n.changeLanguage(nextLanguage);
+  };
+
+  const getCurrentLanguageDisplay = () => {
+    return i18n.language === "en" ? "ENG" : "УКР";
+  };
 
   return (
     <>
-      <div className={css.container}>
+      <button className={css.container} onClick={toggleLanguage}>
         {currentRoute == "/candles" || currentRoute == "/about" ? (
           <>
             <img
@@ -14,7 +25,9 @@ export default function LanguageSwitch() {
               alt="Language Switcher"
               className={css.icon}
             />
-            <span className={css.currentLanguageLight}>ENG</span>
+            <span className={css.currentLanguageLight}>
+              {getCurrentLanguageDisplay()}
+            </span>
           </>
         ) : (
           <>
@@ -23,10 +36,12 @@ export default function LanguageSwitch() {
               alt="Language Switcher"
               className={css.icon}
             />
-            <span className={css.currentLanguage}>ENG</span>
+            <span className={css.currentLanguage}>
+              {getCurrentLanguageDisplay()}
+            </span>
           </>
         )}
-      </div>
+      </button>
     </>
   );
 }

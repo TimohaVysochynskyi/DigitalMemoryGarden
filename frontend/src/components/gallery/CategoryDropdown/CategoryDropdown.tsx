@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { getAllCategories } from "../../../services/category";
 import type { Category } from "../../../types/category";
 import css from "./CategoryDropdown.module.css";
@@ -10,6 +11,7 @@ export default function CategoryDropdown({
   value: string;
   onChange: (val: string) => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const ref = useRef<HTMLDivElement>(null);
@@ -38,7 +40,9 @@ export default function CategoryDropdown({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span>{selectedCategory?.name || "Category"}</span>
+        <span>
+          {selectedCategory?.name || t("gallery.gallery.filters.mediaType")}
+        </span>
         <img
           src="/dropdown-arrow-down.png"
           alt="Dropdown arrow down"
@@ -54,7 +58,7 @@ export default function CategoryDropdown({
               setOpen(false);
             }}
           >
-            All Categories
+            {t("gallery.gallery.filters.all")}
           </li>
           {categories.map((cat) => (
             <li

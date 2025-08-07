@@ -107,6 +107,23 @@
   right: 30px;
 }
 
+@media screen and (min-width: 1441px) {
+  .input {
+    font-size: 20px;
+    height: 76px;
+  }
+  .dropdownItem {
+    font-size: 20px;
+    padding: 20px 42px;
+  }
+  .dropdownAuthor {
+    font-size: 18px;
+  }
+  .dropdownId {
+    font-size: 17px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .container {
     padding: 40px;

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import CategoryDropdown from "../CategoryDropdown/CategoryDropdown";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import LoadingSpinner from "../../common/LoadingSpinner/LoadingSpinner";
@@ -22,6 +23,7 @@ export default function Gallery({
   selectedCategoryId,
   onCategoryChange,
 }: Props) {
+  const { t } = useTranslation();
   const [stories, setStories] = useState<GalleryStory[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -114,7 +116,7 @@ export default function Gallery({
             }`}
             onClick={() => onMediaTypeChange("photo")}
           >
-            Photos
+            {t("gallery.hero.filters.photo")}
           </button>
           <button
             type="button"
@@ -123,7 +125,7 @@ export default function Gallery({
             }`}
             onClick={() => onMediaTypeChange("video")}
           >
-            Videos
+            {t("gallery.hero.filters.video")}
           </button>
           <button
             type="button"
@@ -132,7 +134,7 @@ export default function Gallery({
             }`}
             onClick={() => onMediaTypeChange("audio")}
           >
-            Audios
+            {t("gallery.hero.filters.audio")}
           </button>
           <CategoryDropdown
             value={selectedCategoryId}
@@ -148,12 +150,16 @@ export default function Gallery({
 
         {!loading && stories.length === 0 && (
           <div className={css.empty}>
-            No {selectedMediaType} content found for the selected filters.
+            {t("gallery.gallery.noMedia", {
+              mediaType: t(`gallery.hero.filters.${selectedMediaType}`),
+            })}
           </div>
         )}
 
         {!loading && hasMore && stories.length > 0 && (
-          <OutlineButton onClick={handleShowMore}>Show more</OutlineButton>
+          <OutlineButton onClick={handleShowMore}>
+            {t("gallery.gallery.loadMore")}
+          </OutlineButton>
         )}
       </div>
     </>

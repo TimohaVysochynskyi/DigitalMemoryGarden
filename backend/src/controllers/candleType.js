@@ -7,16 +7,14 @@ import {
   updateCandleType,
   deleteCandleType,
 } from '../services/candleType.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-import { createDirIfNotExist } from '../utils/createDirIfNotExist.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 // POST /candle-types
 export const createCandleTypeController = async (req, res, next) => {
   try {
     let imageUrl;
     if (req.file) {
-      await createDirIfNotExist('uploads/candle-types');
-      imageUrl = await saveFileToUploadDir(req.file, 'candle-types');
+      imageUrl = await saveFileToCloudinary(req.file, 'candle-types');
     }
 
     const payload = {
@@ -31,7 +29,6 @@ export const createCandleTypeController = async (req, res, next) => {
   }
 };
 
-// GET /candle-types/:id
 export const getCandleTypeByIdController = async (req, res, next) => {
   const candleType = await getCandleTypeById(req.params.id);
   if (!candleType)
@@ -39,25 +36,21 @@ export const getCandleTypeByIdController = async (req, res, next) => {
   res.status(200).send(candleType);
 };
 
-// GET /candle-types
 export const getAllCandleTypesController = async (req, res, next) => {
   const candleTypes = await getAllCandleTypes();
   res.status(200).send(candleTypes);
 };
 
-// GET /candle-types/admin
 export const getAllCandleTypesForAdminController = async (req, res, next) => {
   const candleTypes = await getAllCandleTypesForAdmin();
   res.status(200).send(candleTypes);
 };
 
-// PATCH /candle-types/:id
 export const updateCandleTypeController = async (req, res, next) => {
   try {
     let imageUrl;
     if (req.file) {
-      await createDirIfNotExist('uploads/candle-types');
-      imageUrl = await saveFileToUploadDir(req.file, 'candle-types');
+      imageUrl = await saveFileToCloudinary(req.file, 'candle-types');
     }
 
     const payload = {

@@ -26,7 +26,6 @@ export default function GalleryPage() {
   };
 
   const handleStoryAdded = () => {
-    // Refresh gallery or show success message
     window.location.reload();
   };
 

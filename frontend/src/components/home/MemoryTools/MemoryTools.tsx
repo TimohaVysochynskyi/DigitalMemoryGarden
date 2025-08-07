@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import css from "./MemoryTools.module.css";
 
 type Props = {
@@ -5,10 +6,11 @@ type Props = {
 };
 
 export default function MemoryTools({ onToolClick }: Props) {
+  const { t } = useTranslation();
   return (
     <>
       <div className={css.container}>
-        <h2 className={css.title}>Our memory tools</h2>
+        <h2 className={css.title}>{t("home.memoryTools.title")}</h2>
         <div className={css.tools}>
           <div className={css.tool}>
             <div className={css.toolImageWrapper}>
@@ -28,7 +30,9 @@ export default function MemoryTools({ onToolClick }: Props) {
                 />
               </button>
             </div>
-            <h3 className={css.toolTitle}>How to plant a flower of memory</h3>
+            <h3 className={css.toolTitle}>
+              {t("home.memoryTools.flower.title")}
+            </h3>
           </div>
           <div className={css.tool}>
             <div className={css.toolImageWrapper}>
@@ -48,7 +52,9 @@ export default function MemoryTools({ onToolClick }: Props) {
                 />
               </button>
             </div>
-            <h3 className={css.toolTitle}>How to light a memorial candle</h3>
+            <h3 className={css.toolTitle}>
+              {t("home.memoryTools.candle.title")}
+            </h3>
           </div>
           <div className={css.tool}>
             <div className={css.toolImageWrapper}>
@@ -68,7 +74,9 @@ export default function MemoryTools({ onToolClick }: Props) {
                 />
               </button>
             </div>
-            <h3 className={css.toolTitle}>How to use the memory archive</h3>
+            <h3 className={css.toolTitle}>
+              {t("home.memoryTools.archive.title")}
+            </h3>
           </div>
         </div>
       </div>

@@ -81,6 +81,25 @@
   letter-spacing: 0%;
 }
 
+@media screen and (min-width: 1441px) {
+  .title {
+    font-size: 40px;
+  }
+  .reviewText {
+    font-size: 18px;
+    line-height: 130%;
+  }
+  .reviewAuthor {
+    font-size: 28px;
+  }
+  .reviewDate {
+    font-size: 22px;
+  }
+  .reviewIcon {
+    font-size: 28px;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .image {
     max-width: 430px;

@@ -16,6 +16,25 @@ apiClient.interceptors.request.use((config) => {
     return config;
 });
 
+apiClient.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 400) {
+            console.error('API Error:', error.response.data);
+            if (error.response.data.message?.includes('File too large')) {
+                throw new Error('File is too large. Maximum size is 10MB per file.');
+            }
+            if (error.response.data.message?.includes('Invalid file type')) {
+                throw new Error('Invalid file type. Please use supported formats.');
+            }
+            if (error.response.data.message?.includes('Too many files')) {
+                throw new Error('Too many files. Maximum is 3 files total.');
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export default apiClient;
 
 

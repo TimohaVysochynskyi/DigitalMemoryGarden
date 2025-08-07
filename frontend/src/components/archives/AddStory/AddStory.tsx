@@ -6,24 +6,7 @@ import CategoryDropdown from "../CategoryDropdown/CategoryDropdown";
 import { addStory } from "../../../services/story";
 import { generateStoryId } from "../../../utils/storyId";
 import type { Category } from "../../../types/category";
-
-const validationSchema = Yup.object({
-  name: Yup.string().max(100, "Maximum 100 characters"),
-  age: Yup.number()
-    .min(0, "Age cannot be less than 0")
-    .max(120, "Age cannot be greater than 120")
-    .integer("Age must be an integer")
-    .nullable(),
-  location: Yup.string().max(200, "Maximum 200 characters"),
-  title: Yup.string()
-    .required("The 'Title of story' field is required")
-    .min(3, "Minimum 3 characters")
-    .max(100, "Maximum 100 characters"),
-  category: Yup.string().required("Category is required"),
-  comment: Yup.string().max(2000, "Maximum 2000 characters"),
-  consent: Yup.boolean().oneOf([true], "Consent is required"),
-  sensitive: Yup.boolean(),
-});
+import { useTranslation } from "react-i18next";
 
 type AddStoryProps = {
   categories: Category[];
@@ -31,7 +14,37 @@ type AddStoryProps = {
 };
 
 export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
-  // categories: масив категорій з ArchivesPage
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    name: Yup.string().max(100, t("archives.addStory.validation.nameMax")),
+    age: Yup.number()
+      .min(0, t("archives.addStory.validation.ageMin"))
+      .max(120, t("archives.addStory.validation.ageMax"))
+      .integer(t("archives.addStory.validation.ageInteger"))
+      .nullable(),
+    location: Yup.string().max(
+      200,
+      t("archives.addStory.validation.locationMax")
+    ),
+    title: Yup.string()
+      .required(t("archives.addStory.validation.titleRequired"))
+      .min(3, t("archives.addStory.validation.titleMin"))
+      .max(100, t("archives.addStory.validation.titleMax")),
+    category: Yup.string().required(
+      t("archives.addStory.validation.categoryRequired")
+    ),
+    comment: Yup.string().max(
+      2000,
+      t("archives.addStory.validation.commentMax")
+    ),
+    consent: Yup.boolean().oneOf(
+      [true],
+      t("archives.addStory.validation.consentRequired")
+    ),
+    sensitive: Yup.boolean(),
+  });
+
   return (
     <div className={css.container} id="add-story">
       <Formik
@@ -72,13 +85,13 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                 <div className={css.row}>
                   <Field
                     name="name"
-                    placeholder="Name and Surname"
+                    placeholder={t("archives.addStory.name")}
                     className={css.input}
                   />
                   <Field
                     name="age"
                     type="number"
-                    placeholder="Age"
+                    placeholder={t("archives.addStory.age")}
                     className={css.input}
                   />
                 </div>
@@ -95,7 +108,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
 
                 <Field
                   name="location"
-                  placeholder="Location"
+                  placeholder={t("archives.addStory.location")}
                   className={css.input}
                 />
                 <ErrorMessage
@@ -108,7 +121,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                   <div>
                     <Field
                       name="title"
-                      placeholder="Title of story *"
+                      placeholder={`${t("archives.addStory.storyTitle")} *`}
                       className={css.input}
                     />
                     <ErrorMessage
@@ -137,7 +150,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
 
                 <Field
                   name="comment"
-                  placeholder="Comment or story"
+                  placeholder={t("archives.addStory.comment")}
                   className={css.input}
                 />
                 <ErrorMessage
@@ -155,9 +168,8 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                     name="consent"
                     className={css.checkboxInput}
                   />
-                  <div className={css.customCheckbox}></div>I consent to the
-                  processing of my personal data and public sharing of my
-                  submission*
+                  <div className={css.customCheckbox}></div>
+                  {t("archives.addStory.consent")}
                 </label>
                 <ErrorMessage
                   name="consent"
@@ -172,13 +184,15 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                     className={css.checkboxInput}
                   />
                   <div className={css.customCheckbox}></div>
-                  This message may contain sensitive content
+                  {t("archives.addStory.sensitive")}
                 </label>
               </div>
             </div>
             <div className={css.col}>
-              <OutlineButton type="submit">
-                {isSubmitting ? "Adding..." : "Add story to archive"}
+              <OutlineButton type="submit" disabled={isSubmitting}>
+                {isSubmitting
+                  ? t("archives.addStory.loading")
+                  : t("archives.addStory.submit")}
               </OutlineButton>
             </div>
           </Form>

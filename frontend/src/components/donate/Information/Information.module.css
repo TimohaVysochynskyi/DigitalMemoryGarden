@@ -46,15 +46,14 @@
   justify-content: space-between;
 }
 .optionTitle {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 500;
   text-transform: uppercase;
   line-height: 100%;
   letter-spacing: 0%;
 }
 .optionText {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 22px;
   line-height: 100%;
   letter-spacing: 0%;
   text-align: justify;
@@ -66,6 +65,12 @@
   }
   .content {
     gap: 40px;
+  }
+  .optionTitle {
+    font-size: 24px;
+  }
+  .optionText {
+    font-size: 20px;
   }
 }
 
@@ -80,10 +85,10 @@
     gap: 30px;
   }
   .optionTitle {
-    font-size: 20px;
+    font-size: 22px;
   }
   .optionText {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 

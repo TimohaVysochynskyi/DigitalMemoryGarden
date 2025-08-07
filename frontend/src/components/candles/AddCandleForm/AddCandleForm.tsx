@@ -2,17 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./AddCandleForm.module.css";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
-
-const validationSchema = Yup.object({
-  name: Yup.string().max(100, "Maximum 100 characters"),
-  dateOfBirth: Yup.date().required("Date of birth is required"),
-  dateOfDeath: Yup.date().required("Date of death is required"),
-  comment: Yup.string().max(2000, "Maximum 2000 characters"),
-  audio: Yup.mixed().nullable(),
-  photo: Yup.mixed().nullable(),
-  video: Yup.mixed().nullable(),
-  consent: Yup.boolean().oneOf([true], "Consent is required"),
-});
+import { useTranslation } from "react-i18next";
 
 type AddCandleFormValues = {
   name: string;
@@ -31,17 +21,49 @@ type Props = {
     files: { audio: File | null; photo: File | null; video: File | null }
   ) => void | Promise<void>;
   storyId: string;
+  initialValues?: {
+    name: string;
+    dateOfBirth: string;
+    dateOfDeath: string;
+  };
 };
 
-export default function AddCandleForm({ onSubmit, storyId }: Props) {
+export default function AddCandleForm({
+  onSubmit,
+  storyId,
+  initialValues,
+}: Props) {
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    name: Yup.string().max(100, t("candles.candleForm.validation.nameMax")),
+    dateOfBirth: Yup.date().required(
+      t("candles.candleForm.validation.dateOfBirthRequired")
+    ),
+    dateOfDeath: Yup.date().required(
+      t("candles.candleForm.validation.dateOfDeathRequired")
+    ),
+    comment: Yup.string().max(
+      2000,
+      t("candles.candleForm.validation.commentMax")
+    ),
+    audio: Yup.mixed().nullable(),
+    photo: Yup.mixed().nullable(),
+    video: Yup.mixed().nullable(),
+    consent: Yup.boolean().oneOf(
+      [true],
+      t("candles.candleForm.validation.consentRequired")
+    ),
+  });
+
   return (
     <>
       <div className={css.container}>
         <Formik
           initialValues={{
-            name: "",
-            dateOfBirth: "",
-            dateOfDeath: "",
+            name: initialValues?.name || "",
+            dateOfBirth: initialValues?.dateOfBirth || "",
+            dateOfDeath: initialValues?.dateOfDeath || "",
             comment: "",
             audio: null,
             photo: null,
@@ -49,6 +71,7 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
             consent: false,
           }}
           validationSchema={validationSchema}
+          enableReinitialize={true}
           onSubmit={(values, { resetForm }) => {
             onSubmit(values, {
               audio: values.audio,
@@ -58,13 +81,13 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
             resetForm();
           }}
         >
-          {({ setFieldValue, values }) => (
+          {({ setFieldValue, values, isSubmitting }) => (
             <Form className={css.formWrapper}>
-              <h2 className={css.title}>New candle</h2>
+              <h2 className={css.title}>{t("candles.candleForm.title")}</h2>
               <div className={css.form}>
                 <Field
                   name="name"
-                  placeholder="Name or Callsign"
+                  placeholder={t("candles.candleForm.name")}
                   className={css.input}
                 />
                 <ErrorMessage
@@ -76,7 +99,7 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                 <div className={css.row}>
                   <div className={css.dateField}>
                     <label htmlFor="dateOfBirth" className={css.dateLabel}>
-                      Date of birth
+                      {t("candles.candleForm.dateOfBirth")}
                     </label>
                     <Field
                       name="dateOfBirth"
@@ -86,7 +109,7 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                   </div>
                   <div className={css.dateField}>
                     <label htmlFor="dateOfDeath" className={css.dateLabel}>
-                      Date of death
+                      {t("candles.candleForm.dateOfDeath")}
                     </label>
                     <Field
                       name="dateOfDeath"
@@ -108,7 +131,7 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
 
                 <Field
                   name="comment"
-                  placeholder="Comment or story"
+                  placeholder={t("candles.candleForm.comment")}
                   className={css.input}
                 />
                 <ErrorMessage
@@ -123,7 +146,9 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                       values.audio ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.audio ? "Audio Added" : "Audio"}
+                    {values.audio
+                      ? t("mediaUpload.audioAdded")
+                      : t("mediaUpload.audio")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -146,7 +171,9 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                       values.photo ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.photo ? "Photo Added" : "Photo"}
+                    {values.photo
+                      ? t("mediaUpload.photoAdded")
+                      : t("mediaUpload.photo")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -169,7 +196,9 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                       values.video ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.video ? "Video Added" : "Video"}
+                    {values.video
+                      ? t("mediaUpload.videoAdded")
+                      : t("mediaUpload.video")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -198,9 +227,8 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
                     name="consent"
                     className={css.checkboxInput}
                   />
-                  <div className={css.customCheckbox}></div>I consent to the
-                  processing of my personal data and public sharing of my
-                  submission*
+                  <div className={css.customCheckbox}></div>
+                  {t("candles.candleForm.consent")}*
                 </label>
                 <ErrorMessage
                   name="consent"
@@ -211,8 +239,14 @@ export default function AddCandleForm({ onSubmit, storyId }: Props) {
 
               <div className={css.footerRow}>
                 <div className={css.flowerId}>#{storyId}</div>
-                <OutlineButton color="light" type="submit">
-                  Light new memory candle
+                <OutlineButton
+                  color="light"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting
+                    ? t("candles.candleForm.loading")
+                    : t("candles.candleForm.submit")}
                 </OutlineButton>
               </div>
             </Form>

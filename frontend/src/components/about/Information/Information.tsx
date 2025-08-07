@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import css from "./Information.module.css";
 
 export default function Information() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={css.container}>
@@ -16,17 +19,10 @@ export default function Information() {
           />
           <div className={css.videoRow}>
             <div className={css.videoCol}>
-              <p className={css.videoTitle}>Interview</p>
+              <p className={css.videoTitle}>{t("about.information.title")}</p>
             </div>
             <p className={css.videoDescription}>
-              In this video interview with Professor Rachel Granger, we discuss
-              the role of digital platforms in preserving personal and
-              collective wartime memory. The conversation explores how
-              interactive design, storytelling, and emotion come together to
-              support remembrance, resilience, and cultural heritage. We explore
-              why platforms like The Digital Memory Garden matter - for healing,
-              connection, and history - and how they help keep memory alive in
-              times of war and displacement.
+              {t("about.information.subtitle")}
             </p>
           </div>
         </div>

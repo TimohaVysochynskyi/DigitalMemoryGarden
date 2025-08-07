@@ -25,6 +25,16 @@
   transition: color 0.15s;
   width: 100%;
 }
+
+@media screen and (min-width: 1441px) {
+  .dropdownButton {
+    font-size: 28px;
+  }
+  .dropdownItem {
+    font-size: 17px;
+  }
+}
+
 .icon {
   width: 26px;
   height: 17px;

@@ -1,4 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import css from "./AddStory.module.css";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
@@ -7,47 +8,58 @@ import { addStory } from "../../../services/story";
 import { generateStoryId } from "../../../utils/storyId";
 import type { Category } from "../../../types/category";
 
-const validationSchema = Yup.object({
-  name: Yup.string().max(100, "Maximum 100 characters"),
-  age: Yup.number()
-    .min(0, "Age cannot be less than 0")
-    .max(120, "Age cannot be greater than 120")
-    .integer("Age must be an integer")
-    .nullable(),
-  location: Yup.string().max(200, "Maximum 200 characters"),
-  title: Yup.string()
-    .required("The 'Title of story' field is required")
-    .min(3, "Minimum 3 characters")
-    .max(100, "Maximum 100 characters"),
-  category: Yup.string().required("Category is required"),
-  comment: Yup.string().max(2000, "Maximum 2000 characters"),
-  consent: Yup.boolean().oneOf([true], "Consent is required"),
-  sensitive: Yup.boolean(),
-  audio: Yup.mixed().nullable(),
-  photo: Yup.mixed().nullable(),
-  video: Yup.mixed().nullable(),
-}).test(
-  "at-least-one-media",
-  "At least one media file (audio, photo, or video) is required for gallery",
-  function (values) {
-    const { audio, photo, video } = values;
-    if (!audio && !photo && !video) {
-      return this.createError({
-        message:
-          "At least one media file (audio, photo, or video) is required for gallery",
-        path: "audio",
-      });
-    }
-    return true;
-  }
-);
-
 type AddStoryProps = {
   categories: Category[];
   onStoryAdded: () => void;
 };
 
 export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    name: Yup.string().max(100, t("gallery.addStory.validation.nameMax")),
+    age: Yup.number()
+      .min(0, t("gallery.addStory.validation.ageMin"))
+      .max(120, t("gallery.addStory.validation.ageMax"))
+      .integer(t("gallery.addStory.validation.ageInteger"))
+      .nullable(),
+    location: Yup.string().max(
+      200,
+      t("gallery.addStory.validation.locationMax")
+    ),
+    title: Yup.string()
+      .required(t("gallery.addStory.validation.titleRequired"))
+      .min(3, t("gallery.addStory.validation.titleMin"))
+      .max(100, t("gallery.addStory.validation.titleMax")),
+    category: Yup.string().required(
+      t("gallery.addStory.validation.categoryRequired")
+    ),
+    comment: Yup.string().max(
+      2000,
+      t("gallery.addStory.validation.commentMax")
+    ),
+    consent: Yup.boolean().oneOf(
+      [true],
+      t("gallery.addStory.validation.consentRequired")
+    ),
+    sensitive: Yup.boolean(),
+    audio: Yup.mixed().nullable(),
+    photo: Yup.mixed().nullable(),
+    video: Yup.mixed().nullable(),
+  }).test(
+    "at-least-one-media",
+    t("gallery.addStory.validation.mediaRequired"),
+    function (values) {
+      const { audio, photo, video } = values;
+      if (!audio && !photo && !video) {
+        return this.createError({
+          message: t("gallery.addStory.validation.mediaRequired"),
+          path: "audio",
+        });
+      }
+      return true;
+    }
+  );
   return (
     <div className={css.container} id="add-story">
       <Formik
@@ -90,18 +102,18 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
         {({ setFieldValue, values, isSubmitting }) => (
           <Form className={css.formWrapper}>
             <div className={css.col}>
-              <h2 className={css.title}>Add story to gallery</h2>
+              <h2 className={css.title}>{t("gallery.addStory.title")}</h2>
               <div className={css.form}>
                 <div className={css.row}>
                   <Field
                     name="name"
-                    placeholder="Name and Surname"
+                    placeholder={t("gallery.addStory.name")}
                     className={css.input}
                   />
                   <Field
                     name="age"
                     type="number"
-                    placeholder="Age"
+                    placeholder={t("gallery.addStory.age")}
                     className={css.input}
                   />
                 </div>
@@ -118,7 +130,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
 
                 <Field
                   name="location"
-                  placeholder="Location"
+                  placeholder={t("gallery.addStory.location")}
                   className={css.input}
                 />
                 <ErrorMessage
@@ -131,7 +143,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                   <div>
                     <Field
                       name="title"
-                      placeholder="Title of story *"
+                      placeholder={t("gallery.addStory.storyTitle")}
                       className={css.input}
                     />
                     <ErrorMessage
@@ -161,7 +173,7 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                 <Field
                   name="comment"
                   as="textarea"
-                  placeholder="Comment or story"
+                  placeholder={t("gallery.addStory.comment")}
                   className={css.textarea}
                 />
                 <ErrorMessage
@@ -176,7 +188,9 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                       values.audio ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.audio ? "Audio Added" : "Audio"}
+                    {values.audio
+                      ? t("mediaUpload.audioAdded")
+                      : t("gallery.addStory.audio")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -199,7 +213,9 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                       values.photo ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.photo ? "Photo Added" : "Photo"}
+                    {values.photo
+                      ? t("mediaUpload.photoAdded")
+                      : t("gallery.addStory.photo")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -222,7 +238,9 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                       values.video ? css.mediaBtnAdded : ""
                     }`}
                   >
-                    {values.video ? "Video Added" : "Video"}
+                    {values.video
+                      ? t("mediaUpload.videoAdded")
+                      : t("gallery.addStory.video")}
                     <img
                       src="/plus-media.png"
                       alt="Add file"
@@ -256,9 +274,8 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                     name="consent"
                     className={css.checkboxInput}
                   />
-                  <div className={css.customCheckbox}></div>I consent to the
-                  processing of my personal data and public sharing of my
-                  submission*
+                  <div className={css.customCheckbox}></div>
+                  {t("gallery.addStory.consent")}
                 </label>
                 <ErrorMessage
                   name="consent"
@@ -273,12 +290,12 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
                     className={css.checkboxInput}
                   />
                   <div className={css.customCheckbox}></div>
-                  This message may contain sensitive content
+                  {t("gallery.addStory.sensitive")}
                 </label>
               </div>
             </div>
             <div className={css.col}>
-              <OutlineButton type="submit">
+              <OutlineButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Adding..." : "Add story to gallery"}
               </OutlineButton>
             </div>

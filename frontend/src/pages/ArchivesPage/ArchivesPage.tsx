@@ -13,6 +13,7 @@ import {
 import { getAllCategories } from "../../services/category";
 import type { Story } from "../../types/story";
 import type { Category } from "../../types/category";
+import { useTranslation } from "react-i18next";
 
 export default function ArchivesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -24,6 +25,8 @@ export default function ArchivesPage() {
   const [searchError, setSearchError] = useState<string>("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchStoriesArr, setSearchStoriesArr] = useState<Story[]>([]);
+
+  const { t } = useTranslation();
 
   // Load categories on mount
   useEffect(() => {
@@ -98,7 +101,7 @@ export default function ArchivesPage() {
         setSearchStoriesArr(contextStories);
         setSearchBarVisible(false);
       } else {
-        setSearchError("No stories found for your query.");
+        setSearchError(t("archives.book.noStories"));
       }
     } catch {
       setSearchError("Search failed. Please try again.");

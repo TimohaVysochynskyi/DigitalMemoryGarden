@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import HeroTitleAndSubtitle from "../../common/HeroTitleAndSubtitle/HeroTitleAndSubtitle";
 import type { MediaType } from "../../../types/Gallery";
 import css from "./Hero.module.css";
@@ -8,12 +9,13 @@ type Props = {
 };
 
 export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={css.hero}>
-        <HeroTitleAndSubtitle title="The gallery">
-          Explore the media archive: video stories, audio messages, and images
-          contributed by people across the Digital Memory Garden.
+        <HeroTitleAndSubtitle title={t("gallery.hero.title")}>
+          {t("gallery.hero.subtitle")}
         </HeroTitleAndSubtitle>
 
         <div className={css.content}>
@@ -31,7 +33,7 @@ export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
                 }`}
                 onClick={() => onMediaTypeChange("photo")}
               >
-                Photo
+                {t("gallery.hero.filters.photo")}
               </button>
               <button
                 type="button"
@@ -40,7 +42,7 @@ export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
                 }`}
                 onClick={() => onMediaTypeChange("video")}
               >
-                Video
+                {t("gallery.hero.filters.video")}
               </button>
               <button
                 type="button"
@@ -49,7 +51,7 @@ export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
                 }`}
                 onClick={() => onMediaTypeChange("audio")}
               >
-                Audio
+                {t("gallery.hero.filters.audio")}
               </button>
             </div>
           </div>

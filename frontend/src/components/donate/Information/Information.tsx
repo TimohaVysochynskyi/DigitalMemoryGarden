@@ -1,21 +1,16 @@
+import { useTranslation } from "react-i18next";
 import css from "./Information.module.css";
 
 export default function Information() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={css.container}>
-        <h2 className={css.title}>Where Your Donation Goes</h2>
+        <h2 className={css.title}>{t("donate.information.title")}</h2>
         <div className={css.content}>
-          <p className={css.description}>
-            In times of war, every small act of solidarity matters. That’s why
-            we’ve carefully selected three of the most trusted and transparent
-            funds supporting Ukraineeach focused on a different area: frontline
-            defense, humanitarian recovery, and protection of children. Whether
-            you feel moved to help equip those defending their homes, support
-            medical and reconstruction efforts, or ensure safety for displaced
-            families, your contribution will go directly to where it’s needed
-            most.
-          </p>
+          <p className={css.description}>{t("donate.information.subtitle")}</p>
+          /Information.module.css";
           <div className={css.option}>
             <img
               src="/donate-alive-pic.webp"

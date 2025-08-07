@@ -3,27 +3,7 @@ import { useEffect } from "react";
 import * as Yup from "yup";
 import css from "./PlantFlowerForm.module.css";
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
-
-const validationSchema = Yup.object({
-  name: Yup.string().max(100, "Maximum 100 characters"),
-  age: Yup.number()
-    .min(0, "Age cannot be less than 0")
-    .max(120, "Age cannot be greater than 120")
-    .integer("Age must be an integer")
-    .nullable(),
-  location: Yup.string().max(200, "Maximum 200 characters"),
-  title: Yup.string()
-    .required("The 'Title of story' field is required")
-    .min(3, "Minimum 3 characters")
-    .max(100, "Maximum 100 characters"),
-  comment: Yup.string().max(2000, "Maximum 2000 characters"),
-  audio: Yup.mixed().nullable(),
-  photo: Yup.mixed().nullable(),
-  video: Yup.mixed().nullable(),
-  consent: Yup.boolean().oneOf([true], "Consent is required"),
-  sensitive: Yup.boolean(),
-  category: Yup.string().required("Category is required"),
-});
+import { useTranslation } from "react-i18next";
 
 function FormSyncComponent({
   onFormChange,
@@ -115,6 +95,40 @@ export default function PlantFlowerForm({
   onFormChange,
   onSubmit,
 }: Props) {
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    name: Yup.string().max(100, t("garden.plantForm.validation.nameMax")),
+    age: Yup.number()
+      .min(0, t("garden.plantForm.validation.ageMin"))
+      .max(120, t("garden.plantForm.validation.ageMax"))
+      .integer(t("garden.plantForm.validation.ageInteger"))
+      .nullable(),
+    location: Yup.string().max(
+      200,
+      t("garden.plantForm.validation.locationMax")
+    ),
+    title: Yup.string()
+      .required(t("garden.plantForm.validation.titleRequired"))
+      .min(3, t("garden.plantForm.validation.titleMin"))
+      .max(100, t("garden.plantForm.validation.titleMax")),
+    comment: Yup.string().max(
+      2000,
+      t("garden.plantForm.validation.commentMax")
+    ),
+    audio: Yup.mixed().nullable(),
+    photo: Yup.mixed().nullable(),
+    video: Yup.mixed().nullable(),
+    consent: Yup.boolean().oneOf(
+      [true],
+      t("garden.plantForm.validation.consentRequired")
+    ),
+    sensitive: Yup.boolean(),
+    category: Yup.string().required(
+      t("garden.plantForm.validation.categoryRequired")
+    ),
+  });
+
   return (
     <>
       <div className={css.container}>
@@ -133,22 +147,22 @@ export default function PlantFlowerForm({
             });
           }}
         >
-          {({ setFieldValue, values }) => {
+          {({ setFieldValue, values, isSubmitting }) => {
             return (
               <Form className={css.formWrapper}>
                 <FormSyncComponent onFormChange={onFormChange} />
-                <h2 className={css.title}>New flower</h2>
+                <h2 className={css.title}>{t("garden.plantForm.title")}</h2>
                 <div className={css.form}>
                   <div className={css.row}>
                     <Field
                       name="name"
-                      placeholder="Name or Callsign"
+                      placeholder={t("garden.plantForm.name")}
                       className={css.input}
                     />
                     <Field
                       name="age"
                       type="number"
-                      placeholder="Age"
+                      placeholder={t("garden.plantForm.age")}
                       className={css.input}
                       value={undefined}
                       // Let Formik handle value, but ensure never null
@@ -168,7 +182,7 @@ export default function PlantFlowerForm({
 
                   <Field
                     name="location"
-                    placeholder="Location"
+                    placeholder={t("garden.plantForm.location")}
                     className={css.input}
                   />
                   <ErrorMessage
@@ -179,7 +193,7 @@ export default function PlantFlowerForm({
 
                   <Field
                     name="title"
-                    placeholder="Title of story *"
+                    placeholder={`${t("garden.plantForm.storyTitle")} *`}
                     className={css.input}
                   />
                   <ErrorMessage
@@ -191,7 +205,7 @@ export default function PlantFlowerForm({
                   <Field
                     name="comment"
                     as="textarea"
-                    placeholder="Comment or story"
+                    placeholder={t("garden.plantForm.comment")}
                     className={css.textarea}
                   />
                   <ErrorMessage
@@ -206,7 +220,9 @@ export default function PlantFlowerForm({
                         values.audio ? css.mediaBtnAdded : ""
                       }`}
                     >
-                      {values.audio ? "Audio Added" : "Audio"}
+                      {values.audio
+                        ? t("mediaUpload.audioAdded")
+                        : t("mediaUpload.audio")}
                       <img
                         src="/plus-media.png"
                         alt="Add file"
@@ -229,7 +245,9 @@ export default function PlantFlowerForm({
                         values.photo ? css.mediaBtnAdded : ""
                       }`}
                     >
-                      {values.photo ? "Photo Added" : "Photo"}
+                      {values.photo
+                        ? t("mediaUpload.photoAdded")
+                        : t("mediaUpload.photo")}
                       <img
                         src="/plus-media.png"
                         alt="Add file"
@@ -252,7 +270,9 @@ export default function PlantFlowerForm({
                         values.video ? css.mediaBtnAdded : ""
                       }`}
                     >
-                      {values.video ? "Video Added" : "Video"}
+                      {values.video
+                        ? t("mediaUpload.videoAdded")
+                        : t("mediaUpload.video")}
                       <img
                         src="/plus-media.png"
                         alt="Add file"
@@ -281,9 +301,8 @@ export default function PlantFlowerForm({
                       name="consent"
                       className={css.checkboxInput}
                     />
-                    <div className={css.customCheckbox}></div>I consent to the
-                    processing of my personal data and public sharing of my
-                    submission*
+                    <div className={css.customCheckbox}></div>
+                    {t("garden.plantForm.consent")}
                   </label>
                   <ErrorMessage
                     name="consent"
@@ -298,7 +317,7 @@ export default function PlantFlowerForm({
                       className={css.checkboxInput}
                     />
                     <div className={css.customCheckbox}></div>
-                    This message may contain sensitive content
+                    {t("garden.plantForm.sensitive")}
                   </label>
                 </div>
 
@@ -310,8 +329,10 @@ export default function PlantFlowerForm({
 
                 <div className={css.footerRow}>
                   <div className={css.flowerId}>#{storyId}</div>
-                  <OutlineButton type="submit">
-                    Plant new memory flower
+                  <OutlineButton type="submit" disabled={isSubmitting}>
+                    {isSubmitting
+                      ? t("garden.plantForm.loading")
+                      : t("garden.plantForm.submit")}
                   </OutlineButton>
                 </div>
               </Form>

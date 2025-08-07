@@ -104,6 +104,12 @@
   letter-spacing: 0%;
 }
 
+@media screen and (min-width: 1441px) {
+  .bookTitle {
+    font-size: 32px;
+  }
+}
+
 @media screen and (max-width: 1650px) {
   .booksWrapper {
     position: relative;
@@ -257,5 +263,51 @@
 @media screen and (max-width: 375px) {
   .row {
     height: 60%;
+  }
+}
+
+.hint {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+  top: 20px;
+  left: 20px;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.hintText {
+  color: rgba(15, 26, 44);
+  font-size: 32px;
+  margin-right: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.hintArrow {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
   }
 }

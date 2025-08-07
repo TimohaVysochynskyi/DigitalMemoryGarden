@@ -2,6 +2,7 @@ import HeroTitleAndSubtitle from "../../common/HeroTitleAndSubtitle/HeroTitleAnd
 import OutlineButton from "../../common/OutlineButton/OutlineButton";
 import type { Story } from "../../../types/story";
 import css from "./Hero.module.css";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   onSearch?: () => void;
@@ -10,14 +11,7 @@ type Props = {
 };
 
 export default function Hero({ onSearch, lastAddedCandle, onDetails }: Props) {
-  console.log("Hero - lastAddedCandle:", lastAddedCandle);
-  console.log("Hero - candleType:", lastAddedCandle?.candleType);
-  console.log(
-    "Hero - candleType.image:",
-    typeof lastAddedCandle?.candleType === "object"
-      ? lastAddedCandle.candleType?.image
-      : "not object"
-  );
+  const { t } = useTranslation();
 
   const handleLightNewCandle = () => {
     window.scrollTo({
@@ -29,18 +23,17 @@ export default function Hero({ onSearch, lastAddedCandle, onDetails }: Props) {
   return (
     <>
       <div className={css.hero}>
-        <HeroTitleAndSubtitle title="Memory candles" color="light">
-          Honor someone’s memory with a symbolic digital candle. Add their name,
-          a date, or a message – and help keep their light alive.
+        <HeroTitleAndSubtitle title={t("candles.hero.title")} color="light">
+          {t("candles.hero.subtitle")}
         </HeroTitleAndSubtitle>
 
         <div className={css.heroContent}>
           <div className={css.btnsWrapper}>
             <OutlineButton color="light" onClick={onSearch}>
-              Find some memory candle
+              {t("candles.hero.findCandle")}
             </OutlineButton>
             <OutlineButton color="light" onClick={handleLightNewCandle}>
-              Light new memory candle
+              {t("candles.hero.lightCandle")}
             </OutlineButton>
           </div>
           <div className={css.candlesWrapper}>
@@ -110,7 +103,7 @@ export default function Hero({ onSearch, lastAddedCandle, onDetails }: Props) {
                       ) as HTMLVideoElement;
                       if (fire && lastAddedCandle) {
                         // Position fire exactly above the candle top
-                        fire.style.top = `-${fire.offsetHeight + 5}px`;
+                        fire.style.top = `-${fire.offsetHeight - 15}px`;
                       }
                     }}
                   />

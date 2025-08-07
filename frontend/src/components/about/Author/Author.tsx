@@ -1,10 +1,13 @@
+import { useTranslation } from "react-i18next";
 import css from "./Author.module.css";
 
 export default function Author() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={css.container}>
-        <h1 className={css.titleMobile}>About Author</h1>
+        <h1 className={css.titleMobile}>{t("about.author.title")}</h1>
         <div className={css.imageWrapper}>
           <div className={css.imageBorder}>
             <div className={css.image}>
@@ -14,10 +17,10 @@ export default function Author() {
         </div>
         <div className={css.content}>
           <div className={css.header}>
-            <h2 className={css.title}>Author</h2>
+            <h2 className={css.title}>{t("about.author.title")}</h2>
             <div className={css.headerCol}>
               <p className={css.authorName}>Lana Sokoliuk</p>
-              <p className={css.authorRole}>Creator of the Platform</p>
+              <p className={css.authorRole}>{t("about.author.subtitle")}</p>
             </div>
           </div>
           <p className={css.authorText}>

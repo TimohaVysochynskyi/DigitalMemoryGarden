@@ -8,7 +8,11 @@ import CandleSelection from "../../components/candles/CandleSelection/CandleSele
 import AddCandleForm from "../../components/candles/AddCandleForm/AddCandleForm";
 import FadeInOnScroll from "../../components/common/FadeInOnScroll/FadeInOnScroll";
 import { getAllCandleTypes } from "../../services/candleType";
-import { addCandle, searchStories } from "../../services/story";
+import {
+  addCandle,
+  searchStories,
+  getStoryByStoryId,
+} from "../../services/story";
 import { generateStoryId } from "../../utils/storyId";
 import type { CandleType } from "../../types/candleType";
 import type { Story } from "../../types/story";
@@ -25,6 +29,11 @@ export default function CandlesPage() {
   const [lastAddedCandle, setLastAddedCandle] = useState<Story | null>(null);
   const [currentStoryId, setCurrentStoryId] = useState<string>("");
   const [candleDetailsVisible, setCandleDetailsVisible] = useState(false);
+  const [initialFormValues, setInitialFormValues] = useState({
+    name: "",
+    dateOfBirth: "",
+    dateOfDeath: "",
+  });
 
   useEffect(() => {
     getAllCandleTypes()
@@ -33,6 +42,34 @@ export default function CandlesPage() {
         if (data.length) setSelectedCandleTypeId(data[0]._id);
       })
       .finally(() => setLoading(false));
+
+    // Load user's last candle data from localStorage
+    const savedCandleData = localStorage.getItem("lastCandleData");
+    if (savedCandleData) {
+      try {
+        const parsedData = JSON.parse(savedCandleData);
+        setInitialFormValues({
+          name: parsedData.name || "",
+          dateOfBirth: parsedData.dateOfBirth || "",
+          dateOfDeath: parsedData.dateOfDeath || "",
+        });
+
+        // If there's a lastAddedStoryId, load and show that story
+        if (parsedData.lastAddedStoryId) {
+          getStoryByStoryId(parsedData.lastAddedStoryId)
+            .then((story) => {
+              if (story) {
+                setLastAddedCandle(story);
+              }
+            })
+            .catch((error) => {
+              console.error("Failed to load last added candle story:", error);
+            });
+        }
+      } catch (error) {
+        console.error("Failed to parse saved candle data:", error);
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -65,11 +102,23 @@ export default function CandlesPage() {
     console.log("New candle added:", newCandle);
     setLastAddedCandle(newCandle);
 
-    // Показати toast про успішне додавання свічки
-    const candleName = values.name || "Memorial candle";
-    toast.success(`🕯️ "${candleName}" has been lit and added to our memorial!`);
+    // Save user's data to localStorage for next time (excluding comment and files)
+    const dataToSave = {
+      name: values.name,
+      dateOfBirth: values.dateOfBirth,
+      dateOfDeath: values.dateOfDeath,
+      lastAddedStoryId: newCandle.storyId, // Save the storyId of the last added story
+    };
+    localStorage.setItem("lastCandleData", JSON.stringify(dataToSave));
 
-    // Прокрутити до верху з невеликою затримкою
+    const candleName = values.name || "Memorial candle";
+    toast.success(
+      `🕯️ "${candleName}" has been lit and added to our memorial!`,
+      {
+        duration: 3000,
+      }
+    );
+
     setTimeout(() => {
       window.scrollTo({
         top: 0,
@@ -119,7 +168,11 @@ export default function CandlesPage() {
           selectedId={selectedCandleTypeId}
           onSelect={setSelectedCandleTypeId}
         />
-        <AddCandleForm onSubmit={handleAddCandle} storyId={currentStoryId} />
+        <AddCandleForm
+          onSubmit={handleAddCandle}
+          storyId={currentStoryId}
+          initialValues={initialFormValues}
+        />
       </div>
       {candleDetailsVisible && lastAddedCandle && (
         <PopupOverlay onClose={() => setCandleDetailsVisible(false)}>

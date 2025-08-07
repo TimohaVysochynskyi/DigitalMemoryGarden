@@ -16,6 +16,7 @@ import {
   searchStories,
   getNextFlowerStory,
   getPrevFlowerStory,
+  getStoryByStoryId,
 } from "../../services/story";
 import { generateStoryId } from "../../utils/storyId";
 import type { Story } from "../../types/story";
@@ -67,6 +68,35 @@ export default function GardenPage() {
         if (data.length) setSelectedCategoryId(data[0]._id);
       })
       .finally(() => setLoading(false));
+
+    // Load user's last flower data from localStorage
+    const savedFlowerData = localStorage.getItem("lastFlowerData");
+    if (savedFlowerData) {
+      try {
+        const parsedData = JSON.parse(savedFlowerData);
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          name: parsedData.name || "",
+          age: parsedData.age || "",
+          location: parsedData.location || "",
+        }));
+
+        // If there's a lastAddedStoryId, load and show that story
+        if (parsedData.lastAddedStoryId) {
+          getStoryByStoryId(parsedData.lastAddedStoryId)
+            .then((story) => {
+              if (story) {
+                setRandomFlower(story);
+              }
+            })
+            .catch((error) => {
+              console.error("Failed to load last added flower story:", error);
+            });
+        }
+      } catch (error) {
+        console.error("Failed to parse saved flower data:", error);
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -110,57 +140,81 @@ export default function GardenPage() {
     },
     files: { audio: File | null; photo: File | null; video: File | null }
   ) => {
-    const newStory = await addStory({
-      storyId: currentStoryId,
-      name: values.name,
-      age: values.age === "" || values.age === null ? undefined : values.age,
-      location: values.location,
-      title: values.title,
-      comment: values.comment,
-      category: selectedCategoryId,
-      source: "flower",
-      audio: files.audio ?? undefined,
-      photo: files.photo ?? undefined,
-      video: files.video ?? undefined,
-    });
-
-    // Показати toast про успішне додавання квітки
-    const flowerTitle = values.title || "Your memory flower";
-    toast.success(
-      `🌸 "${flowerTitle}" has been planted and is blooming in the garden!`
-    );
-
-    if (newStory && typeof newStory.category === "object") {
-      setRandomFlower(newStory);
-    } else if (newStory) {
-      const category = categories.find((cat) => cat._id === newStory.category);
-      if (category) {
-        setRandomFlower({ ...newStory, category });
-      }
-    }
-
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+    try {
+      const newStory = await addStory({
+        storyId: currentStoryId,
+        name: values.name,
+        age: values.age === "" || values.age === null ? undefined : values.age,
+        location: values.location,
+        title: values.title,
+        comment: values.comment,
+        category: selectedCategoryId,
+        source: "flower",
+        audio: files.audio ?? undefined,
+        photo: files.photo ?? undefined,
+        video: files.video ?? undefined,
       });
-    }, 50);
 
-    setFormValues({
-      name: "",
-      age: "",
-      location: "",
-      title: "",
-      comment: "",
-      audio: null,
-      photo: null,
-      video: null,
-      consent: false,
-      sensitive: false,
-    });
+      const flowerTitle = values.title || "Your memory flower";
+      toast.success(
+        `🌸 "${flowerTitle}" has been planted and is blooming in the garden!`,
+        {
+          duration: 3000,
+        }
+      );
 
-    // Generate new storyId for next submission
-    setCurrentStoryId(generateStoryId("flower"));
+      if (newStory && typeof newStory.category === "object") {
+        setRandomFlower(newStory);
+      } else if (newStory) {
+        const category = categories.find(
+          (cat) => cat._id === newStory.category
+        );
+        if (category) {
+          setRandomFlower({ ...newStory, category });
+        }
+      }
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 50);
+
+      // Save user's last added flower story storyId and data to localStorage for next time
+      const dataToSave = {
+        name: values.name,
+        age: values.age,
+        location: values.location,
+        lastAddedStoryId: newStory.storyId, // Save the storyId of the last added story
+      };
+      localStorage.setItem("lastFlowerData", JSON.stringify(dataToSave));
+
+      setFormValues({
+        name: "",
+        age: "",
+        location: "",
+        title: "",
+        comment: "",
+        audio: null,
+        photo: null,
+        video: null,
+        consent: false,
+        sensitive: false,
+      });
+
+      // Generate new storyId for next submission
+      setCurrentStoryId(generateStoryId("flower"));
+    } catch (error) {
+      console.error("Error planting flower:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to plant flower. Please try again.";
+      toast.error(errorMessage, {
+        duration: 2000,
+      });
+    }
   };
 
   const handleSearchFlower = async (input: string | Story) => {

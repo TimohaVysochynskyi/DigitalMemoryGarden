@@ -1,0 +1,298 @@
+{
+  "common": {
+    "loading": "Завантаження...",
+    "search": "Пошук",
+    "close": "Закрити",
+    "next": "Далі",
+    "prev": "Попередній",
+    "cancel": "Скасувати",
+    "submit": "Надіслати",
+    "save": "Зберегти",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "add": "Додати",
+    "back": "Назад",
+    "continue": "Продовжити",
+    "yes": "Так",
+    "no": "Ні",
+    "required": "Обов'язково",
+    "optional": "Необов'язково",
+    "error": "Помилка",
+    "success": "Успіх",
+    "warning": "Попередження",
+    "info": "Інформація"
+  },
+  "navigation": {
+    "home": "Головна",
+    "garden": "Сад",
+    "candles": "Свічки",
+    "archives": "Архіви",
+    "gallery": "Галерея",
+    "about": "Про нас",
+    "donate": "Донат"
+  },
+  "home": {
+    "hero": {
+      "title": ["Цифровий", "сад пам'яті"],
+      "subtitle": "Інтерактивна платформа для колективного вшанування пам'яті про війну, що триває в Україні (2022–). Завдяки партисипативному розповіданню історій, Цифровий сад пам'яті запрошує вас зберегти особисті воєнні спогади – усні чи мовчазні, письмові, намальовані чи записані. Кожен внесок стає частиною живого архіву мужності, втрат та стійкості. Давайте разом вирощувати цей цифровий сад пам'яті – і нести наші історії через покоління. Ваша пам'ять має значення!",
+      "cta": "Доєднатися до нашого саду"
+    },
+    "memoryTools": {
+      "title": "Інструменти збереження пам’яті",
+      "flower": {
+        "title": "Як посадити квітку пам’яті"
+      },
+      "candle": {
+        "title": "Як запалити свічку пам’яті"
+      },
+      "archive": {
+        "title": "Як користуватись архівом пам'яті"
+      }
+    },
+    "map": {
+      "title": "Україна завжди пам’ятатиме всіх об’єднаних війною",
+      "description": "Ця жива карта розквітає цифровими квітами – кожна з яких позначає історію, голос, пам’ять, що сягає корінням по всій Україні."
+    },
+    "numbers": {
+      "title": "Статистика",
+      "people": "Осіб доєдналось",
+      "stories": "Історій зібрано",
+      "places": "Понівечених місць",
+      "cta": "Доєднатися до нашого саду"
+    }
+  },
+  "garden": {
+    "hero": {
+      "title": "Сад пам'яті",
+      "subtitle": "Зафіксуйте момент чи почуття. Завантажте письмову історію, запишіть відео або додайте зображення, звук чи малюнок – і дозвольте їм розквітнути як цифрова квітка.",
+      "findFlower": "Знайти квітку пам'яті",
+      "plantFlower": "Посадити нову квітку пам'яті"
+    },
+    "map": {
+      "title": "Україна завжди пам’ятатиме всіх об’єднаних війною",
+      "readAll": "Читати всі історії",
+      "viewAll": "Переглянути всі медіа"
+    },
+    "plantForm": {
+      "title": "Нова квітка",
+      "name": "Ім'я або псевдонім",
+      "age": "Вік",
+      "location": "Місцезнаходження",
+      "storyTitle": "Назва історії",
+      "comment": "Коментар або історія",
+      "consent": "Я даю згоду на обробку моїх персональних даних та публічне поширення мого внеску",
+      "sensitive": "Це повідомлення може містити чутливий контент",
+      "flowerId": "ID квітки",
+      "validation": {
+        "nameMax": "Максимум 100 символів",
+        "ageMin": "Вік не може бути менше 0",
+        "ageMax": "Вік не може бути більшим за 120",
+        "ageInteger": "Вік має бути цілим числом",
+        "locationMax": "Максимум 200 символів",
+        "titleRequired": "Поле 'Назва історії' є обов'язковим",
+        "titleMin": "Мінімум 3 символи",
+        "titleMax": "Максимум 100 символів",
+        "commentMax": "Максимум 2000 символів",
+        "consentRequired": "Необхідна згода"
+      },
+      "success": "була посаджена і цвіте в саду!",
+      "error": "Не вдалося посадити квітку. Будь ласка, спробуйте ще раз.",
+      "submit": "Посадити нову квітку пам'яті",
+      "loading": "Додавання історії..."
+    }
+  },
+  "candles": {
+    "hero": {
+      "title": "Memory candles",
+      "subtitle": "Honor someone's memory with a symbolic digital candle. Add their name, a date, or a message – and help keep their light alive.",
+      "findCandle": "Find some memory candle",
+      "lightCandle": "Light new memory candle"
+    },
+    "candleSelection": {
+      "title": "Choose a candle type",
+      "subtitle": "Select the style that best honors your memory"
+    },
+    "candleForm": {
+      "title": "Light your memory candle",
+      "name": "Name and Surname",
+      "dateOfBirth": "Date of Birth",
+      "dateOfDeath": "Date of Death",
+      "comment": "Comment or story",
+      "audio": "Audio",
+      "photo": "Photo",
+      "video": "Video",
+      "consent": "I consent to the processing of my personal data and public sharing of my submission",
+      "candleId": "Candle ID",
+      "validation": {
+        "nameMax": "Maximum 100 characters",
+        "dateOfBirthRequired": "Date of birth is required",
+        "dateOfDeathRequired": "Date of death is required",
+        "commentMax": "Maximum 2000 characters",
+        "consentRequired": "Consent is required"
+      },
+      "success": "has been lit and added to our memorial!",
+      "error": "Failed to light candle. Please try again.",
+      "submit": "Light new memory candle"
+    }
+  },
+  "archives": {
+    "hero": {
+      "title": "Memory Archives",
+      "subtitle": "Preserve and explore important stories, documents, and memories from our community.",
+      "searchPlaceholder": "Search through archives..."
+    },
+    "book": {
+      "title": "Archive Stories",
+      "noStories": "No stories found in this category",
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page {{current}} of {{total}}"
+      }
+    },
+    "addStory": {
+      "title": "Add story to archives",
+      "name": "Name and Surname",
+      "age": "Age",
+      "location": "Location",
+      "storyTitle": "Title of story",
+      "category": "Category",
+      "comment": "Comment or story",
+      "consent": "I consent to the processing of my personal data and public sharing of my submission",
+      "sensitive": "This message may contain sensitive content",
+      "storyId": "Story ID",
+      "validation": {
+        "nameMax": "Maximum 100 characters",
+        "ageMin": "Age cannot be less than 0",
+        "ageMax": "Age cannot be greater than 120",
+        "ageInteger": "Age must be an integer",
+        "locationMax": "Maximum 200 characters",
+        "titleRequired": "The 'Title of story' field is required",
+        "titleMin": "Minimum 3 characters",
+        "titleMax": "Maximum 100 characters",
+        "categoryRequired": "Category is required",
+        "commentMax": "Maximum 2000 characters",
+        "consentRequired": "Consent is required"
+      },
+      "success": "Story has been added to archives!",
+      "error": "Failed to add story. Please try again."
+    }
+  },
+  "gallery": {
+    "hero": {
+      "title": "Галерея Спогадів",
+      "subtitle": "Досліджуйте візуальні та аудіо спогади, якими поділилася наша спільнота.",
+      "filters": {
+        "photo": "Фото",
+        "video": "Відео",
+        "audio": "Аудіо"
+      }
+    },
+    "gallery": {
+      "title": "Галерея",
+      "filters": {
+        "all": "Усі категорії",
+        "mediaType": "Тип медіа"
+      },
+      "noMedia": "{{mediaType}} не знайдено",
+      "loadMore": "Завантажити більше"
+    },
+    "addStory": {
+      "title": "Додати історію до галереї",
+      "name": "Ім'я та прізвище",
+      "age": "Вік",
+      "location": "Місцезнаходження",
+      "storyTitle": "Назва історії",
+      "category": "Категорія",
+      "comment": "Коментар або історія",
+      "audio": "Аудіо",
+      "photo": "Фото",
+      "video": "Відео",
+      "consent": "Я даю згоду на обробку моїх персональних даних та публічне поширення моєї заявки",
+      "sensitive": "Це повідомлення може містити делікатний контент",
+      "storyId": "ID історії",
+      "validation": {
+        "nameMax": "Максимум 100 символів",
+        "ageMin": "Вік не може бути менше 0",
+        "ageMax": "Вік не може бути більше 120",
+        "ageInteger": "Вік має бути цілим числом",
+        "locationMax": "Максимум 200 символів",
+        "titleRequired": "Поле 'Назва історії' є обов'язковим",
+        "titleMin": "Мінімум 3 символи",
+        "titleMax": "Максимум 100 символів",
+        "categoryRequired": "Категорія є обов'язковою",
+        "commentMax": "Максимум 2000 символів",
+        "consentRequired": "Згода є обов'язковою",
+        "mediaRequired": "Принаймні один медіафайл (аудіо, фото або відео) є обов'язковим для галереї"
+      },
+      "success": "Історію додано до галереї!",
+      "error": "Не вдалося додати історію. Спробуйте ще раз."
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Про Цифровий Сад Спогадів",
+      "subtitle": "Дізнайтеся про нашу місію зберігати та ділитися спогадами"
+    },
+    "statistics": {
+      "title": "Наш вплив",
+      "memoriesPreserved": "Збережено спогадів",
+      "communitiesConnected": "Спільнот об'єднано",
+      "countriesReached": "Країн охоплено"
+    },
+    "reviews": {
+      "title": "Що кажуть люди",
+      "subtitle": "Відгуки від членів нашої спільноти"
+    },
+    "information": {
+      "title": "Наша місія",
+      "subtitle": "Збереження спогадів для майбутніх поколінь"
+    },
+    "manifest": {
+      "title": "Наші цінності",
+      "subtitle": "Що нас рухає вперед"
+    },
+    "author": {
+      "title": "Про творця",
+      "subtitle": "Людина за Цифровим Садом Спогадів"
+    }
+  },
+  "donate": {
+    "hero": {
+      "title": "Підтримайте нашу місію",
+      "subtitle": "Допоможіть нам зберігати спогади для майбутніх поколінь"
+    },
+    "information": {
+      "title": "Навіщо жертвувати?",
+      "subtitle": "Ваш внесок допомагає підтримувати та розвивати нашу платформу"
+    }
+  },
+  "search": {
+    "placeholder": "Пошук спогадів...",
+    "noResults": "За вашим запитом нічого не знайдено.",
+    "error": "Пошук не вдався. Спробуйте ще раз.",
+    "suggestions": "Пропозиції"
+  },
+  "storyDetails": {
+    "from": "ВІД:",
+    "number": "Номер",
+    "dateOfBirth": "Народився:",
+    "dateOfDeath": "Помер:",
+    "author": "Автор:",
+    "close": "Закрити",
+    "next": "Далі",
+    "previous": "Назад"
+  },
+  "mediaUpload": {
+    "audioAdded": "Аудіо додано",
+    "photoAdded": "Фото додано",
+    "videoAdded": "Відео додано",
+    "audio": "Аудіо",
+    "photo": "Фото",
+    "video": "Відео"
+  },
+  "language": {
+    "en": "English",
+    "uk": "Українська"
+  }
+}

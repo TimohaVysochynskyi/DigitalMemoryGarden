@@ -16,15 +16,10 @@
   pointer-events: none;
   user-select: none;
 }
-
 .mapContainer {
   position: relative;
-  width: 65%;
   height: 100%;
-  max-width: 900px;
-  min-width: 320px;
-  min-height: 300px;
-  aspect-ratio: 3/2;
+  aspect-ratio: 112/73;
 }
 
 .flowerMarker {
@@ -56,15 +51,24 @@
   letter-spacing: 0%;
 }
 
+@media screen and (max-width: 1650px) {
+  .container {
+    height: 80vh;
+  }
+}
+
 @media screen and (max-width: 1440px) {
-  .mapContainer {
-    width: calc(65% - 400px + 65%);
+  .container {
+    height: 65vh;
   }
 }
 
 @media screen and (max-width: 1200px) {
+  .container {
+    height: 60vh;
+  }
   .content {
-    width: 300px;
+    width: 280px;
   }
   .title {
     font-size: 28px;
@@ -73,15 +77,12 @@
     font-size: 20px;
     width: 500px;
   }
-  .mapContainer {
-    width: calc(100% - 300px);
-  }
 }
 
 @media screen and (max-width: 1024px) {
   .container {
-    height: auto;
     padding: 40px;
+    height: 50vh;
   }
   .content {
     gap: 160px;
@@ -96,6 +97,9 @@
 }
 
 @media screen and (max-width: 900px) {
+  .container {
+    height: 45vh;
+  }
   .content {
     gap: 120px;
   }
@@ -113,6 +117,7 @@
     align-items: center;
     gap: 40px;
     padding: 20px;
+    height: auto;
   }
   .content,
   .mapContainer {

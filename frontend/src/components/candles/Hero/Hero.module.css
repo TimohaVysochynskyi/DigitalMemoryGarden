@@ -66,8 +66,7 @@
   top: -5px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 70px;
+  height: 90px;
   z-index: 15;
   pointer-events: none;
   object-fit: cover;
@@ -132,17 +131,16 @@
 
 @media screen and (max-width: 1440px) {
   .hero {
-    padding: 16px 40px 60px 40px;
+    padding: 16px 72px 60px 72px;
   }
   .candlesWrapper {
-    padding: 0 40px;
+    padding: 0 72px;
   }
   .mainCandleWrapper {
     width: 90px;
   }
   .fire {
-    width: 40px;
-    height: 60px;
+    height: 80px;
   }
   .candleButton {
     width: 80px;
@@ -157,13 +155,13 @@
 
 @media screen and (max-width: 1024px) {
   .hero {
-    padding: 16px 32px 40px 32px;
+    padding: 40px;
   }
   .heroContent {
     margin-top: 15vh;
   }
   .candlesWrapper {
-    padding: 0 32px;
+    padding: 0 40px;
     height: 60%;
   }
 
@@ -171,13 +169,13 @@
     width: 80px;
   }
   .fire {
-    width: 35px;
-    height: 50px;
+    height: 60px;
   }
   .candleButton {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
     padding: 14px;
+    border-width: 5px;
   }
   .candleIcon {
     max-width: 42px;
@@ -191,7 +189,7 @@
 
 @media screen and (max-width: 768px) {
   .hero {
-    padding: 16px 20px 30px 20px;
+    padding: 20px;
   }
   .btnsWrapper {
     flex-direction: column;
@@ -199,16 +197,17 @@
     align-items: center;
   }
   .heroContent {
-    margin-top: 10vh;
+    margin-top: 8vh;
   }
   .candlesWrapper {
     padding: 0 20px;
     height: 50%;
     gap: 5%;
+    bottom: 50px;
   }
   .leftCandles,
   .rightCandles {
-    width: 25%;
+    width: 32%;
     gap: 3%;
   }
   .commonCandle:nth-child(n + 4) {
@@ -219,12 +218,11 @@
     height: auto;
   }
   .fire {
-    width: 50px;
-    height: 60px;
+    height: 80px;
   }
   .candleButton {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     padding: 12px;
     border-width: 6px;
   }
@@ -235,34 +233,28 @@
 }
 
 @media screen and (max-width: 560px) {
-  .hero {
-    padding: 16px 16px 20px 16px;
-  }
   .heroContent {
-    margin-top: 8vh;
+    margin-top: 4vh;
   }
   .candlesWrapper {
-    padding: 0 16px;
-    height: 45%;
+    height: 60%;
   }
   .leftCandles,
   .rightCandles {
-    width: 20%;
+    width: 25%;
   }
   .commonCandle:nth-child(n + 3) {
     display: none;
   }
   .mainCandleWrapper {
-    width: 60px;
+    width: 80px;
   }
   .fire {
-    width: 25px;
-    height: 36px;
-    top: -41px;
+    height: 55px;
   }
   .candleButton {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     padding: 10px;
     border-width: 4px;
   }
@@ -273,30 +265,25 @@
 }
 
 @media screen and (max-width: 425px) {
-  .heroContent {
-    margin-top: 6vh;
-  }
   .candlesWrapper {
-    height: 40%;
+    height: 55%;
   }
   .leftCandles,
   .rightCandles {
-    width: 15%;
+    width: 20%;
   }
   .commonCandle:nth-child(n + 2) {
     display: none;
   }
   .mainCandleWrapper {
-    width: 50px;
+    width: 90px;
   }
   .fire {
-    width: 18px;
-    height: 26px;
-    top: -31px;
+    height: 60px;
   }
   .candleButton {
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
     padding: 8px;
     border-width: 3px;
   }
@@ -307,14 +294,11 @@
 }
 
 @media screen and (max-width: 375px) {
-  .hero {
-    padding: 16px 8px;
-  }
   .heroContent {
     margin-top: 4vh;
   }
   .candlesWrapper {
-    height: 35%;
+    height: 50%;
   }
   .leftCandles,
   .rightCandles {
@@ -324,24 +308,38 @@
     display: none;
   }
   .mainCandleWrapper {
-    width: 40px;
+    width: 75px;
   }
   .fire {
-    width: 16px;
-    height: 22px;
-    top: -27px;
+    height: 50px;
   }
   .candleButton {
-    width: 32px;
-    height: 32px;
+    width: 54px;
+    height: 54px;
     padding: 4px;
   }
   .candleIcon {
     max-width: 20px;
     max-height: 20px;
   }
-  .mainCandleImage,
-  .commonCandleImage {
-    max-height: 100px;
+}
+
+@media screen and (min-width: 769px) and (min-height: 1024px) {
+  .candlesWrapper {
+    bottom: 50px;
+  }
+  .commonCandle:nth-child(n + 3) {
+    display: none;
+  }
+  .mainCandleWrapper {
+    width: 140px;
+  }
+  .candleButton {
+    width: 100px;
+    height: 100px;
+    border-width: 6px;
+  }
+  .fire {
+    height: 90px;
   }
 }

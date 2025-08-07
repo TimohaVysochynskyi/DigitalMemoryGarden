@@ -148,6 +148,21 @@
   display: none;
 }
 
+@media screen and (min-width: 1441px) {
+  .title {
+    font-size: 32px;
+  }
+  .input,
+  .mediaBtn {
+    font-size: 20px;
+    height: 76px;
+  }
+  .textarea {
+    font-size: 20px;
+    min-height: 130px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .container {
     width: calc(100% - 400px);

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import css from "./CategoryDropdown.module.css";
+import { useTranslation } from "react-i18next";
 
 type Category = { value: string; label: string };
 
@@ -30,6 +31,8 @@ export default function CategoryDropdown({
 
   const selected = options.find((opt) => opt.value === value);
 
+  const { t } = useTranslation();
+
   return (
     <div ref={ref} className={css.dropdownWrapper}>
       <button
@@ -48,7 +51,7 @@ export default function CategoryDropdown({
         name={name}
       >
         <span style={{ color: value ? "#0F1A2C" : "#50667B" }}>
-          {selected ? selected.label : "Category of story"}
+          {selected ? selected.label : t("archives.addStory.category")}
         </span>
         <svg
           style={{

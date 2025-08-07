@@ -1,11 +1,13 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import css from "./Header.module.css";
 import LanguageSwitch from "../LanguageSwitch/LanguageSwitch";
 import clsx from "clsx";
 import { useState } from "react";
 
 export default function Header() {
-  const currentRoute = useLocation().pathname.replace(/\/$/, ""); // Remove trailing slash for consistency
+  const { t } = useTranslation();
+  const currentRoute = useLocation().pathname.replace(/\/$/, "");
   const [menuOpen, setMenuOpen] = useState(false);
 
   const linkClass = ({ isActive }: { isActive: boolean }) => {
@@ -20,7 +22,6 @@ export default function Header() {
     return clsx(css.mobileLink, isActive && css.mobileLinkActive);
   };
 
-  // Закривати меню при переході по лінку
   const handleNavClick = () => setMenuOpen(false);
 
   return (
@@ -37,22 +38,22 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className={css.nav}>
           <NavLink className={linkClass} to="/garden">
-            Garden
+            {t("navigation.garden")}
           </NavLink>
           <NavLink className={linkClass} to="/candles">
-            Candles
+            {t("navigation.candles")}
           </NavLink>
           <NavLink className={linkClass} to="/archives">
-            Archives
+            {t("navigation.archives")}
           </NavLink>
           <NavLink className={linkClass} to="/gallery">
-            Gallery
+            {t("navigation.gallery")}
           </NavLink>
           <NavLink className={linkClass} to="/donate">
-            Donate
+            {t("navigation.donate")}
           </NavLink>
           <NavLink className={linkClass} to="/about">
-            About us
+            {t("navigation.about")}
           </NavLink>
         </nav>
 
@@ -66,7 +67,7 @@ export default function Header() {
             (currentRoute === "/candles" || currentRoute === "/about") &&
               css.burgerLight
           )}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={menuOpen ? t("common.closeMenu") : t("common.openMenu")}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
@@ -83,49 +84,49 @@ export default function Header() {
               to="/"
               onClick={handleNavClick}
             >
-              Home
+              {t("navigation.home")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/garden"
               onClick={handleNavClick}
             >
-              Garden
+              {t("navigation.garden")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/candles"
               onClick={handleNavClick}
             >
-              Candles
+              {t("navigation.candles")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/archives"
               onClick={handleNavClick}
             >
-              Archives
+              {t("navigation.archives")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/gallery"
               onClick={handleNavClick}
             >
-              Gallery
+              {t("navigation.gallery")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/donate"
               onClick={handleNavClick}
             >
-              Donate
+              {t("navigation.donate")}
             </NavLink>
             <NavLink
               className={mobileLinkClass}
               to="/about"
               onClick={handleNavClick}
             >
-              About us
+              {t("navigation.about")}
             </NavLink>
           </nav>
           <img

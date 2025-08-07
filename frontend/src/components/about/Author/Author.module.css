@@ -81,6 +81,7 @@
 .authorText {
   line-height: 100%;
   letter-spacing: 0%;
+  font-size: 18px;
 }
 .authorTextBold {
   font-weight: 600;
@@ -90,6 +91,7 @@
   line-height: 100%;
   letter-spacing: 0%;
   font-style: italic;
+  font-size: 18px;
 }
 .titleMobile {
   display: none;
@@ -99,6 +101,10 @@
   .imageBorder {
     width: calc(400px * 1.18);
     height: 400px;
+  }
+  .authorQuote,
+  .authorText {
+    font-size: 16px;
   }
 }
 

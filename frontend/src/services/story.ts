@@ -61,26 +61,54 @@ export const addStory = async (data: {
     audio?: File;
     video?: File;
 }): Promise<Story> => {
-    const formData = new FormData();
-    formData.append("storyId", data.storyId);
-    if (data.title) formData.append("title", data.title);
-    if (data.comment) formData.append("comment", data.comment);
-    if (data.name) formData.append("name", data.name);
-    if (data.age !== undefined && data.age !== null) formData.append("age", String(data.age));
-    if (data.location) formData.append("location", data.location);
-    if (data.dateOfBirth) formData.append("dateOfBirth", data.dateOfBirth);
-    if (data.dateOfDeath) formData.append("dateOfDeath", data.dateOfDeath);
-    formData.append("category", data.category);
-    if (data.candleType) formData.append("candleType", data.candleType);
-    formData.append("source", data.source);
-    if (data.photo) formData.append("photo", data.photo);
-    if (data.audio) formData.append("audio", data.audio);
-    if (data.video) formData.append("video", data.video);
-
-    const response = await apiClient.post("/stories", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+    console.log('📤 Starting story upload:', {
+        storyId: data.storyId,
+        source: data.source,
+        title: data.title,
+        hasPhoto: !!data.photo,
+        hasAudio: !!data.audio,
+        hasVideo: !!data.video,
+        photoSize: data.photo ? data.photo.size : 0,
+        audioSize: data.audio ? data.audio.size : 0,
+        videoSize: data.video ? data.video.size : 0
     });
-    return response.data;
+
+    try {
+        const formData = new FormData();
+        formData.append("storyId", data.storyId);
+        if (data.title) formData.append("title", data.title);
+        if (data.comment) formData.append("comment", data.comment);
+        if (data.name) formData.append("name", data.name);
+        if (data.age !== undefined && data.age !== null) formData.append("age", String(data.age));
+        if (data.location) formData.append("location", data.location);
+        if (data.dateOfBirth) formData.append("dateOfBirth", data.dateOfBirth);
+        if (data.dateOfDeath) formData.append("dateOfDeath", data.dateOfDeath);
+        formData.append("category", data.category);
+        if (data.candleType) formData.append("candleType", data.candleType);
+        formData.append("source", data.source);
+        if (data.photo) formData.append("photo", data.photo);
+        if (data.audio) formData.append("audio", data.audio);
+        if (data.video) formData.append("video", data.video);
+
+        console.log('📤 Sending FormData to server...');
+        const response = await apiClient.post("/stories", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        console.log('✅ Story upload successful:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('❌ Story upload failed:', error);
+
+        // Log detailed error information
+        if (error instanceof Error) {
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+        }
+
+        // Re-throw the error to be handled by the calling component
+        throw error;
+    }
 };
 
 export const updateStory = async (
