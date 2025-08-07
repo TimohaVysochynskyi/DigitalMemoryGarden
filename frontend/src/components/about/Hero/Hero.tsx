@@ -8,11 +8,12 @@ export default function Hero() {
   return (
     <>
       <div className={css.hero}>
-        <HeroTitleAndSubtitle color="light" title={t("about.hero.title")}>
-          {t("about.hero.subtitle")}
-        </HeroTitleAndSubtitle>
+        <HeroTitleAndSubtitle
+          color="light"
+          title={t("about.hero.title")}
+        ></HeroTitleAndSubtitle>
         <div className={css.content}>
-          <h2 className={css.title}>Why is this important?</h2>
+          <h2 className={css.title}>{t("about.hero.bigTitle")}</h2>
         </div>
       </div>
     </>

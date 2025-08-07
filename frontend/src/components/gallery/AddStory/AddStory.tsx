@@ -296,7 +296,9 @@ export default function AddStory({ categories, onStoryAdded }: AddStoryProps) {
             </div>
             <div className={css.col}>
               <OutlineButton type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Adding..." : "Add story to gallery"}
+                {isSubmitting
+                  ? t("gallery.addStory.loading")
+                  : t("gallery.addStory.submit")}
               </OutlineButton>
             </div>
           </Form>

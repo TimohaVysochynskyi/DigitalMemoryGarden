@@ -1,29 +1,32 @@
 import { Link, NavLink } from "react-router-dom";
 import css from "./Footer.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <>
       <footer className={css.footer}>
         <div className={css.navWrapper}>
           <nav className={css.nav}>
             <NavLink to="/garden" className={css.navLink}>
-              Garden
+              {t("navigation.garden")}
             </NavLink>
             <NavLink to="/candles" className={css.navLink}>
-              Candles
+              {t("navigation.candles")}
             </NavLink>
             <NavLink to="/archives" className={css.navLink}>
-              Archives
+              {t("navigation.archives")}
             </NavLink>
             <NavLink to="/gallery" className={css.navLink}>
-              Gallery
+              {t("navigation.gallery")}
             </NavLink>
             <NavLink to="/donate" className={css.navLink}>
-              Donate
+              {t("navigation.donate")}
             </NavLink>
             <NavLink to="/about" className={css.navLink}>
-              About us
+              {t("navigation.about")}
             </NavLink>
           </nav>
           <div className={css.socialsWrapper}>

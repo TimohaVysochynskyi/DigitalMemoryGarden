@@ -36,7 +36,9 @@ export default function Statistics() {
             <h4 className={css.itemTitle}>
               5 <span>million</span>
             </h4>
-            <p className={css.itemDescription}>Refugees in Europe</p>
+            <p className={css.itemDescription}>
+              {t("about.statistics.refugeesInEurope")}
+            </p>
           </div>
         </div>
       </div>

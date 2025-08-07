@@ -3,6 +3,7 @@ import clsx from "clsx";
 import CloseCross from "../CloseCross/CloseCross";
 import css from "./StoryDetails.module.css";
 import type { Story } from "../../../types/story";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   story?: Story;
@@ -17,7 +18,6 @@ export default function StoryDetails({
   onNext,
   onPrev,
 }: Props) {
-  // Determine if this is a candle or flower story
   const isCandle = story?.source === "candle";
 
   // category name
@@ -81,6 +81,8 @@ export default function StoryDetails({
     );
   }
 
+  const { t } = useTranslation();
+
   return (
     <div className={css.container}>
       <div className={css.cross} onClick={onClose}>
@@ -91,30 +93,42 @@ export default function StoryDetails({
         <div className={clsx(css.col, mediaContent == null && css.colWide)}>
           <div className={css.header}>
             <div className={css.row}>
-              <span className={css.headerText}>FROM: {categoryName}</span>
+              <span className={css.headerText}>
+                {t("storyDetails.category")}: {categoryName}
+              </span>
               <span className={css.headerText}>{date}</span>
             </div>
             {isCandle ? (
               <>
                 {dateOfBirth && (
                   <div className={css.row}>
-                    <span className={css.headerText}>Born: {dateOfBirth}</span>
+                    <span className={css.headerText}>
+                      {t("storyDetails.dateOfBirth")}: {dateOfBirth}
+                    </span>
                   </div>
                 )}
                 {dateOfDeath && (
                   <div className={css.row}>
-                    <span className={css.headerText}>Died: {dateOfDeath}</span>
+                    <span className={css.headerText}>
+                      {t("storyDetails.dateOfDeath")}: {dateOfDeath}
+                    </span>
                   </div>
                 )}
               </>
             ) : (
               <div className={css.row}>
-                <span className={css.headerText}>{location}</span>
-                <span className={css.headerText}>{age}</span>
+                <span className={css.headerText}>
+                  {t("storyDetails.location")}: {location}
+                </span>
+                <span className={css.headerText}>
+                  {t("storyDetails.age")}: {age}
+                </span>
               </div>
             )}
             <div className={css.row}>
-              <span className={css.headerText}>Number {storyId}</span>
+              <span className={css.headerText}>
+                {t("storyDetails.number")}: {storyId}
+              </span>
             </div>
           </div>
           <div className={clsx(css.body, mediaContent == null && css.bodyWide)}>
@@ -128,7 +142,7 @@ export default function StoryDetails({
               {author && !isCandle && (
                 <>
                   <br />
-                  by {author}
+                  {t("storyDetails.author")} {author}
                 </>
               )}
             </p>

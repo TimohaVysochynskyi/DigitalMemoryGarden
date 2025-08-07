@@ -6,7 +6,8 @@
   gap: 24px;
 }
 .sliderWrapper {
-  height: 550px;
+  min-height: 550px;
+  height: fit-content;
   width: 100%;
   position: relative;
 }
@@ -65,7 +66,7 @@
   width: 25%;
   transform: rotate(90deg);
   z-index: 1;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .middleLine {
   position: absolute;

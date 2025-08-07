@@ -86,14 +86,15 @@
       "validation": {
         "nameMax": "Максимум 100 символів",
         "ageMin": "Вік не може бути менше 0",
-        "ageMax": "Вік не може бути більшим за 120",
+        "ageMax": "Вік не може бути більше 120",
         "ageInteger": "Вік має бути цілим числом",
         "locationMax": "Максимум 200 символів",
         "titleRequired": "Поле 'Назва історії' є обов'язковим",
         "titleMin": "Мінімум 3 символи",
         "titleMax": "Максимум 100 символів",
         "commentMax": "Максимум 2000 символів",
-        "consentRequired": "Необхідна згода"
+        "consentRequired": "Необхідна згода",
+        "categoryRequired": "Категорія є обов'язковою"
       },
       "success": "була посаджена і цвіте в саду!",
       "error": "Не вдалося посадити квітку. Будь ласка, спробуйте ще раз.",
@@ -103,79 +104,73 @@
   },
   "candles": {
     "hero": {
-      "title": "Memory candles",
-      "subtitle": "Honor someone's memory with a symbolic digital candle. Add their name, a date, or a message – and help keep their light alive.",
-      "findCandle": "Find some memory candle",
-      "lightCandle": "Light new memory candle"
-    },
-    "candleSelection": {
-      "title": "Choose a candle type",
-      "subtitle": "Select the style that best honors your memory"
+      "title": "Свічки пам'яті",
+      "subtitle": "Вшануйте чиюсь пам'ять символічною цифровою свічкою. Додайте ім'я, дату або повідомлення – і допоможіть зберегти їхнє світло живим.",
+      "findCandle": "Знайти свічку пам'яті",
+      "lightCandle": "Запалити нову свічку пам'яті"
     },
     "candleForm": {
-      "title": "Light your memory candle",
-      "name": "Name and Surname",
-      "dateOfBirth": "Date of Birth",
-      "dateOfDeath": "Date of Death",
-      "comment": "Comment or story",
-      "audio": "Audio",
-      "photo": "Photo",
-      "video": "Video",
-      "consent": "I consent to the processing of my personal data and public sharing of my submission",
-      "candleId": "Candle ID",
+      "title": "Запалити свічку пам'яті",
+      "name": "Ім'я та прізвище",
+      "dateOfBirth": "Дата народження",
+      "dateOfDeath": "Дата смерті",
+      "comment": "Коментар або історія",
+      "audio": "Аудіо",
+      "photo": "Фото",
+      "video": "Відео",
+      "consent": "Я даю згоду на обробку моїх персональних даних та публічне поширення моєї заявки",
+      "candleId": "ID свічки",
       "validation": {
-        "nameMax": "Maximum 100 characters",
-        "dateOfBirthRequired": "Date of birth is required",
-        "dateOfDeathRequired": "Date of death is required",
-        "commentMax": "Maximum 2000 characters",
-        "consentRequired": "Consent is required"
+        "nameMax": "Максимум 100 символів",
+        "dateOfBirthRequired": "Дата народження є обов'язковою",
+        "dateOfDeathRequired": "Дата смерті є обов'язковою",
+        "commentMax": "Максимум 2000 символів",
+        "consentRequired": "Згода є обов'язковою"
       },
-      "success": "has been lit and added to our memorial!",
-      "error": "Failed to light candle. Please try again.",
-      "submit": "Light new memory candle"
+      "success": "була запалена і додана до нашого меморіалу!",
+      "error": "Не вдалося запалити свічку. Будь ласка, спробуйте ще раз.",
+      "submit": "Запалити нову свічку пам'яті",
+      "loading": "Додавання вашої історії..."
     }
   },
   "archives": {
     "hero": {
-      "title": "Memory Archives",
-      "subtitle": "Preserve and explore important stories, documents, and memories from our community.",
-      "searchPlaceholder": "Search through archives..."
+      "title": "Архіви пам'яті",
+      "subtitle": "Зберігайте та досліджуйте важливі історії, документи та спогади нашої спільноти.",
+      "findStory": "Знайти історію в архіві",
+      "addStory": "Додати історію до архіву"
     },
     "book": {
-      "title": "Archive Stories",
-      "noStories": "No stories found in this category",
-      "pagination": {
-        "previous": "Previous",
-        "next": "Next",
-        "page": "Page {{current}} of {{total}}"
-      }
+      "title": "Архів",
+      "noStories": "Не знайдено історій за вашим запитом"
     },
     "addStory": {
-      "title": "Add story to archives",
-      "name": "Name and Surname",
-      "age": "Age",
-      "location": "Location",
-      "storyTitle": "Title of story",
-      "category": "Category",
-      "comment": "Comment or story",
-      "consent": "I consent to the processing of my personal data and public sharing of my submission",
-      "sensitive": "This message may contain sensitive content",
-      "storyId": "Story ID",
+      "name": "Ім'я або позивний",
+      "age": "Вік",
+      "location": "Місцезнаходження",
+      "storyTitle": "Назва історії",
+      "category": "Категорія історії",
+      "comment": "Коментар або історія",
+      "consent": "Я даю згоду на обробку моїх персональних даних та публічне поширення моєї заявки",
+      "sensitive": "Це повідомлення може містити делікатний контент",
+      "storyId": "ID історії",
       "validation": {
-        "nameMax": "Maximum 100 characters",
-        "ageMin": "Age cannot be less than 0",
-        "ageMax": "Age cannot be greater than 120",
-        "ageInteger": "Age must be an integer",
-        "locationMax": "Maximum 200 characters",
-        "titleRequired": "The 'Title of story' field is required",
-        "titleMin": "Minimum 3 characters",
-        "titleMax": "Maximum 100 characters",
-        "categoryRequired": "Category is required",
-        "commentMax": "Maximum 2000 characters",
-        "consentRequired": "Consent is required"
+        "nameMax": "Максимум 100 символів",
+        "ageMin": "Вік не може бути менше 0",
+        "ageMax": "Вік не може бути більше 120",
+        "ageInteger": "Вік має бути цілим числом",
+        "locationMax": "Максимум 200 символів",
+        "titleRequired": "Поле 'Назва історії' є обов'язковим",
+        "titleMin": "Мінімум 3 символи",
+        "titleMax": "Максимум 100 символів",
+        "categoryRequired": "Категорія є обов'язковою",
+        "commentMax": "Максимум 2000 символів",
+        "consentRequired": "Згода є обов'язковою"
       },
-      "success": "Story has been added to archives!",
-      "error": "Failed to add story. Please try again."
+      "success": "Історію додано до архівів!",
+      "error": "Не вдалося додати історію. Спробуйте ще раз.",
+      "loading": "Додавання вашої історії...",
+      "submit": "Додати історію до архіву"
     }
   },
   "gallery": {
@@ -231,40 +226,58 @@
   },
   "about": {
     "hero": {
-      "title": "Про Цифровий Сад Спогадів",
-      "subtitle": "Дізнайтеся про нашу місію зберігати та ділитися спогадами"
+      "title": "Про нас",
+      "bigTitle": "Чому це важливо?"
     },
     "statistics": {
       "title": "Наш вплив",
       "memoriesPreserved": "Збережено спогадів",
       "communitiesConnected": "Спільнот об'єднано",
-      "countriesReached": "Країн охоплено"
+      "countriesReached": "Країн охоплено",
+      "refugeesInEurope": "Біженців у Європі"
     },
     "reviews": {
       "title": "Що кажуть люди",
-      "subtitle": "Відгуки від членів нашої спільноти"
+      "subtitle": "Відгуки від членів нашої спільноти",
+      "button": "Витягти один відгук"
     },
     "information": {
-      "title": "Наша місія",
-      "subtitle": "Збереження спогадів для майбутніх поколінь"
+      "title": "Інтерв'ю",
+      "subtitle": "У цьому відео-інтерв'ю з професором Рейчел Грейнджер ми обговорюємо роль цифрових платформ у збереженні особистої та колективної воєнної пам'яті. Розмова досліджує, як інтерактивний дизайн, розповідання історій та емоції поєднуються для підтримки пам'яті, стійкості та культурної спадщини. Ми розглядаємо, чому такі платформи, як Цифровий Сад Пам'яті, мають значення - для зцілення, з'єднання та історії - і як вони допомагають зберегти пам'ять живою в часи війни та переміщення.",
+      "proffessorJob": "Професор креативного розвитку та соціальних наук",
+      "proffessorUniversity": "Університет Де Монфорт, Лестер"
     },
     "manifest": {
-      "title": "Наші цінності",
+      "title": "Маніфест",
       "subtitle": "Що нас рухає вперед"
     },
     "author": {
+      "name": "Лана Соколюк",
       "title": "Про творця",
-      "subtitle": "Людина за Цифровим Садом Спогадів"
+      "subtitle": "Автор Цифрового Саду Пам'яті",
+      "descriptionTitle": "Про автора та проект",
+      "description": "Лана Соколюк є творцем Цифрового Саду Пам'яті та студенткою магістерської програми з цифрового медіа-дизайну в Единбурзькому університеті. Її творча та академічна діяльність зосереджена на збереженні колективної пам'яті, символічних формах оповідання та розробці емоційно інтелектуальних, інтерактивних платформ. Цей проект виник з переконання, що пам'ять не повинна зникати в тиші — її слід плекати, ділитися нею та дбайливо зберігати. Цифровий Сад Пам'яті — це її спосіб перетворити горе та пам'ять на участь у цифровому просторі.",
+      "quote": "Деякі спогади занадто крихкі, щоб їх кричати, але занадто важливі, щоб їх втратити. Цей простір був створений, щоб тримати їх ніжно - дати людям можливість говорити без страху, пам'ятати без шуму і дозволити історіям тихо рости там, де їх не забудуть."
     }
   },
   "donate": {
     "hero": {
-      "title": "Підтримайте нашу місію",
-      "subtitle": "Допоможіть нам зберігати спогади для майбутніх поколінь"
+      "title": "Донат",
+      "subtitle": "Донатські ініціативи для України"
     },
+    "initiatives": [
+      "Підтримка потреб армії",
+      "Для оборони, медицини та відновлення",
+      "Допомога вразливим дітям"
+    ],
     "information": {
-      "title": "Навіщо жертвувати?",
-      "subtitle": "Ваш внесок допомагає підтримувати та розвивати нашу платформу"
+      "title": "Куди йде ваш донат",
+      "subtitle": "У часи війни кожен малий акт солідарності має значення. Тому ми ретельно відібрали три з найнадійніших та найпрозоріших фондів, що підтримують Україну - кожен зосереджений на різній сфері: фронтова оборона, гуманітарне відновлення та захист дітей. Незалежно від того, чи відчуваєте ви потребу допомогти забезпечити тих, хто захищає свої домівки, підтримати медичні та відновлювальні зусилля, чи забезпечити безпеку переміщених сімей, ваш внесок піде безпосередньо туди, де це найбільш потрібно.",
+      "funds": [
+        "Фонд 'Повернись живим' є одним з найстаріших та найповажніших українських благодійних фондів, що підтримує військових. Заснований у 2014 році, він надає нелетальну допомогу захисникам України - такі як дрони, тепловізори, системи зв'язку та тактичні тренування. Відомий тим, що працює безпосередньо на місцях та публікує прозорі фінансові звіти, фонд завоював як національну, так і міжнародну довіру.",
+        "UNITED24 - це офіційна платформа збору коштів, запущена Президентом України. Всі пожертви обробляються через Національний банк України та йдуть безпосередньо на оборону, медичну допомогу, гуманітарне розмінування, освіту та відновлення інфраструктури. Платформа надає чіткі щотижневі звіти, і донори можуть обирати конкретні напрямки для підтримки, що робить її надійним та добре керованим механізмом для масштабного впливу.",
+        "Екстрений заклик зосереджений на допомозі українським дітям та сім'ям, постраждалим від війни. Як частина Організації Об'єднаних Націй, ЮНІСЕФ працює по всій Україні та сусідніх країнах, щоб забезпечити безпечну воду, екстрене житло, охорону здоров'я, шкільні матеріали та емоційну підтримку. Це одна з найавторитетніших глобальних організацій, що забезпечує добробут найуразливішого населення - дітей."
+      ]
     }
   },
   "search": {
@@ -274,11 +287,13 @@
     "suggestions": "Пропозиції"
   },
   "storyDetails": {
-    "from": "ВІД:",
+    "category": "Категорія",
     "number": "Номер",
-    "dateOfBirth": "Народився:",
-    "dateOfDeath": "Помер:",
-    "author": "Автор:",
+    "dateOfBirth": "Народився",
+    "dateOfDeath": "Помер",
+    "author": "Автор: ",
+    "age": "Вік",
+    "location": "Місцезнаходження",
     "close": "Закрити",
     "next": "Далі",
     "previous": "Назад"

@@ -19,32 +19,19 @@ export default function Author() {
           <div className={css.header}>
             <h2 className={css.title}>{t("about.author.title")}</h2>
             <div className={css.headerCol}>
-              <p className={css.authorName}>Lana Sokoliuk</p>
+              <p className={css.authorName}>{t("about.author.name")}</p>
               <p className={css.authorRole}>{t("about.author.subtitle")}</p>
             </div>
           </div>
           <p className={css.authorText}>
             <span className={css.authorTextBold}>
-              About the Author and Project
+              {t("about.author.descriptionTitle")}
             </span>
             <br />
             <br />
-            Lana Sokoliuk is the creator of The Digital Memory Garden and a
-            student of the Digital Media Design Master's programme at the
-            University of Edinburgh. Her creative and academic work is driven by
-            a deep interest in preserving collective memory, symbolic forms of
-            storytelling, and designing emotionally intelligent, interactive
-            platforms. This project was born from the belief that memory should
-            not disappear in silence — it should be nurtured, shared, and held
-            with care. The Digital Memory Garden is her way of transforming
-            grief and remembrance into a participatory digital space.
+            {t("about.author.description")}
           </p>
-          <p className={css.authorQuote}>
-            "Some memories are too fragile to be shouted, but too important to
-            be lost. This space was built to hold them gently - to give people a
-            way to speak without fear, to remember without noise, and to let
-            stories grow quietly where they won’t be forgotten."
-          </p>
+          <p className={css.authorQuote}>"{t("about.author.quote")}"</p>
         </div>
       </div>
     </>

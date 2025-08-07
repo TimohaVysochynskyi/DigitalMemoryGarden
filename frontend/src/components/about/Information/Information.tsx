@@ -34,9 +34,11 @@ export default function Information() {
           />
           <p className={css.professorText}>Rachel Granger</p>
           <p className={css.professorText}>
-            Professor of Creative Development and Social Sciences
+            {t("about.information.proffessorJob")}
           </p>
-          <p className={css.professorText}>De Montfort University, Leicester</p>
+          <p className={css.professorText}>
+            {t("about.information.proffessorUniversity")}
+          </p>
         </div>
       </div>
     </>

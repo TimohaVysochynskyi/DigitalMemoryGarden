@@ -80,7 +80,7 @@ export default function Reviews() {
               )}
             </AnimatePresence>
             <OutlineButton onClick={getRandomReview}>
-              Take one review
+              {t("about.reviews.button")}
             </OutlineButton>
           </div>
         </div>
