@@ -32,7 +32,9 @@ export default function Information() {
             alt="About Professor"
             className={css.professorImage}
           />
-          <p className={css.professorText}>Rachel Granger</p>
+          <p className={css.professorText}>
+            <b>Rachel Granger</b>
+          </p>
           <p className={css.professorText}>
             {t("about.information.proffessorJob")}
           </p>

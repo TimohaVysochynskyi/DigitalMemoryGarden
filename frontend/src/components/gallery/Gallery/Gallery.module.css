@@ -4,6 +4,9 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 .filterWrapper {
   display: flex;
@@ -30,6 +33,33 @@
   .filterButton {
     font-size: 28px;
   }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    max-width: 1300px;
+  }
+
+  .videoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    max-width: 1300px;
+  }
+}
+
+/* For ultra-wide screens */
+@media screen and (min-width: 1920px) {
+  .container {
+    max-width: 1600px;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    max-width: 1400px;
+  }
+
+  .videoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    max-width: 1400px;
+  }
 }
 
 .filterButton:hover,
@@ -44,20 +74,22 @@
   width: 100%;
 }
 
-/* Photo grid - irregular layout */
+/* Photo grid - masonry layout */
 .photoGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
   width: 100%;
+  max-width: 1200px;
 }
 
-/* Video grid - uniform 1/3 width */
+/* Video grid - masonry layout */
 .videoGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
   width: 100%;
+  max-width: 1200px;
 }
 
 /* Audio grid - full width tracks */
@@ -128,6 +160,14 @@
   .filterButton {
     font-size: 20px;
   }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .videoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -145,6 +185,16 @@
   }
 
   .grid {
+    gap: 16px;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .videoGrid {
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 }

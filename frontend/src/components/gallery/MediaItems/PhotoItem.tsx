@@ -5,13 +5,24 @@ import css from "./PhotoItem.module.css";
 type Props = {
   story: GalleryStory;
   index: number;
+  onPhotoClick?: (story: GalleryStory) => void;
 };
 
-export default function PhotoItem({ story, index }: Props) {
+export default function PhotoItem({ story, index, onPhotoClick }: Props) {
   const photoUrl = story.media.photo ? `${story.media.photo}` : "";
 
+  const handlePhotoClick = () => {
+    if (photoUrl && onPhotoClick) {
+      onPhotoClick(story);
+    }
+  };
+
   return (
-    <div className={css.photoItem} data-index={index}>
+    <div
+      className={css.photoItem}
+      data-index={index}
+      onClick={handlePhotoClick}
+    >
       {photoUrl && (
         <img
           src={photoUrl}

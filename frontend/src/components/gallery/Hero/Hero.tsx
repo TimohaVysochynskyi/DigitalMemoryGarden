@@ -22,7 +22,11 @@ export default function Hero({ selectedMediaType, onMediaTypeChange }: Props) {
           <div className={css.row}>
             <div className={css.imageWrapper}>
               <div className={css.imageBorder}>
-                <div className={css.image}></div>
+                <img
+                  className={css.image}
+                  src="/galleryImage.png"
+                  alt="Image description"
+                />
               </div>
             </div>
             <div className={css.btnsWrapper}>

@@ -15,6 +15,7 @@ type Props = {
   onMediaTypeChange: (mediaType: MediaType) => void;
   selectedCategoryId: string;
   onCategoryChange: (categoryId: string) => void;
+  onPhotoClick?: (story: GalleryStory) => void;
 };
 
 export default function Gallery({
@@ -22,6 +23,7 @@ export default function Gallery({
   onMediaTypeChange,
   selectedCategoryId,
   onCategoryChange,
+  onPhotoClick,
 }: Props) {
   const { t } = useTranslation();
   const [stories, setStories] = useState<GalleryStory[]>([]);
@@ -95,7 +97,14 @@ export default function Gallery({
   const renderMediaItem = (story: GalleryStory, index: number) => {
     switch (selectedMediaType) {
       case "photo":
-        return <PhotoItem key={story._id} story={story} index={index} />;
+        return (
+          <PhotoItem
+            key={story._id}
+            story={story}
+            index={index}
+            onPhotoClick={onPhotoClick}
+          />
+        );
       case "video":
         return <VideoItem key={story._id} story={story} />;
       case "audio":

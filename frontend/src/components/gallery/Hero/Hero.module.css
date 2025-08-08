@@ -27,6 +27,7 @@
   box-shadow: -6px -1px 4px 0px rgba(0, 0, 0, 0.25);
   background-color: rgba(188, 198, 210, 1);
   position: absolute;
+  object-fit: cover;
   top: 5%;
   right: 5%;
 }

@@ -90,9 +90,10 @@
   gap: 25px;
 }
 .recordTitle {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
+  font-weight: 500;
 }
 .recordEmpty {
   width: 100%;
@@ -146,6 +147,9 @@
 @media screen and (min-width: 1441px) {
   .title {
     font-size: 40px;
+  }
+  .recordTitle {
+    font-size: 20px;
   }
   .recordText {
     font-size: 17px;
